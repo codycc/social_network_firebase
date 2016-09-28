@@ -27,6 +27,7 @@
 		0B446B261D9C5197004E9A56 /* RoundButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		0B446B281D9C5338004E9A56 /* FancyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyField.swift; sourceTree = "<group>"; };
 		0B446B2A1D9C5483004E9A56 /* FancyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyButton.swift; sourceTree = "<group>"; };
+		0B7F52A01D9C77EB009CF99E /* SocialNetworkCody.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialNetworkCody.entitlements; sourceTree = "<group>"; };
 		0BDB599C1D9C1B6200E8195F /* SocialNetworkCody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetworkCody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BDB599F1D9C1B6200E8195F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BDB59A11D9C1B6200E8195F /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		0BDB599E1D9C1B6200E8195F /* SocialNetworkCody */ = {
 			isa = PBXGroup;
 			children = (
+				0B7F52A01D9C77EB009CF99E /* SocialNetworkCody.entitlements */,
 				0B446B211D9C4FB4004E9A56 /* Util */,
 				0BDB59B31D9C1E2500E8195F /* Model */,
 				0BDB59B41D9C1E2A00E8195F /* View */,
@@ -175,6 +177,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = G7CYZFGRXM;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -393,6 +400,7 @@
 			baseConfigurationReference = DD750ED039456E1ED4952406 /* Pods-SocialNetworkCody.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SocialNetworkCody/SocialNetworkCody.entitlements;
 				DEVELOPMENT_TEAM = G7CYZFGRXM;
 				INFOPLIST_FILE = SocialNetworkCody/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -407,6 +415,7 @@
 			baseConfigurationReference = 574B84D5B4FA111A4CD43948 /* Pods-SocialNetworkCody.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SocialNetworkCody/SocialNetworkCody.entitlements;
 				DEVELOPMENT_TEAM = G7CYZFGRXM;
 				INFOPLIST_FILE = SocialNetworkCody/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
