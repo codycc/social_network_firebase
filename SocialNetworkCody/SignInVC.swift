@@ -56,8 +56,9 @@ class SignInVC: UIViewController {
             }
         }
     }
-    //NOTE: add facebook to firebase auth in firebase console -- Done 
     
+    
+    //NOTE: add facebook to firebase auth in firebase console -- Done
     // Using the credential to authenticate with firebase
     func firebaseAuth(_ credential: FIRAuthCredential) {
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
@@ -98,6 +99,7 @@ class SignInVC: UIViewController {
             })
         }
     }
+    
     
     // for existing users function to automatically sign them in
     func completeSignIn(id: String) {
