@@ -25,6 +25,7 @@ class SignInVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        //Checking if keychain already exists
         if let _ = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID) {
             // Perform segue if keychain already exists
             performSegue(withIdentifier: "goToFeed", sender: nil)
@@ -59,6 +60,8 @@ class SignInVC: UIViewController {
     
     
     //NOTE: add facebook to firebase auth in firebase console -- Done
+    
+    
     // Using the credential to authenticate with firebase
     func firebaseAuth(_ credential: FIRAuthCredential) {
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
