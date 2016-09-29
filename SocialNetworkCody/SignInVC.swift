@@ -12,6 +12,8 @@ import FBSDKCoreKit
 import Firebase
 
 class SignInVC: UIViewController {
+    @IBOutlet weak var emailField: FancyField!
+    @IBOutlet weak var passwordField: FancyField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,7 @@ class SignInVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    //SIGNING IN WITH FACEBOOK 
     @IBAction func facebookBtnTapped(_ sender: AnyObject) {
         
         // setting up the facebook manager constant
@@ -46,6 +49,7 @@ class SignInVC: UIViewController {
             }
         }
     }
+    //NOTE: add facebook to firebase auth in firebase console -- Done 
     
     // Using the credential to authenticate with firebase
     func firebaseAuth(_ credential: FIRAuthCredential) {
@@ -56,6 +60,25 @@ class SignInVC: UIViewController {
                 print("CODY: Successfully authenticated with Firebase")
             }
         })
+    }
+    
+    //SIGNING IN/UP WITH EMAIL/PASSWORD
+    @IBAction func signInTapped(_ sender: AnyObject) {
+        if let email = emailField.text, let password = passwordField.text {
+            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                if error == nil {
+                    print("CODY1: Email user authenticated with Firebase")
+                } else {
+                    FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                        if error != nil {
+                            print("CODY1: Unable to authenticated with Firebase using email")
+                        } else {
+                            print("CODY1: Successfully signed up (authenticated) with Firebase")
+                        }
+                    })
+                }
+            })
+        }
     }
 
 }
