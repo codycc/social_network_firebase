@@ -12,6 +12,7 @@
 		0B446B271D9C5197004E9A56 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B261D9C5197004E9A56 /* RoundButton.swift */; };
 		0B446B291D9C5338004E9A56 /* FancyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B281D9C5338004E9A56 /* FancyField.swift */; };
 		0B446B2B1D9C5483004E9A56 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B2A1D9C5483004E9A56 /* FancyButton.swift */; };
+		0B93799B1D9D58A300C7553A /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B93799A1D9D58A200C7553A /* FeedVC.swift */; };
 		0BDB59A01D9C1B6200E8195F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB599F1D9C1B6200E8195F /* AppDelegate.swift */; };
 		0BDB59A21D9C1B6200E8195F /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB59A11D9C1B6200E8195F /* SignInVC.swift */; };
 		0BDB59A51D9C1B6200E8195F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BDB59A31D9C1B6200E8195F /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 		0B446B281D9C5338004E9A56 /* FancyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyField.swift; sourceTree = "<group>"; };
 		0B446B2A1D9C5483004E9A56 /* FancyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyButton.swift; sourceTree = "<group>"; };
 		0B7F52A01D9C77EB009CF99E /* SocialNetworkCody.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialNetworkCody.entitlements; sourceTree = "<group>"; };
+		0B93799A1D9D58A200C7553A /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		0BDB599C1D9C1B6200E8195F /* SocialNetworkCody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetworkCody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BDB599F1D9C1B6200E8195F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BDB59A11D9C1B6200E8195F /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				0BDB59A11D9C1B6200E8195F /* SignInVC.swift */,
+				0B93799A1D9D58A200C7553A /* FeedVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 					0BDB599B1D9C1B6200E8195F = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = G7CYZFGRXM;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -274,6 +278,7 @@
 				0BDB59A21D9C1B6200E8195F /* SignInVC.swift in Sources */,
 				0B446B271D9C5197004E9A56 /* RoundButton.swift in Sources */,
 				0B446B2B1D9C5483004E9A56 /* FancyButton.swift in Sources */,
+				0B93799B1D9D58A300C7553A /* FeedVC.swift in Sources */,
 				0BDB59A01D9C1B6200E8195F /* AppDelegate.swift in Sources */,
 				0B446B201D9C4F35004E9A56 /* FancyView.swift in Sources */,
 				0B446B251D9C4FD5004E9A56 /* Constants.swift in Sources */,

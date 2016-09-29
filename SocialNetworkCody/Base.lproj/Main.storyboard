@@ -71,7 +71,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FBr-Vm-8Wv" customClass="FancyField" customModule="SocialNetworkCody" customModuleProvider="target">
                                         <color key="textColor" red="0.1215686275" green="0.17254901959999999" blue="0.30196078430000001" alpha="0.86670590753424659" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lCv-M6-iIc" customClass="FancyField" customModule="SocialNetworkCody" customModuleProvider="target">
                                         <color key="textColor" red="0.1215686275" green="0.17254901959999999" blue="0.30196078430000001" alpha="0.86670590749999998" colorSpace="calibratedRGB"/>
@@ -113,11 +113,44 @@
                     <connections>
                         <outlet property="emailField" destination="FBr-Vm-8Wv" id="5dj-NW-yz2"/>
                         <outlet property="passwordField" destination="lCv-M6-iIc" id="Sf5-zZ-bkR"/>
+                        <segue destination="bWE-xY-NgQ" kind="show" identifier="goToFeed" id="0ai-qZ-pEI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+        <!--FeedVC-->
+        <scene sceneID="uQz-PT-3Oh">
+            <objects>
+                <viewController id="bWE-xY-NgQ" customClass="FeedVC" customModule="SocialNetworkCody" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bIH-ch-Yeu"/>
+                        <viewControllerLayoutGuide type="bottom" id="W0u-vv-h48"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ffc-8m-yXT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vlo-Qy-R14">
+                                <state key="normal" title="SignOut">
+                                    <color key="titleColor" red="0.6705882353" green="0.92549019610000005" blue="0.023529411760000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signOutTapped:" destination="bWE-xY-NgQ" eventType="touchUpInside" id="WsY-0m-I0Y"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.53725490196078429" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Vlo-Qy-R14" firstAttribute="centerX" secondItem="Ffc-8m-yXT" secondAttribute="centerX" id="Cid-yJ-rWR"/>
+                            <constraint firstItem="Vlo-Qy-R14" firstAttribute="centerY" secondItem="Ffc-8m-yXT" secondAttribute="centerY" id="w0Q-ir-hLs"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GeE-7T-ZNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1175" y="139"/>
         </scene>
     </scenes>
     <resources>
