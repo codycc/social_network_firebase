@@ -16,6 +16,7 @@ class DataService {
     //Singleton
     static let ds = DataService()
     
+    //url to base
     private var _REF_BASE = DB_BASE
     // grabbing the posts
     private var _REF_POSTS = DB_BASE.child("posts")
@@ -33,6 +34,7 @@ class DataService {
     var REF_USERS: FIRDatabaseReference {
         return _REF_USERS
     }
+    
     
     func createFirebaseDbUser(uid: String, userData: Dictionary<String, String>) {
         // when creating a user, itll create uid, and update the child values with the userData we pass in 

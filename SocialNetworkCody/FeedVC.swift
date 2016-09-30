@@ -19,6 +19,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
+       
+        // observing for any changes in the posts object in firebase
+        DataService.ds.REF_POSTS.observe(.value) { (snapshot) in
+            print(snapshot.value)
+        }
         // Do any additional setup after loading the view.
     }
     
