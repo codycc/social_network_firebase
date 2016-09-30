@@ -14,23 +14,35 @@ import SwiftKeychainWrapper
 
 
 
-class SignInVC: UIViewController {
+
+class SignInVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailField: FancyField!
     @IBOutlet weak var passwordField: FancyField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    
+        emailField.delegate = self
+        passwordField.delegate = self
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         //Checking if keychain already exists
         if let _ = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID) {
+            print("CODY1: ID found in keychain")
             // Perform segue if keychain already exists
             performSegue(withIdentifier: "goToFeed", sender: nil)
+            
         }
     }
+    
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+
     
 
     //SIGNING IN WITH FACEBOOK 
@@ -71,7 +83,8 @@ class SignInVC: UIViewController {
                 print("CODY1: Successfully authenticated with Firebase")
                 //For keychain sign in
                 if let user = user {
-                  self.completeSignIn(id: user.uid)
+                    let userData = ["provider": credential.provider]
+                    self.completeSignIn(id: user.uid, userData: userData)
                 }
                 
             }
@@ -85,7 +98,8 @@ class SignInVC: UIViewController {
                 if error == nil {
                     print("CODY1: Email user authenticated with Firebase")
                     if let user = user {
-                       self.completeSignIn(id: user.uid)
+                        let userData = ["provider": user.providerID]
+                        self.completeSignIn(id: user.uid, userData: userData)
                     }
                 } else {
                     FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
@@ -94,7 +108,8 @@ class SignInVC: UIViewController {
                         } else {
                             print("CODY1: Successfully signed up (authenticated) with Firebase")
                             if let user = user {
-                                self.completeSignIn(id: user.uid)
+                                let userData = ["provider": user.providerID]
+                                self.completeSignIn(id: user.uid, userData: userData)
                             }
                         }
                     })
@@ -105,7 +120,9 @@ class SignInVC: UIViewController {
     
     
     // for existing users function to automatically sign them in
-    func completeSignIn(id: String) {
+    func completeSignIn(id: String, userData: Dictionary<String,String>) {
+        //passing the text from email field and password into the createfirebasedbuser function in the DataService class
+        DataService.ds.createFirebaseDbUser(uid: id, userData: userData)
         let keychainResult = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID)
         print("CODY1: Data saved to keychain \(keychainResult)")
         //Added performSegue here so when the user first signs up, or signs in it will still perform segue
