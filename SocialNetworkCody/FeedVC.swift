@@ -13,6 +13,8 @@ import SwiftKeychainWrapper
 class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var posts = [Post]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +23,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
        
         // observing for any changes in the posts object in firebase
-        DataService.ds.REF_POSTS.observe(.value) { (snapshot) in
-            print(snapshot.value)
-        }
+        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
+            // going through every snapshot
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                //for every snap in the snapshot
+                for snap in snapshot {
+                    print("SNAP: \(snap)")
+                    // setting the value of each snap as a postDict
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        //setting constants of key and post
+                        let key = snap.key
+                        let post = Post(postKey: key, postData: postDict)
+                        //adding each post to the posts array 
+                        self.posts.append(post)
+                    }
+                }
+                self.tableView.reloadData()
+            }
+        })
         // Do any additional setup after loading the view.
     }
     
@@ -32,10 +49,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let post = posts[indexPath.row]
+        print("CODY1: \(post.caption)")
+        
         return tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
     }
     

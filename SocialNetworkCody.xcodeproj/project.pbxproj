@@ -22,6 +22,7 @@
 		0BDB59A71D9C1B6200E8195F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BDB59A61D9C1B6200E8195F /* Assets.xcassets */; };
 		0BDB59AA1D9C1B6200E8195F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BDB59A81D9C1B6200E8195F /* LaunchScreen.storyboard */; };
 		0BDB59B71D9C20CB00E8195F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BDB59B61D9C20CB00E8195F /* GoogleService-Info.plist */; };
+		0BE53B9E1DA3EB51005B56BA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE53B9D1DA3EB51005B56BA /* Post.swift */; };
 		7DE1F4348729FF89BF3E2FA2 /* Pods_SocialNetworkCody.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF54C14B3F73D394C631FF7D /* Pods_SocialNetworkCody.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		0BDB59A91D9C1B6200E8195F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0BDB59AB1D9C1B6200E8195F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BDB59B61D9C20CB00E8195F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0BE53B9D1DA3EB51005B56BA /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		574B84D5B4FA111A4CD43948 /* Pods-SocialNetworkCody.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialNetworkCody.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocialNetworkCody/Pods-SocialNetworkCody.release.xcconfig"; sourceTree = "<group>"; };
 		DD750ED039456E1ED4952406 /* Pods-SocialNetworkCody.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialNetworkCody.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocialNetworkCody/Pods-SocialNetworkCody.debug.xcconfig"; sourceTree = "<group>"; };
 		EF54C14B3F73D394C631FF7D /* Pods_SocialNetworkCody.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialNetworkCody.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +119,7 @@
 		0BDB59B31D9C1E2500E8195F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0BE53B9D1DA3EB51005B56BA /* Post.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				0B522F681D9D7E0700BC2B05 /* CircleView.swift in Sources */,
 				0B446B291D9C5338004E9A56 /* FancyField.swift in Sources */,
 				0BDB59A21D9C1B6200E8195F /* SignInVC.swift in Sources */,
+				0BE53B9E1DA3EB51005B56BA /* Post.swift in Sources */,
 				0B446B271D9C5197004E9A56 /* RoundButton.swift in Sources */,
 				0B446B2B1D9C5483004E9A56 /* FancyButton.swift in Sources */,
 				0B522F6D1D9EF2B200BC2B05 /* DataService.swift in Sources */,
