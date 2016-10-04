@@ -163,12 +163,16 @@
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6B2-JZ-wIK">
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-image" translatesAutoresizingMaskIntoConstraints="NO" id="JGt-5q-dG2" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-image" translatesAutoresizingMaskIntoConstraints="NO" id="JGt-5q-dG2" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
                                                 <color key="backgroundColor" red="0.0" green="0.53725490196078429" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="49" id="VmC-fS-k9p"/>
                                                     <constraint firstAttribute="width" constant="49" id="l54-H3-hCS"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="ebD-2x-uPd" appends="YES" id="oIA-iJ-HFb"/>
+                                                </connections>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add a caption" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FGi-it-d3p" customClass="FancyField" customModule="SocialNetworkCody" customModuleProvider="target">
                                                 <nil key="textColor"/>
@@ -304,13 +308,19 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="imageAdd" destination="JGt-5q-dG2" id="M6M-nk-NU6"/>
                         <outlet property="tableView" destination="YbK-Y1-9mk" id="f4v-Uf-OwZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GeE-7T-ZNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="KrD-TD-yCD">
                     <connections>
-                        <action selector="signOutTapped:" destination="bWE-xY-NgQ" id="fUx-oG-3R2"/>
+                        <action selector="signOutTapped:" destination="bWE-xY-NgQ" id="tr3-CW-zTg"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="ebD-2x-uPd">
+                    <connections>
+                        <action selector="addImageTapped:" destination="bWE-xY-NgQ" id="h28-yg-oeg"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

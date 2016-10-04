@@ -10,17 +10,24 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var imageAdd: CircleView!
+    
     
     var posts = [Post]()
+    var imagePicker: UIImagePickerController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        //user can edit photo before uploading
+        imagePicker.allowsEditing = true
        
         // observing for any changes in the posts object in firebase
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
@@ -53,10 +60,27 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // grabbing each post out of the posts array
         let post = posts[indexPath.row]
-        print("CODY1: \(post.caption)")
         
-        return tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+        // setting up each cell and calling configureCell which will update the UI with firebase data
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
+            cell.configureCell(post: post)
+            return cell
+        } else {
+            return PostCell()
+        }
+    }
+    
+    //IMAGE PICKER: once the image is selected, dissmiss the view
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // what to do if it returns as edited image
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            imageAdd.image = image
+        } else {
+            print("CODY1: A valid image wasnt selected")
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
     
@@ -69,6 +93,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // Go back to login screen
         self.dismiss(animated: true, completion: nil)
         
+    }
+    
+    //
+    @IBAction func addImageTapped(_ sender: AnyObject) {
+        present(imagePicker, animated: true, completion:nil)
     }
 
 }
