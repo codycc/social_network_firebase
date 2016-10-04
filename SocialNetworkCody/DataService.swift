@@ -12,15 +12,19 @@ import Firebase
 //this will contain the url of our firebase database
 let DB_BASE = FIRDatabase.database().reference()
 
+// this will contain the url of our firebase storage
+let STORAGE_BASE = FIRStorage.storage().reference()
+
 class DataService {
     //Singleton
     static let ds = DataService()
     
-    //url to base
+    //Storage references 
+    private var _REF_POST_IMAGES = STORAGE_BASE.child("post-pics")
+    
+    //DB references
     private var _REF_BASE = DB_BASE
-    // grabbing the posts
     private var _REF_POSTS = DB_BASE.child("posts")
-    // grabbing the users
     private var _REF_USERS = DB_BASE.child("users")
     
     var REF_BASE: FIRDatabaseReference {
@@ -33,6 +37,10 @@ class DataService {
     
     var REF_USERS: FIRDatabaseReference {
         return _REF_USERS
+    }
+    
+    var REF_POST_IMAGES: FIRStorageReference {
+        return _REF_POST_IMAGES
     }
     
     
