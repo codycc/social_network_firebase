@@ -31,10 +31,13 @@ class PostCell: UITableViewCell {
         self.caption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
         
+        // if theres an img from the cache then set the image
         if img != nil {
         self.postImg.image = img
         } else {
+            // otherwise create the image from firebase storage
            let ref = FIRStorage.storage().reference(forURL: post.imageUrl)
+            // max size aloud
            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
             if error != nil {
                 print("CODY!: Unable to download image Firebase storage")
@@ -43,6 +46,7 @@ class PostCell: UITableViewCell {
                 if let imgData = data {
                     if let img = UIImage(data: imgData) {
                         self.postImg.image = img
+                        // setting the cache now 
                         FeedVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
                     }
                 }
