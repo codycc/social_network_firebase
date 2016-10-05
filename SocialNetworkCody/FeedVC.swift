@@ -55,6 +55,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         })
     }
     
+    
     //FOR KEYBOARD EDITING 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
@@ -82,7 +83,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 cell.configureCell(post: post, img: img)
             } else {
                 cell.configureCell(post: post)
-               
             }
              return cell
         } else {
@@ -109,9 +109,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         print("CODY1: ID removed from keychain \(removeKeychain)")
         //Signout from firebase
         try! FIRAuth.auth()?.signOut()
-        // Go back to login screen
-        self.dismiss(animated: true, completion: nil)
-        
+        //Dissmiss all open view controllers above the log in screen (root controller)
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
     

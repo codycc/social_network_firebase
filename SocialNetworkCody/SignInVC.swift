@@ -101,6 +101,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                     if let user = user {
                         let userData = ["provider": user.providerID]
                         self.completeSignIn(id: user.uid, userData: userData)
+                        self.performSegue(withIdentifier: "goToFeed", sender: nil)
                     }
                 } else {
                     FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
@@ -111,6 +112,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                             if let user = user {
                                 let userData = ["provider": user.providerID]
                                 self.completeSignIn(id: user.uid, userData: userData)
+                                self.performSegue(withIdentifier: "goToCustomize", sender: nil)
                             }
                         }
                     })
@@ -129,7 +131,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         print("CODY1: Data saved to keychain \(keychainResult)")
         //Added performSegue here so when the user first signs up, or signs in it will still perform segue
         // Once keychain is set, it wont call this segue, it will call one at viewDidLoad because the keychain exists
-        performSegue(withIdentifier: "goToFeed", sender: nil)
+        
     }
 
 }
