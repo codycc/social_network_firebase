@@ -17,17 +17,29 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var postImg: UIImageView!
     @IBOutlet weak var caption: UITextView!
     @IBOutlet weak var likesLbl: UILabel!
+    @IBOutlet weak var likeImg: UIImageView!
     
     var post: Post!
+    var likesRef: FIRDatabaseReference!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        // setting up the tap for the heart like button, since its repeated in the cells
+        let tap = UITapGestureRecognizer(target: self, action: #selector(likeTapped))
+        // it takes one tap to work
+        tap.numberOfTapsRequired = 1
+        // adding this gesture recognizer to the likes heart
+        likeImg.addGestureRecognizer(tap)
+        //adding the user interaction
+        likeImg.isUserInteractionEnabled = true
     }
+    
     
     // ui image with default value as nil
     func configureCell(post:Post, img: UIImage? = nil ) {
         self.post = post
+        // going to the id of the likkes
+        likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
         self.caption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
         
@@ -49,11 +61,43 @@ class PostCell: UITableViewCell {
                         // setting the cache now 
                         FeedVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
                     }
-                }
-            }
+                 }
+              }
            })
         }
+        // check for the current users likes if anything changes
+        likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            //if null
+            if let _ = snapshot.value as? NSNull {
+                self.likeImg.image = UIImage(named: "empty-heart")
+            } else {
+                self.likeImg.image = UIImage(named: "filled-heart")
+            }
+        })
     }
     
-
+    
+    
+    func likeTapped(sender: UITapGestureRecognizer) {
+        
+        // check for the current users likes if anything changes
+        likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            //if null
+            
+            if let _ = snapshot.value as? NSNull {
+                //change the heart image
+                self.likeImg.image = UIImage(named: "filled-heart")
+                // adjusting the number of likes by one
+                self.post.adjustLikes(addLike: true)
+                // setting the value of the current users likes, the likes will have every post and true beside it
+                self.likesRef.setValue(true)
+            } else {
+                self.likeImg.image = UIImage(named: "empty-heart")
+                //taking away a like from that post 
+                self.post.adjustLikes(addLike: false)
+                // remove the value of true under the current users liked posts
+                self.likesRef.removeValue()
+            }
+        })
+    }
 }

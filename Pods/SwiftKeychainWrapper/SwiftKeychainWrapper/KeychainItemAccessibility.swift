@@ -107,16 +107,12 @@ private let keychainItemAccessibilityLookup: [KeychainItemAccessibility:CFString
         .afterFirstUnlock: kSecAttrAccessibleAfterFirstUnlock,
         .afterFirstUnlockThisDeviceOnly: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
         .always: kSecAttrAccessibleAlways,
+        .whenPasscodeSetThisDeviceOnly: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
         .alwaysThisDeviceOnly : kSecAttrAccessibleAlwaysThisDeviceOnly,
         .whenUnlocked: kSecAttrAccessibleWhenUnlocked,
         .whenUnlockedThisDeviceOnly: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
     ]
-    
-    // INFO: While this framework only supports iOS 8 and up, the files themselves can be pulled directly into an iOS 7 project and work fine as long as this #available check is in place. Unfortunately, this also generates a warning in the framework project for now.
-    if #available(iOSApplicationExtension 8, *) {
-        lookup[.whenPasscodeSetThisDeviceOnly] = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
-    }
-    
+
     return lookup
 }()
 

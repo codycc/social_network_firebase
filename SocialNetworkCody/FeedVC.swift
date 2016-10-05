@@ -80,11 +80,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 // pass that into the configure cell with the post itself 
                 cell.configureCell(post: post, img: img)
-                return cell
             } else {
                 cell.configureCell(post: post)
-                return cell
+               
             }
+             return cell
         } else {
             return PostCell()
         }
@@ -105,8 +105,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     @IBAction func signOutTapped(_ sender: AnyObject) {
         // When signing out ... remove keychain ID
-        let keychainResult2 = KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KEY_UID)
-        print("CODY1: ID removed from keychain \(keychainResult2)")
+        let removeKeychain: Bool = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
+        print("CODY1: ID removed from keychain \(removeKeychain)")
         //Signout from firebase
         try! FIRAuth.auth()?.signOut()
         // Go back to login screen
@@ -148,6 +148,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     //GETT
                     let downloadURL = metadata?.downloadURL()?.absoluteString
                     if let url = downloadURL {
+                        //once the image is uploaded to firebase stoarge, its then posted to the database 
                        self.postToFirebase(imgUrl: url)
                     }
                 }

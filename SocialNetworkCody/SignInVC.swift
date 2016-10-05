@@ -28,7 +28,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         //Checking if keychain already exists
-        if let _ = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID) {
+        if let _ = KeychainWrapper.standard.string(forKey: KEY_UID) {
+            
             print("CODY1: ID found in keychain")
             // Perform segue if keychain already exists
             performSegue(withIdentifier: "goToFeed", sender: nil)
@@ -123,7 +124,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     func completeSignIn(id: String, userData: Dictionary<String,String>) {
         //passing the text from email field and password into the createfirebasedbuser function in the DataService class
         DataService.ds.createFirebaseDbUser(uid: id, userData: userData)
-        let keychainResult = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID)
+//        let keychainResult = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID)
+        let keychainResult: Bool = KeychainWrapper.standard.set(id , forKey: KEY_UID)
         print("CODY1: Data saved to keychain \(keychainResult)")
         //Added performSegue here so when the user first signs up, or signs in it will still perform segue
         // Once keychain is set, it wont call this segue, it will call one at viewDidLoad because the keychain exists
