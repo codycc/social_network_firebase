@@ -104,6 +104,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                         self.performSegue(withIdentifier: "goToFeed", sender: nil)
                     }
                 } else {
+                    
                     FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
                         if error != nil {
                             print("CODY1: Unable to authenticated with Firebase using email")

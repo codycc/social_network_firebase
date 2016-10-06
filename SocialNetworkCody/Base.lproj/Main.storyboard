@@ -159,12 +159,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.86809717465753422" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a nickname" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-mT-51T">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to be called?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-mT-51T">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="VUq-I9-NTF"/>
                                     <constraint firstAttribute="width" constant="242" id="YcX-jS-wE9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="21"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.86809717470000003" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -200,7 +200,7 @@
                             <constraint firstItem="gMp-LM-peN" firstAttribute="centerX" secondItem="YcG-nU-bIt" secondAttribute="centerX" id="8Pd-MZ-IyG"/>
                             <constraint firstItem="9g2-lT-bs5" firstAttribute="leading" secondItem="YcG-nU-bIt" secondAttribute="leading" id="B1M-ZD-Lx8"/>
                             <constraint firstAttribute="trailing" secondItem="9g2-lT-bs5" secondAttribute="trailing" id="DCs-Lt-iRM"/>
-                            <constraint firstItem="c3V-zW-mGj" firstAttribute="top" secondItem="gMp-LM-peN" secondAttribute="bottom" constant="54" id="GSb-XQ-vGj"/>
+                            <constraint firstItem="c3V-zW-mGj" firstAttribute="top" secondItem="gMp-LM-peN" secondAttribute="bottom" constant="26" id="GSb-XQ-vGj"/>
                             <constraint firstItem="9g2-lT-bs5" firstAttribute="top" secondItem="YcG-nU-bIt" secondAttribute="top" id="IHK-NY-SvZ"/>
                             <constraint firstItem="qE1-mT-51T" firstAttribute="top" secondItem="c3V-zW-mGj" secondAttribute="bottom" constant="21" id="UbX-Kd-CTk"/>
                             <constraint firstItem="GzE-dA-GTY" firstAttribute="centerX" secondItem="YcG-nU-bIt" secondAttribute="centerX" id="akz-BR-XtW"/>
@@ -212,6 +212,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="usernameField" destination="c3V-zW-mGj" id="Sdd-7s-T5r"/>
                         <segue destination="bWE-xY-NgQ" kind="show" identifier="enterApp" id="k5h-2q-SgC"/>
                     </connections>
                 </viewController>
@@ -343,7 +344,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="UHC-Z7-Uav"/>
                                                                     </constraints>
-                                                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 </textView>
