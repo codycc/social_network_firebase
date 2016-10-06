@@ -148,11 +148,15 @@
                                     <constraint firstAttribute="height" constant="65" id="xEN-Vh-BHN"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="GzE-dA-GTY" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="GzE-dA-GTY" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="g5e-ni-0Qj"/>
                                     <constraint firstAttribute="height" constant="240" id="owX-u2-VLm"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="qnP-nO-RzZ" appends="YES" id="rPY-7h-yJ4"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap above to select profile photo." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMp-LM-peN">
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="23"/>
@@ -212,11 +216,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="profilePicAdd" destination="GzE-dA-GTY" id="ydd-Be-dCy"/>
                         <outlet property="usernameField" destination="c3V-zW-mGj" id="Sdd-7s-T5r"/>
                         <segue destination="bWE-xY-NgQ" kind="show" identifier="enterApp" id="k5h-2q-SgC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Q4-Cj-jSV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="qnP-nO-RzZ">
+                    <connections>
+                        <action selector="profilePicTapped:" destination="cRc-pY-jxc" id="4yt-C5-yZj"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="906" y="-307"/>
         </scene>
