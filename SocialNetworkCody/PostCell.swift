@@ -21,7 +21,7 @@ class PostCell: UITableViewCell {
     
     var post: Post!
     var likesRef: FIRDatabaseReference!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // setting up the tap for the heart like button, since its repeated in the cells
@@ -35,14 +35,48 @@ class PostCell: UITableViewCell {
     }
     
     
+    
     // ui image with default value as nil
-    func configureCell(post:Post, img: UIImage? = nil ) {
+    func configureCell(post:Post, img: UIImage? = nil, profileImage: UIImage? = nil ) {
         self.post = post
         // going to the id of the likkes
         likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
         self.caption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
         
+        // grab the user id of that post
+         let postUser = post.userId
+        // search through users by that specific id and access the username
+            let userNickname = DataService.ds.REF_USERS.child(postUser).child("username")
+        // grab value of username and set the label accordinly 
+        userNickname.observeSingleEvent(of: .value, with: { (snapshot) in
+             print(snapshot)
+            self.usernameLbl.text = snapshot.value as! String?
+        })
+        
+        
+        // grabbing profile image from cache or downloading it from the url 
+        if profileImage != nil {
+            self.profileImg.image = profileImage
+        } else {
+            let ref = FIRStorage.storage().reference(forURL: post.profilePicUrl)
+            
+            ref.data(withMaxSize: 2 * 1024 * 1024 , completion: { (data, error) in
+                if error != nil {
+                    print("cody!: unable to download image firebase storage")
+                } else {
+                    print("cody!: image downloaded fromfirebase storage ")
+                    if let imgData = data {
+                        if let postProfilePic = UIImage(data: imgData) {
+                            self.profileImg.image = postProfilePic
+                            FeedVC.imageCache.setObject(postProfilePic, forKey: post.profilePicUrl as NSString)
+                        }
+                    }
+                }
+            })
+        }
+        
+
         // if theres an img from the cache then set the image
         if img != nil {
         self.postImg.image = img
@@ -65,6 +99,8 @@ class PostCell: UITableViewCell {
               }
            })
         }
+        
+        
         // check for the current users likes if anything changes
         likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
             //if null
@@ -75,8 +111,6 @@ class PostCell: UITableViewCell {
             }
         })
     }
-    
-    
     
     func likeTapped(sender: UITapGestureRecognizer) {
         

@@ -13,11 +13,10 @@ import Firebase
 import SwiftKeychainWrapper
 
 
-
-
 class SignInVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailField: FancyField!
     @IBOutlet weak var passwordField: FancyField!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +99,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                     print("CODY1: Email user authenticated with Firebase")
                     if let user = user {
                         let userData = ["provider": user.providerID]
+                        
                         self.completeSignIn(id: user.uid, userData: userData)
                         self.performSegue(withIdentifier: "goToFeed", sender: nil)
                     }

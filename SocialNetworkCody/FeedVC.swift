@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageAdd: CircleView!
@@ -26,6 +26,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        captionField.delegate = self 
         
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -79,11 +80,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
             // let img equal to the imageCache with this specifiv post url
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
-                // pass that into the configure cell with the post itself 
-                cell.configureCell(post: post, img: img)
+                if let profileImg = FeedVC.imageCache.object(forKey: post.profilePicUrl as NSString) {
+                    cell.configureCell(post: post, img: img, profileImage: profileImg)
+                }
+                // pass that into the configure cell with the post itself
             } else {
                 cell.configureCell(post: post)
             }
+           
              return cell
         } else {
             return PostCell()
@@ -130,7 +134,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             print("CODY1: An image must be selected")
             return
         }
-        // compressing the image for Firebase storage
+        
+        //grabbing the users profile pic so it can be passed into the post to firebase method to be stored with that post
+        var userProfilePic: String!
+        // grabbing specific user and the profile pic child
+            let profilePicRef = DataService.ds.REF_USER_CURRENT.child("profile-pic")
+        // grabbing the value of that users profile pic
+            profilePicRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                userProfilePic = snapshot.value as! String
+            })
+        
+    
+        // compressing the post image for Firebase storage
         if let imgData = UIImageJPEGRepresentation(img, 0.2) {
             // setting a unique identifier
             let imgUid = NSUUID().uuidString
@@ -148,19 +163,20 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     let downloadURL = metadata?.downloadURL()?.absoluteString
                     if let url = downloadURL {
                         //once the image is uploaded to firebase stoarge, its then posted to the database 
-                       self.postToFirebase(imgUrl: url)
+                        self.postToFirebase(imgUrl: url, profileUrl: userProfilePic)
                     }
                 }
             }
         }
     }
     
-    
-    func postToFirebase(imgUrl: String!) {
+    func postToFirebase(imgUrl: String!, profileUrl: String!) {
         let post: Dictionary<String, Any> = [
             "caption": captionField.text! as String,
             "imageUrl": imgUrl as String,
-            "likes": 0 as Int
+            "likes": 0 as Int,
+            "userId": DataService.ds.REF_USER_CURRENT.key,
+            "profilePicUrl": profileUrl
         ]
         // setting the value with whatever is passed into this function
         let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
