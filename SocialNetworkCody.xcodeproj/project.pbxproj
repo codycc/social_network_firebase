@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0CC56D1DA86411008FEC79 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CC56C1DA86411008FEC79 /* ProfileVC.swift */; };
+		0B0CC56F1DA86A53008FEC79 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CC56E1DA86A53008FEC79 /* ProfileCell.swift */; };
+		0B0CC5711DA8701A008FEC79 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CC5701DA8701A008FEC79 /* User.swift */; };
 		0B446B201D9C4F35004E9A56 /* FancyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B1F1D9C4F35004E9A56 /* FancyView.swift */; };
 		0B446B251D9C4FD5004E9A56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B241D9C4FD5004E9A56 /* Constants.swift */; };
 		0B446B271D9C5197004E9A56 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B261D9C5197004E9A56 /* RoundButton.swift */; };
@@ -28,6 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B0CC56C1DA86411008FEC79 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		0B0CC56E1DA86A53008FEC79 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
+		0B0CC5701DA8701A008FEC79 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0B446B1F1D9C4F35004E9A56 /* FancyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyView.swift; sourceTree = "<group>"; };
 		0B446B241D9C4FD5004E9A56 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0B446B261D9C5197004E9A56 /* RoundButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
@@ -122,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				0BE53B9D1DA3EB51005B56BA /* Post.swift */,
+				0B0CC5701DA8701A008FEC79 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -135,6 +142,7 @@
 				0B446B2A1D9C5483004E9A56 /* FancyButton.swift */,
 				0B522F671D9D7E0700BC2B05 /* CircleView.swift */,
 				0B522F691D9DB17000BC2B05 /* PostCell.swift */,
+				0B0CC56E1DA86A53008FEC79 /* ProfileCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -145,6 +153,7 @@
 				0BDB59A11D9C1B6200E8195F /* SignInVC.swift */,
 				0B93799A1D9D58A200C7553A /* FeedVC.swift */,
 				0BB991521DA5B578001D0204 /* SetDetailsVC.swift */,
+				0B0CC56C1DA86411008FEC79 /* ProfileVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -299,12 +308,15 @@
 			files = (
 				0B522F681D9D7E0700BC2B05 /* CircleView.swift in Sources */,
 				0B446B291D9C5338004E9A56 /* FancyField.swift in Sources */,
+				0B0CC56D1DA86411008FEC79 /* ProfileVC.swift in Sources */,
 				0BB991531DA5B578001D0204 /* SetDetailsVC.swift in Sources */,
+				0B0CC5711DA8701A008FEC79 /* User.swift in Sources */,
 				0BDB59A21D9C1B6200E8195F /* SignInVC.swift in Sources */,
 				0BE53B9E1DA3EB51005B56BA /* Post.swift in Sources */,
 				0B446B271D9C5197004E9A56 /* RoundButton.swift in Sources */,
 				0B446B2B1D9C5483004E9A56 /* FancyButton.swift in Sources */,
 				0B522F6D1D9EF2B200BC2B05 /* DataService.swift in Sources */,
+				0B0CC56F1DA86A53008FEC79 /* ProfileCell.swift in Sources */,
 				0B93799B1D9D58A300C7553A /* FeedVC.swift in Sources */,
 				0BDB59A01D9C1B6200E8195F /* AppDelegate.swift in Sources */,
 				0B446B201D9C4F35004E9A56 /* FancyView.swift in Sources */,

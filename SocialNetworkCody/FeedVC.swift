@@ -181,6 +181,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         // setting the value with whatever is passed into this function
         let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
         firebasePost.setValue(post)
+        let postsRef = DataService.ds.REF_USER_CURRENT.child("posts").child(firebasePost.key)
+        postsRef.setValue(true)
+        
         
         // resetting the inputs for the post
         captionField.text = ""
@@ -190,5 +193,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         // reloading the tableview since new data has now been added to the Firebase Database
         tableView.reloadData()
     }
+    
+    
+    @IBAction func profilePicTapped(_ sender: AnyObject) {
+        performSegue(withIdentifier: "goToProfile", sender: nil)
+    }
+    
 
 }
