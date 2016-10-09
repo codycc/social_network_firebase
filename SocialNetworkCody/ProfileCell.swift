@@ -19,9 +19,33 @@ class ProfileCell: UITableViewCell {
         // Initialization code
     }
     
-    func configureCell(post: Post) {
+    func configureCell(post: Post, img: UIImage? = nil) {
         self.post = post 
         self.captionField.text = post.caption
+        
+        
+        
+        if img != nil {
+            self.postPic.image = img
+        } else {
+            // otherwise create the image from firebase storage
+            let ref = FIRStorage.storage().reference(forURL: post.imageUrl)
+            // max size aloud
+            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("CODY!: Unable to download image Firebase storage")
+                } else {
+                    print("CODY!: Image downloaded from firebase storage")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            self.postPic.image = img
+                            // setting the cache now
+                            FeedVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
+                        }
+                    }
+                }
+            })
+        }
     }
     
 

@@ -51,7 +51,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         self.posts.append(post)
                     }
                 }
-                self.tableView.reloadData()
+                
+                    self.tableView.reloadData()
+                
+                
+                
             }
         })
     }
@@ -75,7 +79,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // grabbing each post out of the posts array
         let post = posts[indexPath.row]
-        
         // setting up each cell and calling configureCell which will update the UI with firebase data
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
             // let img equal to the imageCache with this specifiv post url
