@@ -18,9 +18,12 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var caption: UITextView!
     @IBOutlet weak var likesLbl: UILabel!
     @IBOutlet weak var likeImg: UIImageView!
+    @IBOutlet weak var editPostBtn: CellButton!
+    
     
     var post: Post!
     var likesRef: FIRDatabaseReference!
+    var postsRef: FIRDatabaseReference!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,15 +37,18 @@ class PostCell: UITableViewCell {
         likeImg.isUserInteractionEnabled = true
     }
     
-    
+  
     
     // ui image with default value as nil
     func configureCell(post:Post, img: UIImage? = nil, profileImage: UIImage? = nil ) {
         self.post = post
+      
         // going to the id of the likkes
         likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
+
         self.caption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
+        self.caption.isEditable = false 
         
         // grab the user id of that post
          let postUser = post.userId
@@ -55,7 +61,10 @@ class PostCell: UITableViewCell {
         })
         
         
-        // grabbing profile image from cache or downloading it from the url 
+      
+        
+        
+        // grabbing profile image from cache or downloading it from the url
         if profileImage != nil {
             self.profileImg.image = profileImage
         } else {
@@ -110,6 +119,15 @@ class PostCell: UITableViewCell {
                 self.likeImg.image = UIImage(named: "filled-heart")
             }
         })
+        
+        //checking if this is current users post, if so then show edit post button
+        DataService.ds.REF_USER_CURRENT.child("posts").observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild(post.postKey) {
+                self.editPostBtn.isHidden = false
+            } else {
+                self.editPostBtn.isHidden = true 
+            }
+        })
     }
     
     func likeTapped(sender: UITapGestureRecognizer) {
@@ -133,5 +151,11 @@ class PostCell: UITableViewCell {
                 self.likesRef.removeValue()
             }
         })
+    }
+    @IBAction func editPostTapped(_ sender: AnyObject) {
+        self.caption.isEditable = true
+       
+        
+        
     }
 }

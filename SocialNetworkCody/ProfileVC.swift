@@ -90,6 +90,7 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             let post = posts[indexPath.row]
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
+             
                 if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 print("THIS IS THE POST FROM CELL:\(post)")
                     cell.configureCell(post: post, img: img)

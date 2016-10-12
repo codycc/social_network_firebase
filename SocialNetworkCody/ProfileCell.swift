@@ -22,6 +22,7 @@ class ProfileCell: UITableViewCell {
     func configureCell(post: Post, img: UIImage? = nil) {
         self.post = post 
         self.captionField.text = post.caption
+        self.captionField.isEditable = false
         
         
         
