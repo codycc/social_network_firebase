@@ -52,11 +52,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         self.posts.append(post)
                     }
                 }
-                
                     self.tableView.reloadData()
-                
-                
-                
             }
         })
     }
@@ -137,6 +133,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     
     @IBAction func postBtnTapped(_ sender: AnyObject) {
+        //close keyboard
+        self.view.endEditing(true)
         // if there is caption text and an image has been uploaded, then do the following
         guard let caption = captionField.text, caption != "" else {
             print("CODY1: Caption must be entered")

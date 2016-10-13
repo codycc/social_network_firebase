@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate  {
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var postImg: UIImageView!
@@ -25,7 +25,7 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
+        commentField.delegate = self
         // setting up the information from the didselectrow, taking from sender and setting up views and labels
         let userId = post.userId
         DataService.ds.REF_USERS.child(userId).child("username").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -117,13 +117,17 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         })
     }
     
+    //FOR KEYBOARD EDITING
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let comment = comments[indexPath.row]
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CommentCell {
-
             cell.configureCell(comment: comment)
             return cell
         } else {
@@ -147,6 +151,8 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // when i want to comment, it'll grab the info out of the textfield, set it accordingly
     // when the post button is tapped, call post to firebase
     @IBAction func postBtnTapped(_ sender: AnyObject) {
+        //close keyboard
+        self.view.endEditing(true)
         guard let comment = commentField.text, comment != "" else {
             print("CODY1: Comment must be entered")
             return
