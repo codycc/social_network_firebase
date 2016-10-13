@@ -77,6 +77,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         return posts.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var post: Post!
+        post = posts[indexPath.row]
+        print("DID SELECT ROW AT CALLED")
+
+        performSegue(withIdentifier: "goToPost", sender: post)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // grabbing each post out of the posts array
         let post = posts[indexPath.row]
@@ -197,6 +205,20 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
         // reloading the tableview since new data has now been added to the Firebase Database
         tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // if the segue is called liquordetailvc
+        if segue.identifier == "goToPost" {
+            // if the destination is the liquor detail view controller
+            if let postVC = segue.destination as? PostVC  {
+                // if the info is an instance of liquor results
+                if let post = sender as? Post {
+                    // this instance sends through to the variable on the other side
+                    postVC.post = post
+                }
+            }
+        }
     }
     
     
