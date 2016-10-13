@@ -7,18 +7,35 @@
 //
 
 import UIKit
+import Firebase
 
 class CommentCell: UITableViewCell {
-
+    @IBOutlet weak var commentText: UITextView!
+    @IBOutlet weak var usernameLbl: UILabel!
+    @IBOutlet weak var profilePic: UIImageView!
+    
+    var comment: Comment!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func configureCell(comment:Comment) {
+        // setting up the cell
+        self.comment = comment
+        self.commentText.text = comment.comment
+        let userId = comment.userId
+        
+        // grabbing the user id of the specific comment from users database, then grabbing their username to set value
+        DataService.ds.REF_USERS.child(userId).child("username").observeSingleEvent(of: .value, with: { (snapshot) in
+            let user = snapshot.value
+            self.usernameLbl.text = user as! String?
+        })
+        
+        
+        
     }
+  
 
 }

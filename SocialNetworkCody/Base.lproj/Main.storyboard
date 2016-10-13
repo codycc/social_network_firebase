@@ -595,7 +595,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="119" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IgL-Y0-4nm">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentCell" rowHeight="119" id="s9A-YE-hl7" customClass="CommentCell" customModule="SocialNetworkCody" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="119" id="s9A-YE-hl7" customClass="CommentCell" customModule="SocialNetworkCody" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="119"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="s9A-YE-hl7" id="e5K-DT-95L">
@@ -640,6 +640,11 @@
                                                 <constraint firstItem="koB-CE-LlR" firstAttribute="top" secondItem="e5K-DT-95L" secondAttribute="topMargin" id="cfQ-5O-xHP"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="commentText" destination="koB-CE-LlR" id="LoJ-Wz-4kq"/>
+                                            <outlet property="profilePic" destination="622-gE-mHb" id="fQ0-Ap-dlN"/>
+                                            <outlet property="usernameLbl" destination="lpD-M2-yAw" id="4Ba-uF-ApA"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -669,6 +674,9 @@
                                 <state key="normal" title="Post">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="postBtnTapped:" destination="scZ-WJ-R2J" eventType="touchUpInside" id="VjY-TQ-jHB"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -693,6 +701,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="commentField" destination="E97-bw-Qir" id="Ra4-6g-i4m"/>
                         <outlet property="likesLbl" destination="XCI-n5-smC" id="Ir4-CI-6QD"/>
                         <outlet property="postCaption" destination="mOc-9c-Bhc" id="SD3-Da-m5V"/>
                         <outlet property="postImg" destination="ZGF-0Q-xwj" id="c7z-NB-8Jv"/>

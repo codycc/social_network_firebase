@@ -28,6 +28,7 @@ class DataService {
     private var _REF_BASE = DB_BASE
     private var _REF_POSTS = DB_BASE.child("posts")
     private var _REF_USERS = DB_BASE.child("users")
+    private var _REF_COMMENTS = DB_BASE.child("comments")
     
     
     var REF_BASE: FIRDatabaseReference {
@@ -46,6 +47,10 @@ class DataService {
         let uid = KeychainWrapper.standard.string(forKey: KEY_UID)
         let user = REF_USERS.child(uid!)
         return user 
+    }
+    
+    var REF_COMMENTS: FIRDatabaseReference {
+        return _REF_COMMENTS
     }
     
     

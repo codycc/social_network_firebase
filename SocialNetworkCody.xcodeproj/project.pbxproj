@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		0B0CC56D1DA86411008FEC79 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CC56C1DA86411008FEC79 /* ProfileVC.swift */; };
 		0B0CC56F1DA86A53008FEC79 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CC56E1DA86A53008FEC79 /* ProfileCell.swift */; };
-		0B0CC5711DA8701A008FEC79 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CC5701DA8701A008FEC79 /* User.swift */; };
 		0B14207C1DAEEB9C00E39F05 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B14207B1DAEEB9C00E39F05 /* PostVC.swift */; };
 		0B14207E1DAF057500E39F05 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B14207D1DAF057500E39F05 /* CommentCell.swift */; };
+		0B1420801DAF088C00E39F05 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B14207F1DAF088C00E39F05 /* Comment.swift */; };
 		0B2FE32D1DADCB6900C5D603 /* FancyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FE32C1DADCB6900C5D603 /* FancyImage.swift */; };
 		0B2FE32F1DADCE4500C5D603 /* CellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2FE32E1DADCE4500C5D603 /* CellButton.swift */; };
 		0B446B201D9C4F35004E9A56 /* FancyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B446B1F1D9C4F35004E9A56 /* FancyView.swift */; };
@@ -37,9 +37,9 @@
 /* Begin PBXFileReference section */
 		0B0CC56C1DA86411008FEC79 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		0B0CC56E1DA86A53008FEC79 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
-		0B0CC5701DA8701A008FEC79 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0B14207B1DAEEB9C00E39F05 /* PostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		0B14207D1DAF057500E39F05 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		0B14207F1DAF088C00E39F05 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		0B2FE32C1DADCB6900C5D603 /* FancyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyImage.swift; sourceTree = "<group>"; };
 		0B2FE32E1DADCE4500C5D603 /* CellButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellButton.swift; sourceTree = "<group>"; };
 		0B446B1F1D9C4F35004E9A56 /* FancyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyView.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				0BE53B9D1DA3EB51005B56BA /* Post.swift */,
-				0B0CC5701DA8701A008FEC79 /* User.swift */,
+				0B14207F1DAF088C00E39F05 /* Comment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -322,7 +322,6 @@
 				0B446B291D9C5338004E9A56 /* FancyField.swift in Sources */,
 				0B0CC56D1DA86411008FEC79 /* ProfileVC.swift in Sources */,
 				0BB991531DA5B578001D0204 /* SetDetailsVC.swift in Sources */,
-				0B0CC5711DA8701A008FEC79 /* User.swift in Sources */,
 				0B14207C1DAEEB9C00E39F05 /* PostVC.swift in Sources */,
 				0BDB59A21D9C1B6200E8195F /* SignInVC.swift in Sources */,
 				0B2FE32D1DADCB6900C5D603 /* FancyImage.swift in Sources */,
@@ -334,6 +333,7 @@
 				0B93799B1D9D58A300C7553A /* FeedVC.swift in Sources */,
 				0BDB59A01D9C1B6200E8195F /* AppDelegate.swift in Sources */,
 				0B14207E1DAF057500E39F05 /* CommentCell.swift in Sources */,
+				0B1420801DAF088C00E39F05 /* Comment.swift in Sources */,
 				0B446B201D9C4F35004E9A56 /* FancyView.swift in Sources */,
 				0B2FE32F1DADCE4500C5D603 /* CellButton.swift in Sources */,
 				0B446B251D9C4FD5004E9A56 /* Constants.swift in Sources */,
