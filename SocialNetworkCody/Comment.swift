@@ -38,6 +38,7 @@ class Comment {
         self._comment = comment
     }
     
+    // grabbing the information from firebase and setting it equal to the variables
     init(commentKey: String, commentData: Dictionary< String,AnyObject>) {
         self._commentKey = commentKey
         

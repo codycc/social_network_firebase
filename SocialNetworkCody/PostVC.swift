@@ -100,7 +100,7 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     print("SNAP: \(snap)")
                    // grab the value for the child postId
                     let postId = snap.childSnapshot(forPath: "postId")
-                    // if the value for that specific postId is equal to this post Id on the page, only then can you store it in the array 
+                    // if the value for that specific postId is equal to this post Id on the page, only then can you store it in the array
                     let postIdValue = postId.value as? String
                     if postIdValue == self.post.postKey {
                         if let commentDict = snap.value as? Dictionary<String, AnyObject> {
@@ -110,21 +110,14 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             //adding each post to the posts array
                             self.comments.append(comment)
                         }
-                        
                     }
-                    
-                  
                 }
-                
                 self.tableView.reloadData()
-                
-                
-                
             }
         })
-        
-        
     }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let comment = comments[indexPath.row]
