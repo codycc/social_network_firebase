@@ -62,9 +62,6 @@ class PostCell: UITableViewCell {
         })
         
         
-      
-        
-        
         // grabbing profile image from cache or downloading it from the url
         if profileImage != nil {
             self.profileImg.image = profileImage
@@ -134,7 +131,6 @@ class PostCell: UITableViewCell {
     }
     
     func likeTapped(sender: UITapGestureRecognizer) {
-        
         // check for the current users likes if anything changes
         likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
             //if null
@@ -155,27 +151,29 @@ class PostCell: UITableViewCell {
             }
         })
     }
+    
     @IBAction func editPostTapped(_ sender: AnyObject) {
         self.caption.isEditable = true
         self.saveBtn.isHidden = false
-       
-        
-        
     }
+    
+    
     @IBAction func saveBtnTapped(_ sender: AnyObject) {
-        self.saveBtn.isHidden = true 
+        self.saveBtn.isHidden = true
         let post = self.post!
         self.caption.isEditable = false
         
+        // setting the new caption up to be saved in firebase
         let newCaption = self.caption.text as String
         
+        // setting up structure for this post
         let postRef = DataService.ds.REF_POSTS
         let newPost = ["caption": newCaption,
                     "imageUrl": post.imageUrl,
                     "likes": post.likes,
                     "profilePicUrl": post.profilePicUrl,
                     "userId": post.userId] as [String : Any]
-        
+        // updating that specific post in firebase
         let childUpdates = ["\(post.postKey)": newPost ]
         postRef.updateChildValues(childUpdates)
         

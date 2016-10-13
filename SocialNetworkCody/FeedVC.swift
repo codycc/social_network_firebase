@@ -17,7 +17,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBOutlet weak var captionField: FancyField!
 
     
-    
     var posts = [Post]()
     var imagePicker: UIImagePickerController!
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
@@ -70,15 +69,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         return 1
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var post: Post!
         post = posts[indexPath.row]
         print("DID SELECT ROW AT CALLED")
-
         performSegue(withIdentifier: "goToPost", sender: post)
     }
     
@@ -223,10 +223,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     @IBAction func profilePicTapped(_ sender: AnyObject) {
         performSegue(withIdentifier: "goToProfile", sender: nil)
-    }
-    
-    
-    @IBAction func captionTextTapped(_ sender: AnyObject) {
     }
     
 
