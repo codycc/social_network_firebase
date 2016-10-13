@@ -20,6 +20,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likeImg: UIImageView!
     @IBOutlet weak var editPostBtn: UIButton!
     
+    @IBOutlet weak var saveBtn: UIButton!
     
     var post: Post!
     var likesRef: FIRDatabaseReference!
@@ -124,6 +125,8 @@ class PostCell: UITableViewCell {
         DataService.ds.REF_USER_CURRENT.child("posts").observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild(post.postKey) {
                 self.editPostBtn.isHidden = false
+                
+                
             } else {
                 self.editPostBtn.isHidden = true 
             }
@@ -154,8 +157,27 @@ class PostCell: UITableViewCell {
     }
     @IBAction func editPostTapped(_ sender: AnyObject) {
         self.caption.isEditable = true
+        self.saveBtn.isHidden = false
        
         
+        
+    }
+    @IBAction func saveBtnTapped(_ sender: AnyObject) {
+        self.saveBtn.isHidden = true 
+        let post = self.post!
+        self.caption.isEditable = false
+        
+        let newCaption = self.caption.text as String
+        
+        let postRef = DataService.ds.REF_POSTS
+        let newPost = ["caption": newCaption,
+                    "imageUrl": post.imageUrl,
+                    "likes": post.likes,
+                    "profilePicUrl": post.profilePicUrl,
+                    "userId": post.userId] as [String : Any]
+        
+        let childUpdates = ["\(post.postKey)": newPost ]
+        postRef.updateChildValues(childUpdates)
         
     }
 }
