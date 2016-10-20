@@ -12,8 +12,10 @@ import Firebase
 class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
 
+    @IBOutlet weak var profileImg: CircleView!
     
     var posts = [Post]()
+    var profilePicUrl: String = ""
    
     
     
@@ -22,6 +24,8 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
+        
+        // if the user hser has any posts then display them
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.hasChild("posts") {
@@ -66,16 +70,19 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
            
         })
-        
+        // downloading user profile pic
+        downloadProfilePic()
     }
     
+
     override func viewDidAppear(_ animated: Bool) {
-           self.tableView.reloadData()
-       
+        self.tableView.reloadData()
+        // caching user profile pic
+        cacheProfilePic()
     }
-    
-    
-    
+
+
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -103,6 +110,42 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 return ProfileCell()
             }
     }
+    
+    func downloadProfilePic() {
+        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
+            self.profilePicUrl = (snapshot.value as? String)!
+        })
+    }
+    
+    func cacheProfilePic() {
+        // putting this here because I need to grab the users profile pic before caching it
+        let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString)
+        
+        if profile != nil {
+            self.profileImg.image = profile
+        } else {
+            // otherwise create the image from firebase storage
+            let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
+            // max size aloud
+            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("CODY!: Unable to download image Firebase storage")
+                } else {
+                    print("CODY!: Image downloaded from firebase storage")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            self.profileImg.image = img
+                            
+                            // setting the cache now
+                            FeedVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
+    
     
        
    

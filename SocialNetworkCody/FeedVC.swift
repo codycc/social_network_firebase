@@ -10,30 +10,27 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var imageAdd: CircleView!
-    @IBOutlet weak var captionField: FancyField!
+    @IBOutlet weak var profilePic: CircleView!
+    @IBOutlet weak var statusProfilePic: UIImageView!
+    @IBOutlet weak var signOutImage: UIImageView!
 
+    @IBOutlet weak var feedLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var posts = [Post]()
     var imagePicker: UIImagePickerController!
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var imageSelected = false
+    var profilePicUrl: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        captionField.delegate = self
-        
-        
-        imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        //user can edit photo before uploading
-        imagePicker.allowsEditing = true
-       
+     
         // observing for any changes in the posts object in firebase
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
             // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading 
@@ -55,13 +52,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     self.tableView.reloadData()
             }
         })
+        // grabbing user profile image from firebase
+        grabUserProfile()
     }
     
-    
-    //FOR KEYBOARD EDITING 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return true
+    override func viewDidAppear(_ animated: Bool) {
+        // calling this function to cache the image downloaded from firebase
+        downloadAndCacheImg()
     }
     
     
@@ -104,19 +101,42 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         }
     }
     
-    //IMAGE PICKER: once the image is selected, dissmiss the view
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        // what to do if it returns as edited image
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            imageAdd.image = image
-            imageSelected = true
+    func downloadAndCacheImg() {
+        // putting this here because I need to grab the users profile pic before caching it
+        let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString)
+        
+        if profile != nil {
+            self.profilePic.image = profile
         } else {
-            print("CODY1: A valid image wasnt selected")
+            // otherwise create the image from firebase storage
+            let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
+            // max size aloud
+            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("CODY!: Unable to download image Firebase storage")
+                } else {
+                    print("CODY!: Image downloaded from firebase storage")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            self.profilePic.image = img
+                            self.statusProfilePic.image = img
+                            // setting the cache now
+                            FeedVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
+                        }
+                    }
+                }
+            })
         }
-        imagePicker.dismiss(animated: true, completion: nil)
+        
     }
     
+    func grabUserProfile() {
+        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
+            self.profilePicUrl = (snapshot.value as? String)!
+        })
+    }
     
+
     @IBAction func signOutTapped(_ sender: AnyObject) {
         // When signing out ... remove keychain ID
         let removeKeychain: Bool = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
@@ -127,93 +147,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
-    
-    @IBAction func addImageTapped(_ sender: AnyObject) {
-        present(imagePicker, animated: true, completion:nil)
-    }
-    
-    
-    @IBAction func postBtnTapped(_ sender: AnyObject) {
-        //close keyboard
-        self.view.endEditing(true)
-        // if there is caption text and an image has been uploaded, then do the following
-        guard let caption = captionField.text, caption != "" else {
-            print("CODY1: Caption must be entered")
-            return
-        }
-        
-        guard let img = imageAdd.image, imageSelected == true else {
-            print("CODY1: An image must be selected")
-            return
-        }
-        
-        //grabbing the users profile pic so it can be passed into the post to firebase method to be stored with that post
-        var userProfilePic: String!
-        // grabbing specific user and the profile pic child
-            let profilePicRef = DataService.ds.REF_USER_CURRENT.child("profile-pic")
-        // grabbing the value of that users profile pic
-            profilePicRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                userProfilePic = snapshot.value as! String
-            })
-        
-    
-        // compressing the post image for Firebase storage
-        if let imgData = UIImageJPEGRepresentation(img, 0.2) {
-            // setting a unique identifier
-            let imgUid = NSUUID().uuidString
-            // letting it know itll be a jpeg for safety
-            let metadata = FIRStorageMetadata()
-            metadata.contentType = "image/jpeg"
-            // Referencing Firebase storage child with the unique identifier, and updating with the image from the picker
-            DataService.ds.REF_POST_IMAGES.child(imgUid).put(imgData, metadata: metadata) { (metadata, error) in
-                if error != nil {
-                    print("CODY1: Unable to upload iamge to Firebase storage ")
-                } else {
-                    //
-                    print("CODY1: Successfully uploaded image to Firebase storage ")
-                    //GETT
-                    let downloadURL = metadata?.downloadURL()?.absoluteString
-                    if let url = downloadURL {
-                        //once the image is uploaded to firebase stoarge, its then posted to the database 
-                        self.postToFirebase(imgUrl: url, profileUrl: userProfilePic)
-                    }
-                }
-            }
-        }
-    }
-    
-    func postToFirebase(imgUrl: String!, profileUrl: String!) {
-        let post: Dictionary<String, Any> = [
-            "caption": captionField.text! as String,
-            "imageUrl": imgUrl as String,
-            "likes": 0 as Int,
-            "userId": DataService.ds.REF_USER_CURRENT.key,
-            "profilePicUrl": profileUrl
-        ]
-        // setting the value with whatever is passed into this function
-        let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
-        firebasePost.setValue(post)
-        let postsRef = DataService.ds.REF_USER_CURRENT.child("posts").child(firebasePost.key)
-        postsRef.setValue(true)
-        
-        
-        // resetting the inputs for the post
-        captionField.text = ""
-        imageSelected = false
-        imageAdd.image = UIImage(named:"add-image")
-        
-        // reloading the tableview since new data has now been added to the Firebase Database
-        tableView.reloadData()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // if the segue is called liquordetailvc
         if segue.identifier == "goToPost" {
-            // if the destination is the liquor detail view controller
             if let postVC = segue.destination as? PostVC  {
-                // if the info is an instance of liquor results
                 if let post = sender as? Post {
-                    // this instance sends through to the variable on the other side
                     postVC.post = post
                 }
             }
@@ -225,5 +162,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         performSegue(withIdentifier: "goToProfile", sender: nil)
     }
     
+    
+    @IBAction func magGlassTapped(_ sender: AnyObject) {
+        searchBar.isHidden = false
+        profilePic.isHidden = true
+        signOutImage.isHidden = true
+        feedLbl.isHidden = true
+    }
+    
+  
 
+    @IBAction func statusFieldTapped(_ sender: AnyObject) {
+        performSegue(withIdentifier: "goToStatus", sender: nil)
+    }
 }
