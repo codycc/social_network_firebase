@@ -52,13 +52,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                     self.tableView.reloadData()
             }
         })
-        // grabbing user profile image from firebase
-        grabUserProfile()
+        // grabbing user profilepic url from firebase
+        grabUserProfilePicURL()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // calling this function to cache the image downloaded from firebase
-        downloadAndCacheImg()
+        // if profile pic url exists, then either set image from cache or download it
+        if let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString) {
+            cacheImg(profile: profile)
+        }
+        
     }
     
     
@@ -101,9 +104,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
-    func downloadAndCacheImg() {
+    func cacheImg(profile: UIImage? = nil) {
         // putting this here because I need to grab the users profile pic before caching it
-        let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString)
         
         if profile != nil {
             self.profilePic.image = profile
@@ -130,7 +132,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
     }
     
-    func grabUserProfile() {
+    func grabUserProfilePicURL() {
         DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
             self.profilePicUrl = (snapshot.value as? String)!
         })
@@ -159,7 +161,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     
     @IBAction func profilePicTapped(_ sender: AnyObject) {
-        performSegue(withIdentifier: "goToProfile", sender: nil)
+        performSegue(withIdentifier: "goToMainProfile", sender: nil)
     }
     
     

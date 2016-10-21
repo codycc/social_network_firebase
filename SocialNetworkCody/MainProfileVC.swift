@@ -1,32 +1,40 @@
 //
-//  ProfileVC.swift
+//  MainProfileVC.swift
 //  SocialNetworkCody
 //
-//  Created by Cody Condon on 2016-10-07.
+//  Created by Cody Condon on 2016-10-21.
 //  Copyright © 2016 Cody Condon. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var tableView: UITableView!
 
-    @IBOutlet weak var profileImg: CircleView!
+class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var profileImg: UIImageView!
     
+    let screenHeight = UIScreen.main.bounds.height
+    let scrollViewContentHeight = 1200 as CGFloat
+    let scrollViewContentWidth = 375 as CGFloat
     var posts = [Post]()
     var profilePicUrl: String = ""
-    static var imageCache: NSCache<NSString, UIImage> = NSCache()
-    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView.contentSize = CGSize(width: scrollViewContentWidth, height: scrollViewContentHeight)
         tableView.delegate = self
         tableView.dataSource = self
+        scrollView.delegate = self
+        scrollView.bounces = false
+        tableView.bounces = false
+        tableView.isScrollEnabled = false
         
         
-        // if the user hser has any posts then display them
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.hasChild("posts") {
@@ -56,62 +64,76 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                     print("HERE IS THE THING IN ARRAY:\(post.caption)")
                                     
                                 }
-                               
+                                
                             })
                             
                         }
                         
                     }
-                   
+                    
                 })
                 
             } else {
                 print("user doesnt have any posts")
-               
+                
             }
-           
+            
         })
-        // downloading user profile pic
-        downloadProfilePic()
+            downloadProfilePic()
+        
+        
     }
     
-
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
         // caching user profile pic
         cacheProfilePic()
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        print("THIS IS Y OFFSET \(yOffset)")
+        
+        if scrollView == self.scrollView {
+            if yOffset >= scrollViewContentHeight - screenHeight {
+                print("this is screen height: \(screenHeight)")
+                scrollView.isScrollEnabled = false
+                tableView.isScrollEnabled = true
+            }
+        }
+        
+        if scrollView == self.tableView {
+            if yOffset <= 0   {
+                self.scrollView.isScrollEnabled = true
+                self.tableView.isScrollEnabled = false
+            }
+        }
 
-
-
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
-       
-     
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-            let post = posts[indexPath.row]
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
-             
-                if let img = ProfileVC.imageCache.object(forKey: post.imageUrl as NSString) {
-                    if let profileImg = ProfileVC.imageCache.object(forKey: post.profilePicUrl as NSString) {
-                        print("THIS IS THE POST FROM CELL:\(post)")
-                        cell.configureCell(post: post, img: img, profileImage: profileImg)
-                    }
-                } else {
-                    cell.configureCell(post: post)
-                    
-                }
-                return cell
+        let post = posts[indexPath.row]
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
+            
+            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
+                print("THIS IS THE POST FROM CELL:\(post)")
+                cell.configureCell(post: post, img: img)
             } else {
-                return ProfileCell()
+                cell.configureCell(post: post)
+                
             }
+            return cell
+        } else {
+            return ProfileCell()
+        }
     }
     
     func downloadProfilePic() {
@@ -150,8 +172,6 @@ class ProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     
-       
-   
     @IBAction func backBtnPressed(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }

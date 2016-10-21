@@ -12,6 +12,7 @@ import Firebase
 class ProfileCell: UITableViewCell {
     @IBOutlet weak var postPic: UIImageView!
     @IBOutlet weak var captionField: UITextView!
+    @IBOutlet weak var profilePic: UIImageView!
 
     var post: Post!
     override func awakeFromNib() {
@@ -19,13 +20,13 @@ class ProfileCell: UITableViewCell {
         // Initialization code
     }
     
-    func configureCell(post: Post, img: UIImage? = nil) {
+    func configureCell(post: Post, img: UIImage? = nil, profileImage: UIImage? = nil) {
         self.post = post 
         self.captionField.text = post.caption
         self.captionField.isEditable = false
         
-        
-        
+
+        // caching post pic
         if img != nil {
             self.postPic.image = img
         } else {
@@ -41,12 +42,37 @@ class ProfileCell: UITableViewCell {
                         if let img = UIImage(data: imgData) {
                             self.postPic.image = img
                             // setting the cache now
-                            FeedVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
+                            ProfileVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
                         }
                     }
                 }
             })
         }
+        
+        // caching profile pic
+        if profileImage != nil {
+            self.profilePic.image = profileImage
+        } else {
+            let ref = FIRStorage.storage().reference(forURL: post.profilePicUrl)
+            
+            ref.data(withMaxSize: 2 * 1024 * 1024 , completion: { (data, error) in
+                if error != nil {
+                    print("cody!: unable to download image firebase storage")
+                } else {
+                    print("cody!: image downloaded fromfirebase storage ")
+                    if let imgData = data {
+                        if let postProfilePic = UIImage(data: imgData) {
+                            self.profilePic.image = postProfilePic
+                            FeedVC.imageCache.setObject(postProfilePic, forKey: post.profilePicUrl as NSString)
+                        }
+                    }
+                }
+            })
+        }
+        
+   
+        
+        
     }
     
 
