@@ -15,12 +15,15 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profileImg: UIImageView!
+    @IBOutlet weak var profileImg2: UIImageView!
     
+    static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
     let scrollViewContentHeight = 1200 as CGFloat
     let scrollViewContentWidth = 375 as CGFloat
     var posts = [Post]()
     var profilePicUrl: String = ""
+    
     
     
     override func viewDidLoad() {
@@ -148,6 +151,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         
         if profile != nil {
             self.profileImg.image = profile
+            self.profileImg2.image = profile
         } else {
             // otherwise create the image from firebase storage
             let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
@@ -160,7 +164,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                     if let imgData = data {
                         if let img = UIImage(data: imgData) {
                             self.profileImg.image = img
-                            
+                            self.profileImg2.image = img
                             // setting the cache now
                             FeedVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
                         }
@@ -176,5 +180,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         self.dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func statusBtnPressed(_ sender: AnyObject) {
+        performSegue(withIdentifier: "goToStatusVC2", sender: nil)
+    }
    
 }

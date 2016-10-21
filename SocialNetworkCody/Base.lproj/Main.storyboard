@@ -662,7 +662,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1656.8" y="856.82158920539734"/>
+            <point key="canvasLocation" x="2638" y="-976"/>
         </scene>
         <!--PostVC-->
         <scene sceneID="UVd-qQ-VEj">
@@ -896,7 +896,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2437.5999999999999" y="418.74062968515744"/>
+            <point key="canvasLocation" x="1657" y="936"/>
         </scene>
         <!--Main ProfileVC-->
         <scene sceneID="Jat-wC-LoR">
@@ -1002,6 +1002,7 @@
                                                             <outlet property="captionField" destination="Lva-uD-MN1" id="fIY-F8-o2U"/>
                                                             <outlet property="postPic" destination="3xw-Hq-Ep5" id="Zfy-Ug-uKL"/>
                                                             <outlet property="profilePic" destination="PVB-2E-t79" id="LfR-Ic-Dcc"/>
+                                                            <outlet property="usernameLbl" destination="CfS-nU-xgz" id="6bT-8N-LZL"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -1023,22 +1024,64 @@
                                                     <constraint firstAttribute="height" constant="44" id="mzk-LH-AFz"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cody Condon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acD-lY-mMw">
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="R2I-f8-5NM"/>
+                                                    <constraint firstAttribute="width" constant="210" id="l88-U6-5Eu"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUG-dv-u6z" customClass="FancyView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OoJ-a3-il3">
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="IM9-hs-b81"/>
+                                                            <constraint firstAttribute="width" constant="40" id="PLV-Mh-Xp1"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Whats on your mind?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SvZ-eM-bh9">
+                                                        <frame key="frameInset" minX="53" minY="26" width="207" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="72" id="98q-fy-wNA"/>
+                                                    <constraint firstItem="OoJ-a3-il3" firstAttribute="leading" secondItem="lUG-dv-u6z" secondAttribute="leading" constant="5" id="Mvc-Ff-3r6"/>
+                                                    <constraint firstItem="OoJ-a3-il3" firstAttribute="centerY" secondItem="lUG-dv-u6z" secondAttribute="centerY" id="pnd-J2-WLa"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="C0D-XW-t5i" appends="YES" id="0jR-yG-F2H"/>
+                                                    <outletCollection property="gestureRecognizers" destination="M5K-Eg-5Mf" appends="YES" id="jzb-r6-qCG"/>
+                                                </connections>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.94347865056620772" green="0.95064140515462503" blue="0.95675364847715738" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="D3L-PD-1zx" firstAttribute="leading" secondItem="u9K-ng-MkF" secondAttribute="leading" id="27Q-WI-WDA"/>
                                             <constraint firstAttribute="trailing" secondItem="BKP-JZ-csU" secondAttribute="trailing" id="5gF-sx-vyd"/>
                                             <constraint firstItem="J7y-IX-1f6" firstAttribute="top" secondItem="BKP-JZ-csU" secondAttribute="bottom" constant="112" id="5yN-wz-9HE"/>
+                                            <constraint firstItem="acD-lY-mMw" firstAttribute="centerX" secondItem="u9K-ng-MkF" secondAttribute="centerX" id="CBZ-gP-1Pe"/>
                                             <constraint firstAttribute="trailing" secondItem="VlR-Dw-601" secondAttribute="trailing" id="CjL-GL-ndS"/>
                                             <constraint firstItem="BKP-JZ-csU" firstAttribute="leading" secondItem="u9K-ng-MkF" secondAttribute="leading" id="K5p-w4-DaW"/>
+                                            <constraint firstItem="acD-lY-mMw" firstAttribute="top" secondItem="J7y-IX-1f6" secondAttribute="bottom" constant="10" id="TPL-V5-Ua0"/>
                                             <constraint firstItem="BKP-JZ-csU" firstAttribute="top" secondItem="u9K-ng-MkF" secondAttribute="top" id="WvS-Ut-O1W"/>
+                                            <constraint firstItem="D3L-PD-1zx" firstAttribute="top" secondItem="lUG-dv-u6z" secondAttribute="bottom" constant="9" id="XiB-t4-ylV"/>
                                             <constraint firstItem="VlR-Dw-601" firstAttribute="top" secondItem="u9K-ng-MkF" secondAttribute="top" constant="45" id="afO-pS-ev6"/>
                                             <constraint firstItem="VlR-Dw-601" firstAttribute="leading" secondItem="u9K-ng-MkF" secondAttribute="leading" id="gHj-D0-6wb"/>
                                             <constraint firstAttribute="height" constant="1180" id="hgI-FA-Znz"/>
                                             <constraint firstAttribute="trailing" secondItem="D3L-PD-1zx" secondAttribute="trailing" id="iiE-Hq-ggt"/>
                                             <constraint firstAttribute="bottom" secondItem="t4N-Es-qL0" secondAttribute="bottom" constant="8" id="lHM-Aq-Oqi"/>
+                                            <constraint firstItem="lUG-dv-u6z" firstAttribute="leading" secondItem="u9K-ng-MkF" secondAttribute="leading" constant="5" id="m3L-Fb-v0Q"/>
                                             <constraint firstAttribute="bottom" secondItem="D3L-PD-1zx" secondAttribute="bottom" id="ndO-2t-fGh"/>
                                             <constraint firstItem="J7y-IX-1f6" firstAttribute="centerX" secondItem="u9K-ng-MkF" secondAttribute="centerX" id="wmg-dT-mXB"/>
+                                            <constraint firstAttribute="trailing" secondItem="lUG-dv-u6z" secondAttribute="trailing" constant="5" id="yd7-pf-woB"/>
                                             <constraint firstItem="t4N-Es-qL0" firstAttribute="centerX" secondItem="u9K-ng-MkF" secondAttribute="centerX" id="ym8-DB-t87"/>
                                         </constraints>
                                     </view>
@@ -1088,13 +1131,21 @@
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="profileImg" destination="J7y-IX-1f6" id="MY4-TL-2RB"/>
+                        <outlet property="profileImg2" destination="OoJ-a3-il3" id="VdW-tt-4hd"/>
                         <outlet property="scrollView" destination="gUu-z6-fIe" id="BTi-7q-jTD"/>
                         <outlet property="tableView" destination="D3L-PD-1zx" id="2Yl-SV-HBw"/>
+                        <segue destination="MC3-Di-c4n" kind="showDetail" identifier="goToStatusVC2" id="mEU-ZU-oGF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xIf-a2-Nfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="C0D-XW-t5i"/>
+                <tapGestureRecognizer id="M5K-Eg-5Mf">
+                    <connections>
+                        <action selector="statusBtnPressed:" destination="seu-Dl-Bf4" id="okr-Zi-8cm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2512.8000000000002" y="-715.14242878560731"/>
+            <point key="canvasLocation" x="2638" y="139"/>
         </scene>
     </scenes>
     <resources>
@@ -1111,5 +1162,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0ai-qZ-pEI"/>
+        <segue reference="mEU-ZU-oGF"/>
     </inferredMetricsTieBreakers>
 </document>

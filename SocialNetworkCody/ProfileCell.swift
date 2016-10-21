@@ -13,6 +13,7 @@ class ProfileCell: UITableViewCell {
     @IBOutlet weak var postPic: UIImageView!
     @IBOutlet weak var captionField: UITextView!
     @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var usernameLbl: UILabel!
 
     var post: Post!
     override func awakeFromNib() {
@@ -25,6 +26,17 @@ class ProfileCell: UITableViewCell {
         self.captionField.text = post.caption
         self.captionField.isEditable = false
         
+        
+        // grab the user id of that post
+        let postUser = post.userId
+        // search through users by that specific id and access the username
+        let userNickname = DataService.ds.REF_USERS.child(postUser).child("username")
+        // grab value of username and set the label accordinly
+        userNickname.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot)
+            self.usernameLbl.text = snapshot.value as! String?
+        })
+
 
         // caching post pic
         if img != nil {
@@ -42,7 +54,7 @@ class ProfileCell: UITableViewCell {
                         if let img = UIImage(data: imgData) {
                             self.postPic.image = img
                             // setting the cache now
-                            ProfileVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
+                            MainProfileVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
                         }
                     }
                 }

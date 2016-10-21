@@ -109,6 +109,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
         if profile != nil {
             self.profilePic.image = profile
+            self.statusProfilePic.image = profile
         } else {
             // otherwise create the image from firebase storage
             let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
