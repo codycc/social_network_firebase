@@ -25,6 +25,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     let scrollViewContentWidth = UIScreen.main.bounds.width
     var posts = [Post]()
     var profilePicUrl: String = ""
+    var coverPhotoUrl: String = ""
     
     var imagePicker: UIImagePickerController!
     var imageSelected = false
@@ -89,7 +90,19 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             }
             
         })
+        // downloading profile pic from firebase
             downloadProfilePic()
+        
+        // if the user has uploaded a coverphoto, then go and download it.
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("coverPhotoUrl") {
+                
+                self.downloadCoverPic()
+            } else {
+                print("Cody1: User hasnt added dynamic cover photo")
+                
+            }
+        })
         
         
     }
@@ -98,6 +111,19 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         self.tableView.reloadData()
         // caching user profile pic
         cacheProfilePic()
+        
+        // if the current user has a cover photo, then go and cache it
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("coverPhotoUrl") {
+                // if the user has uploaded a coverphoto, then go and download it.
+                self.cacheCoverPic()
+            } else {
+                print("Cody1: User hasnt added dynamic cover photo")
+                
+            }
+        })
+        
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -118,11 +144,9 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 self.tableView.isScrollEnabled = false
             }
         }
-
     }
     
   
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -154,6 +178,14 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         })
     }
     
+    func downloadCoverPic() {
+        DataService.ds.REF_USER_CURRENT.child("coverPhotoUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+            self.coverPhotoUrl = (snapshot.value as? String)!
+        })
+    }
+    
+    
+    
     func cacheProfilePic() {
         // putting this here because I need to grab the users profile pic before caching it
         let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString)
@@ -183,10 +215,39 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         }
     }
     
+    func cacheCoverPic() {
+        // putting this here because I need to grab the users profile pic before caching it
+        let cover = MainProfileVC.imageCache.object(forKey: coverPhotoUrl as NSString)
+        
+        if cover != nil {
+            self.coverImage.image = cover
+        } else {
+            // otherwise create the image from firebase storage
+            let ref = FIRStorage.storage().reference(forURL: coverPhotoUrl)
+            // max size aloud
+            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("CODY!: Unable to download image Firebase storage")
+                } else {
+                    print("CODY!: Image downloaded from firebase storage")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            self.coverImage.image = img
+                            // setting the cache now
+                            MainProfileVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             coverImage.image = image
             imageSelected = true
+            // take image from uipicker and pass to post to firebase storage function
             postToFirebaseStorage(image: image)
         } else {
             print("Cody1: A valid image wasnt selected")
@@ -194,6 +255,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         imagePicker.dismiss(animated: true, completion: nil)
     }
     
+    
+    // taking cover image from the imagePickerController function, and posting it to firebase storage
     func postToFirebaseStorage(image: UIImage) {
         if let imgData = UIImageJPEGRepresentation(image, 0.2) {
             let imgUid = NSUUID().uuidString
@@ -206,6 +269,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                     print("CODY1: Successfully uploaded image to Firebase Storage")
                     let downloadUrl = metadata?.downloadURL()?.absoluteString
                      if let url = downloadUrl {
+                        // taking the image url, and passing it to the postToFirebaseDatabase function to be stored with the specific user
                         self.postToFirebaseDatabase(imgUrl: url)
                     }
                 }
