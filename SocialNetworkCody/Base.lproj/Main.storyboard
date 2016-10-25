@@ -126,6 +126,81 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
         </scene>
+        <!--SearchVC-->
+        <scene sceneID="nPI-e6-c7C">
+            <objects>
+                <viewController id="4cV-xA-5An" customClass="SearchVC" customModule="SocialNetworkCody" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cp1-4g-2ld"/>
+                        <viewControllerLayoutGuide type="bottom" id="j4J-UM-RXN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hs4-h2-vD2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l06-RL-EYm">
+                                <color key="backgroundColor" red="0.098039215690000001" green="0.46274509800000002" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="39C-gI-TFe"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qra-DB-puZ">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="2Nu-eR-AC2">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Nu-eR-AC2" id="b7H-FT-cw7">
+                                            <frame key="frameInset" width="375" height="69"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="Yop-a4-s9A">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="69" id="Lob-eo-U1o"/>
+                                                        <constraint firstAttribute="width" constant="69" id="Sfv-jo-Shw"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cody Condon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-a1-90W">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="FTE-aA-R67"/>
+                                                        <constraint firstAttribute="width" constant="283" id="lbe-Vt-b9b"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dhf-a1-90W" firstAttribute="centerY" secondItem="b7H-FT-cw7" secondAttribute="centerY" id="PNx-PU-0Mr"/>
+                                                <constraint firstItem="Yop-a4-s9A" firstAttribute="leading" secondItem="b7H-FT-cw7" secondAttribute="leading" id="hHN-mR-f2F"/>
+                                                <constraint firstItem="Yop-a4-s9A" firstAttribute="leading" secondItem="b7H-FT-cw7" secondAttribute="leading" id="iDV-6U-WFO"/>
+                                                <constraint firstItem="Yop-a4-s9A" firstAttribute="centerY" secondItem="b7H-FT-cw7" secondAttribute="centerY" id="kp4-Em-RbL"/>
+                                                <constraint firstItem="dhf-a1-90W" firstAttribute="trailing" secondItem="b7H-FT-cw7" secondAttribute="trailingMargin" id="l32-W2-FID"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="l06-RL-EYm" firstAttribute="leading" secondItem="hs4-h2-vD2" secondAttribute="leading" id="ADF-V3-ECn"/>
+                            <constraint firstAttribute="trailing" secondItem="qra-DB-puZ" secondAttribute="trailing" id="EP1-nj-kLS"/>
+                            <constraint firstAttribute="trailing" secondItem="l06-RL-EYm" secondAttribute="trailing" id="Mvd-W4-xEO"/>
+                            <constraint firstItem="qra-DB-puZ" firstAttribute="leading" secondItem="hs4-h2-vD2" secondAttribute="leading" id="Sj3-2f-iRj"/>
+                            <constraint firstItem="qra-DB-puZ" firstAttribute="top" secondItem="l06-RL-EYm" secondAttribute="bottom" id="bIz-0t-j0W"/>
+                            <constraint firstItem="j4J-UM-RXN" firstAttribute="top" secondItem="qra-DB-puZ" secondAttribute="bottom" id="dfQ-Yt-FQY"/>
+                            <constraint firstItem="l06-RL-EYm" firstAttribute="top" secondItem="hs4-h2-vD2" secondAttribute="top" id="fUD-eY-edT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="qra-DB-puZ" id="bmW-PE-Qzi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S38-0L-N8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905" y="603"/>
+        </scene>
         <!--Set DetailsVC-->
         <scene sceneID="KAk-YT-akD">
             <objects>
@@ -494,6 +569,7 @@
                         <segue destination="scZ-WJ-R2J" kind="show" identifier="goToPost" id="jno-AP-sG0"/>
                         <segue destination="MC3-Di-c4n" kind="show" identifier="goToStatus" id="UvL-8c-Tc9"/>
                         <segue destination="seu-Dl-Bf4" kind="show" identifier="goToMainProfile" id="HZi-fq-Eov"/>
+                        <segue destination="4cV-xA-5An" kind="show" identifier="goToSearchVC" id="xKt-gW-E7l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GeE-7T-ZNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1315,6 +1391,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="k5h-2q-SgC"/>
-        <segue reference="mEU-ZU-oGF"/>
+        <segue reference="UvL-8c-Tc9"/>
     </inferredMetricsTieBreakers>
 </document>
