@@ -33,7 +33,7 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 for snap in snapshot {
                     let usernameRef = snap.childSnapshot(forPath: "username")
                     let username = usernameRef.value
-                    if username as? String == self.searchTerm! {
+                    if username as? String == self.searchTerm!.lowercased() {
                         if let userDict = snap.value as? Dictionary<String, AnyObject> {
                             let key = snap.key
                             let user = User(userKey: key, userData: userDict)
@@ -52,7 +52,15 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToOtherUserVC" {
+            if let otherUserVC = segue.destination as? OtherUserVC  {
+                if let user = sender as? User {
+                    otherUserVC.user = user
+                }
+            }
+        }
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
          return 1
@@ -60,6 +68,11 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let user = users[indexPath.row]
+        performSegue(withIdentifier: "goToOtherUserVC", sender: user)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,5 +93,8 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
  
+    @IBAction func arrowBtnPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
 }

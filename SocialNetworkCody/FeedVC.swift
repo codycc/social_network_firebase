@@ -31,6 +31,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        searchBar.showsCancelButton = true
      
         // observing for any changes in the posts object in firebase
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
@@ -168,6 +169,21 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
              let lower = searchBar.text!.lowercased()
             performSegue(withIdentifier: "goToSearchVC", sender: lower)
         }
+        searchBar.text = ""
+        searchBar.text = ""
+        searchBar.isHidden = true
+        profilePic.isHidden = false
+        signOutImage.isHidden = false
+        feedLbl.isHidden = false
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+        searchBar.text = ""
+        searchBar.isHidden = true
+        profilePic.isHidden = false
+        signOutImage.isHidden = false
+        feedLbl.isHidden = false
     }
     
   

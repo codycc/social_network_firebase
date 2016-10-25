@@ -1,23 +1,22 @@
 //
-//  MainProfileVC.swift
+//  otherUserVC.swift
 //  SocialNetworkCody
 //
-//  Created by Cody Condon on 2016-10-21.
+//  Created by Cody Condon on 2016-10-25.
 //  Copyright © 2016 Cody Condon. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-
-class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profileImg: UIImageView!
-    @IBOutlet weak var profileImg2: UIImageView!
-    
+
     @IBOutlet weak var usernameLbl: UILabel!
+    
     @IBOutlet weak var coverImage: UIImageView!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
@@ -31,6 +30,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     var imagePicker: UIImagePickerController!
     var imageSelected = false
     
+    var user: User!
     
     
     override func viewDidLoad() {
@@ -46,12 +46,10 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        usernameLbl.text = user.username
+        print("here is user key\(user.userKey)")
         
-        
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            let usernameRef = snapshot.childSnapshot(forPath: "username")
-            let username = usernameRef.value
-            self.usernameLbl.text = username as! String?
+        DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
             
             if snapshot.hasChild("posts") {
                 DataService.ds.REF_USER_CURRENT.child("posts").observe(.value, with: { (snapshot) in
@@ -96,10 +94,10 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             
         })
         // downloading profile pic from firebase
-            downloadProfilePic()
+        downloadProfilePic()
         
         // if the user has uploaded a coverphoto, then go and download it.
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+        DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("coverPhotoUrl") {
                 
                 self.downloadCoverPic()
@@ -118,7 +116,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         cacheProfilePic()
         
         // if the current user has a cover photo, then go and cache it
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+        DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("coverPhotoUrl") {
                 // if the user has uploaded a coverphoto, then go and download it.
                 self.cacheCoverPic()
@@ -151,7 +149,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         }
     }
     
-  
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -178,13 +176,13 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     }
     
     func downloadProfilePic() {
-        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
+        DataService.ds.REF_USERS.child(user.userKey).child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
             self.profilePicUrl = (snapshot.value as? String)!
         })
     }
     
     func downloadCoverPic() {
-        DataService.ds.REF_USER_CURRENT.child("coverPhotoUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+        DataService.ds.REF_USERS.child(user.userKey).child("coverPhotoUrl").observeSingleEvent(of: .value, with: { (snapshot) in
             self.coverPhotoUrl = (snapshot.value as? String)!
         })
     }
@@ -197,7 +195,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         
         if profile != nil {
             self.profileImg.image = profile
-            self.profileImg2.image = profile
+           
         } else {
             // otherwise create the image from firebase storage
             let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
@@ -210,7 +208,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                     if let imgData = data {
                         if let img = UIImage(data: imgData) {
                             self.profileImg.image = img
-                            self.profileImg2.image = img
+                           
                             // setting the cache now
                             FeedVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
                         }
@@ -273,7 +271,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 } else {
                     print("CODY1: Successfully uploaded image to Firebase Storage")
                     let downloadUrl = metadata?.downloadURL()?.absoluteString
-                     if let url = downloadUrl {
+                    if let url = downloadUrl {
                         // taking the image url, and passing it to the postToFirebaseDatabase function to be stored with the specific user
                         self.postToFirebaseDatabase(imgUrl: url)
                     }
@@ -286,7 +284,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         let userInfo: Dictionary<String, Any> = [
             "coverPhotoUrl": imgUrl
         ]
-        DataService.ds.REF_USER_CURRENT.updateChildValues(userInfo)
+        DataService.ds.REF_USERS.child(user.userKey).updateChildValues(userInfo)
         imageSelected = false
         
     }
@@ -296,12 +294,11 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBAction func backBtnPressed(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }
+    
 
-    @IBAction func statusBtnPressed(_ sender: AnyObject) {
-        performSegue(withIdentifier: "goToStatusVC2", sender: nil)
-    }
     @IBAction func editCoverPressed(_ sender: AnyObject) {
         present(imagePicker,animated: true, completion: nil)
     }
-   
+    
 }
+
