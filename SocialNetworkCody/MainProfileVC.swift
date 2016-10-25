@@ -10,12 +10,14 @@ import UIKit
 import Firebase
 
 
-class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileImg2: UIImageView!
+    
+    @IBOutlet weak var coverImage: UIImageView!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
@@ -24,6 +26,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     var posts = [Post]()
     var profilePicUrl: String = ""
     
+    var imagePicker: UIImagePickerController!
+    var imageSelected = false
     
     
     override func viewDidLoad() {
@@ -36,6 +40,9 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         scrollView.bounces = false
         tableView.bounces = false
         tableView.isScrollEnabled = false
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -114,6 +121,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
 
     }
     
+  
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -174,6 +183,45 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            coverImage.image = image
+            imageSelected = true
+            postToFirebaseStorage(image: image)
+        } else {
+            print("Cody1: A valid image wasnt selected")
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func postToFirebaseStorage(image: UIImage) {
+        if let imgData = UIImageJPEGRepresentation(image, 0.2) {
+            let imgUid = NSUUID().uuidString
+            let metadata = FIRStorageMetadata()
+            metadata.contentType = "image/jpeg"
+            DataService.ds.REF_COVER_IMAGES.child(imgUid).put(imgData, metadata: metadata) { (metadata, error) in
+                if error != nil {
+                    print("CODY1: Unable to uplaod image to firebase storage")
+                } else {
+                    print("CODY1: Successfully uploaded image to Firebase Storage")
+                    let downloadUrl = metadata?.downloadURL()?.absoluteString
+                     if let url = downloadUrl {
+                        self.postToFirebaseDatabase(imgUrl: url)
+                    }
+                }
+            }
+        }
+    }
+    
+    func postToFirebaseDatabase(imgUrl: String!) {
+        let userInfo: Dictionary<String, Any> = [
+            "coverPhotoUrl": imgUrl
+        ]
+        DataService.ds.REF_USER_CURRENT.updateChildValues(userInfo)
+        imageSelected = false
+        
+    }
+    
     
     
     @IBAction func backBtnPressed(_ sender: AnyObject) {
@@ -182,6 +230,9 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
 
     @IBAction func statusBtnPressed(_ sender: AnyObject) {
         performSegue(withIdentifier: "goToStatusVC2", sender: nil)
+    }
+    @IBAction func editCoverPressed(_ sender: AnyObject) {
+        present(imagePicker,animated: true, completion: nil)
     }
    
 }

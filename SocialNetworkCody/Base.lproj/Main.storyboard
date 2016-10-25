@@ -163,7 +163,7 @@
                                     <outletCollection property="gestureRecognizers" destination="qnP-nO-RzZ" appends="YES" id="rPY-7h-yJ4"/>
                                 </connections>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap above to select profile photo." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMp-LM-peN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap above to select a profile and cover photo." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMp-LM-peN">
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="23"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.86809717465753422" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -204,12 +204,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="gMp-LM-peN" secondAttribute="trailing" constant="21" id="2L1-fD-AH8"/>
-                            <constraint firstItem="gMp-LM-peN" firstAttribute="top" secondItem="GzE-dA-GTY" secondAttribute="bottom" constant="20" id="6yl-dy-rRf"/>
                             <constraint firstItem="gMp-LM-peN" firstAttribute="leading" secondItem="YcG-nU-bIt" secondAttribute="leadingMargin" constant="21" id="7eD-Jb-L2E"/>
                             <constraint firstItem="gMp-LM-peN" firstAttribute="centerX" secondItem="YcG-nU-bIt" secondAttribute="centerX" id="8Pd-MZ-IyG"/>
                             <constraint firstItem="9g2-lT-bs5" firstAttribute="leading" secondItem="YcG-nU-bIt" secondAttribute="leading" id="B1M-ZD-Lx8"/>
                             <constraint firstAttribute="trailing" secondItem="9g2-lT-bs5" secondAttribute="trailing" id="DCs-Lt-iRM"/>
                             <constraint firstItem="c3V-zW-mGj" firstAttribute="top" secondItem="gMp-LM-peN" secondAttribute="bottom" constant="26" id="GSb-XQ-vGj"/>
+                            <constraint firstItem="gMp-LM-peN" firstAttribute="top" secondItem="GzE-dA-GTY" secondAttribute="bottom" constant="30" id="HCP-pS-98j"/>
                             <constraint firstItem="9g2-lT-bs5" firstAttribute="top" secondItem="YcG-nU-bIt" secondAttribute="top" id="IHK-NY-SvZ"/>
                             <constraint firstItem="qE1-mT-51T" firstAttribute="top" secondItem="c3V-zW-mGj" secondAttribute="bottom" constant="21" id="UbX-Kd-CTk"/>
                             <constraint firstItem="GzE-dA-GTY" firstAttribute="centerX" secondItem="YcG-nU-bIt" secondAttribute="centerX" id="akz-BR-XtW"/>
@@ -232,6 +232,7 @@
                         <action selector="profilePicTapped:" destination="cRc-pY-jxc" id="4yt-C5-yZj"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="VpV-9u-JNw"/>
             </objects>
             <point key="canvasLocation" x="906" y="-307"/>
         </scene>
@@ -714,7 +715,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s9A-YE-hl7" id="e5K-DT-95L">
-                                            <frame key="frameInset" width="375" height="88"/>
+                                            <frame key="frameInset" width="375" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="622-gE-mHb">
@@ -1007,7 +1008,7 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vegasbg" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-Dw-601">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultcoverphoto" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-Dw-601">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="GFB-vu-Uni"/>
                                                 </constraints>
@@ -1180,6 +1181,18 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LzM-dl-MAG">
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Yoj-1u-qPg"/>
+                                                    <constraint firstAttribute="width" constant="65" id="sov-74-0Ar"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
+                                                <state key="normal" title="Edit"/>
+                                                <connections>
+                                                    <action selector="editCoverPressed:" destination="seu-Dl-Bf4" eventType="touchUpInside" id="yXP-sn-jDb"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.94347865056620772" green="0.95064140515462503" blue="0.95675364847715738" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1201,9 +1214,11 @@
                                             <constraint firstItem="qhI-hd-AIX" firstAttribute="leading" secondItem="u9K-ng-MkF" secondAttribute="leading" constant="30" id="hfX-me-fwV"/>
                                             <constraint firstAttribute="height" constant="1330" id="hgI-FA-Znz"/>
                                             <constraint firstAttribute="trailing" secondItem="D3L-PD-1zx" secondAttribute="trailing" id="iiE-Hq-ggt"/>
+                                            <constraint firstAttribute="trailing" secondItem="LzM-dl-MAG" secondAttribute="trailing" id="itD-pI-pvk"/>
                                             <constraint firstAttribute="bottom" secondItem="t4N-Es-qL0" secondAttribute="bottom" constant="8" id="lHM-Aq-Oqi"/>
                                             <constraint firstItem="lUG-dv-u6z" firstAttribute="leading" secondItem="u9K-ng-MkF" secondAttribute="leading" constant="5" id="m3L-Fb-v0Q"/>
                                             <constraint firstAttribute="bottom" secondItem="D3L-PD-1zx" secondAttribute="bottom" id="ndO-2t-fGh"/>
+                                            <constraint firstItem="LzM-dl-MAG" firstAttribute="top" secondItem="BKP-JZ-csU" secondAttribute="bottom" id="r3A-sN-P2w"/>
                                             <constraint firstAttribute="trailing" secondItem="qhI-hd-AIX" secondAttribute="trailing" constant="30" id="vdg-Iy-RvA"/>
                                             <constraint firstItem="J7y-IX-1f6" firstAttribute="centerX" secondItem="u9K-ng-MkF" secondAttribute="centerX" id="wmg-dT-mXB"/>
                                             <constraint firstAttribute="trailing" secondItem="lUG-dv-u6z" secondAttribute="trailing" constant="5" id="yd7-pf-woB"/>
@@ -1266,6 +1281,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1300"/>
                     <connections>
+                        <outlet property="coverImage" destination="VlR-Dw-601" id="eRc-NX-DTf"/>
                         <outlet property="profileImg" destination="J7y-IX-1f6" id="MY4-TL-2RB"/>
                         <outlet property="profileImg2" destination="OoJ-a3-il3" id="VdW-tt-4hd"/>
                         <outlet property="scrollView" destination="gUu-z6-fIe" id="BTi-7q-jTD"/>
@@ -1281,13 +1297,14 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3222" y="139"/>
+            <point key="canvasLocation" x="3221.5999999999999" y="138.53073463268368"/>
         </scene>
     </scenes>
     <resources>
         <image name="add-image" width="88" height="88"/>
         <image name="arrow-left" width="512" height="512"/>
         <image name="default-pic" width="500" height="500"/>
+        <image name="defaultcoverphoto" width="923" height="300"/>
         <image name="empty-heart" width="70" height="70"/>
         <image name="f" width="352" height="328"/>
         <image name="magglass" width="256" height="256"/>
@@ -1295,10 +1312,9 @@
         <image name="profile" width="113" height="155"/>
         <image name="pumpkinphoto" width="960" height="960"/>
         <image name="sign-out" width="92" height="65"/>
-        <image name="vegasbg" width="1920" height="1080"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0ai-qZ-pEI"/>
+        <segue reference="k5h-2q-SgC"/>
         <segue reference="mEU-ZU-oGF"/>
     </inferredMetricsTieBreakers>
 </document>

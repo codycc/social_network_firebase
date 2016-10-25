@@ -24,6 +24,7 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        
     }
     // keyboard functionality
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -48,6 +49,8 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         // dissmissing image picker
         imagePicker.dismiss(animated: true, completion: nil)
     }
+    
+    
     
 
     @IBAction func enterAppTapped(_ sender: AnyObject) {
@@ -107,5 +110,6 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
     @IBAction func profilePicTapped(_ sender: AnyObject) {
         present(imagePicker,animated: true, completion: nil)
     }
+  
 
 }
