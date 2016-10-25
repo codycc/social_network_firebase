@@ -30,6 +30,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
      
         // observing for any changes in the posts object in firebase
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
@@ -81,6 +82,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         print("DID SELECT ROW AT CALLED")
         performSegue(withIdentifier: "goToPost", sender: post)
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // grabbing each post out of the posts array
@@ -139,6 +141,39 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         })
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToPost" {
+            if let postVC = segue.destination as? PostVC  {
+                if let post = sender as? Post {
+                    postVC.post = post
+                }
+            }
+        }
+        
+        if segue.identifier == "goToSearchVC" {
+            if let searchVC = segue.destination as? SearchVC {
+                if let searchTerm = sender as? String {
+                    searchVC.searchTerm = searchTerm
+                }
+            }
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text == nil || searchBar.text == "" {
+            
+            //make keyboard go away
+            view.endEditing(true)
+        } else {
+             let lower = searchBar.text!.lowercased()
+            performSegue(withIdentifier: "goToSearchVC", sender: lower)
+        }
+    }
+    
+  
+    
+    
+    
 
     @IBAction func signOutTapped(_ sender: AnyObject) {
         // When signing out ... remove keychain ID
@@ -148,16 +183,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         try! FIRAuth.auth()?.signOut()
         //Dissmiss all open view controllers above the log in screen (root controller)
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToPost" {
-            if let postVC = segue.destination as? PostVC  {
-                if let post = sender as? Post {
-                    postVC.post = post
-                }
-            }
-        }
     }
     
     

@@ -7,29 +7,76 @@
 //
 
 import UIKit
+import Firebase
 
 class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
+    
+    var users = [User]()
+    var searchTerm: String!
+    static var imageCache: NSCache<NSString, UIImage> = NSCache()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    
 
         tableView.delegate = self
         tableView.dataSource = self
+        // here is what is passed from the search bar on the feed vc, I will then query my database with this term to display the proper users
+        print("HERE IS THE SEARCH TERM:\(searchTerm)")
         
-        // Do any additional setup after loading the view.
+        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+            self.users = []
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                // for ever user in user
+                for snap in snapshot {
+                    let usernameRef = snap.childSnapshot(forPath: "username")
+                    let username = usernameRef.value
+                    if username as? String == self.searchTerm! {
+                        if let userDict = snap.value as? Dictionary<String, AnyObject> {
+                            let key = snap.key
+                            let user = User(userKey: key, userData: userDict)
+                            self.users.append(user)
+                        } else {
+                            print("couldnt add to dictionary")
+                        }
+                        self.tableView.reloadData()
+                    } else {
+                        print("doesnt match search term")
+                    }
+                }
+            }
+            
+        })
+        
     }
+    
+   
     
     func numberOfSections(in tableView: UITableView) -> Int {
          return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let user = users[indexPath.row]
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell") as? UserCell {
+            if let img = SearchVC.imageCache.object(forKey: user.profilePicUrl as NSString) {
+                cell.configureCell(user: user, img: img)
+                
+            } else {
+                cell.configureCell(user: user)
+            }
+            return cell
+        } else {
+            return UserCell()
+        }
+        
     }
     
  
