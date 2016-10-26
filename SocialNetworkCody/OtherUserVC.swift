@@ -19,6 +19,8 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var postsCountLbl: UILabel!
+    @IBOutlet weak var followingCountLbl: UILabel!
+    @IBOutlet weak var followersCountLbl: UILabel!
     @IBOutlet weak var followBtn: UIButton!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
@@ -110,7 +112,6 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         })
         
         
-        
         // storing the information of the current user so it can be set later times
        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
         if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
@@ -121,11 +122,9 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         }
        })
         
-        
         // checking if the current user already follows this user, if so, then update the follow button accordingly
          let _ = DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("following") {
-//                let snap = snapshot.value(forKey: "followers")
                 let snap = snapshot.childSnapshot(forPath: "following")
                 if snap.hasChild(self.user.userKey) {
                     self.followBtn.setTitle("Unfollow", for: .normal)
@@ -160,7 +159,8 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         
         // setting the posts label after it counts and pops the posts into the array
         self.postsCountLbl.text = "\(self.posts.count)"
-        
+        self.followersCountLbl.text = "\(self.user.followerCount)"
+        self.followingCountLbl.text = "\(self.user.followingCount)"
         
     }
     
@@ -196,7 +196,6 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let post = posts[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
-            
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 print("THIS IS THE POST FROM CELL:\(post)")
                 cell.configureCell(post: post, img: img)
@@ -349,6 +348,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                 self.user.adjustFollowersCount(addFollowerCount: true)
                 followingRef.setValue(true)
                 followersRef.setValue(true)
+                self.followersCountLbl.text = "\(self.user.followerCount)"
                 //display
                 self.followBtn.setTitle("Unfollow", for: .normal)
                 self.followBtn.backgroundColor = UIColor.white
@@ -360,6 +360,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                 self.user.adjustFollowersCount(addFollowerCount: false)
                 followingRef.removeValue()
                 followersRef.removeValue()
+                self.followersCountLbl.text = "\(self.user.followerCount)"
                 //display
                 self.followBtn.setTitle("Follow", for: .normal)
                 self.followBtn.backgroundColor = UIColor(red: 0.0/255.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)

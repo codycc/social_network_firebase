@@ -1930,6 +1930,8 @@
                     <connections>
                         <outlet property="coverImage" destination="y6V-BQ-kMH" id="wjy-sq-z2X"/>
                         <outlet property="followBtn" destination="TBi-bW-yva" id="cOh-K1-bS9"/>
+                        <outlet property="followersCountLbl" destination="vxn-VB-29o" id="Be6-g4-hTK"/>
+                        <outlet property="followingCountLbl" destination="4jD-7K-AHq" id="XhP-up-6HG"/>
                         <outlet property="postsCountLbl" destination="bCi-4Y-jKc" id="hjC-vw-7S8"/>
                         <outlet property="profileImg" destination="oyq-5E-zOr" id="MGF-h8-CmJ"/>
                         <outlet property="scrollView" destination="h9M-xv-jRt" id="Dc5-0b-bQQ"/>
