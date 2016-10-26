@@ -19,6 +19,8 @@ class User {
     private var _cityBorn: String!
     private var _currentCity: String!
     private var _workplace: String!
+    private var _followerCount: Int!
+    private var _followingCount: Int!
     
     var username: String {
         return _username
@@ -51,6 +53,16 @@ class User {
     var workplace: String {
         return _workplace
     }
+    
+    var followerCount: Int {
+        return _followerCount
+    }
+    
+    var followingCount: Int {
+        return _followingCount
+    }
+    
+    
     
     init(username: String, provider: String, profilePicUrl: String, coverPhotoUrl: String, cityBorn: String, currentCity: String, workplace: String) {
         self._username = username
@@ -92,7 +104,34 @@ class User {
             self._workplace = workplace
         }
         
+        if let followerCount = userData["follower-count"] as? Int {
+            self._followerCount = followerCount
+        }
+        
+        if let followingCount = userData["following-count"] as? Int {
+            self._followingCount = followingCount
+        }
+        
         _userRef = DataService.ds.REF_USERS.child(_userKey)
     }
+    
+    func adjustFollowersCount(addFollowerCount: Bool) {
+        if addFollowerCount {
+            _followerCount = followerCount + 1
+        } else {
+            _followerCount = followerCount - 1
+        }
+        _userRef.child("follower-count").setValue(_followerCount)
+    }
+    
+    func adjustFollowingCount(addFollowingCount: Bool) {
+        if addFollowingCount {
+            _followingCount = followingCount + 1
+        } else {
+            _followingCount = followingCount - 1
+        }
+        _userRef.child("following-count").setValue(_followingCount)
+    }
+    
     
 }

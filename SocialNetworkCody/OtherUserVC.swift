@@ -32,6 +32,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     var imageSelected = false
     
     var user: User!
+    var currentUser: User!
     
     
     override func viewDidLoad() {
@@ -107,6 +108,19 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                 
             }
         })
+        
+        
+        // storing the information of the current user so it can be set later times
+       DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+        if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+            //setting constants of key and post
+            let key = snapshot.key
+            self.currentUser = User(userKey: key, userData: userDict)
+            //adding each post to the posts array
+            
+        }
+    
+       })
         
         
     }
@@ -319,27 +333,19 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         
         followingRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let _ = snapshot.value as? NSNull {
-//                self.user.adjustLikes(addLike: true)
-                // setting the value of the current users likes, the likes will have every post and true beside it
+                self.currentUser.adjustFollowingCount(addFollowingCount: true)
+                self.user.adjustFollowersCount(addFollowerCount: true)
                 followingRef.setValue(true)
-            } else {
-//                self.post.adjustLikes(addLike: false)
-                // remove the value of true under the current users liked posts
-                followingRef.removeValue()
-            }
-        })
-        
-        followersRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let _ = snapshot.value as? NSNull {
-                //                self.user.adjustLikes(addLike: true)
-                // setting the value of the current users likes, the likes will have every post and true beside it
                 followersRef.setValue(true)
             } else {
-                //                self.post.adjustLikes(addLike: false)
-                // remove the value of true under the current users liked posts
+                self.currentUser.adjustFollowingCount(addFollowingCount: false)
+                self.user.adjustFollowersCount(addFollowerCount: false)
+                followingRef.removeValue()
                 followersRef.removeValue()
             }
         })
+        
+
        
     }
     
