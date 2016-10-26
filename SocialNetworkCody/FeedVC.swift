@@ -55,14 +55,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             }
         })
         // grabbing user profilepic url from firebase
-        grabUserProfilePicURL()
+//        grabUserProfilePicURL()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         // if profile pic url exists, then either set image from cache or download it
-        if let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString) {
-            cacheImg(profile: profile)
-        }
+//        if let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString) {
+//            cacheImg(profile: profile)
+//        }
         
     }
     
@@ -136,12 +136,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
     }
     
-    func grabUserProfilePicURL() {
-        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
-            self.profilePicUrl = (snapshot.value as? String)!
-        })
-    }
-    
+//    func grabUserProfilePicURL() {
+//        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
+//           
+//               self.profilePicUrl = (snapshot.value as String)!
+//        })
+//    }
+//    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPost" {
             if let postVC = segue.destination as? PostVC  {

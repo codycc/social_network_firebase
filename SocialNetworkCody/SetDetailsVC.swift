@@ -12,6 +12,8 @@ import Firebase
 class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var usernameField: FancyField!
+    @IBOutlet weak var cityBornField: FancyField!
+    @IBOutlet weak var currentCityField: FancyField!
     @IBOutlet weak var profilePicAdd: CircleView!
     
     var imagePicker: UIImagePickerController!
@@ -21,9 +23,13 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         super.viewDidLoad()
         //boilerplate for imagepicker and textfield delegates
         usernameField.delegate = self
+        cityBornField.delegate = self
+        currentCityField.delegate = self
+        
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        
         
     }
     // keyboard functionality
@@ -36,6 +42,8 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+   
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -94,14 +102,19 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         // setting up how I will update that specific users child value
         let userInfo: Dictionary<String, Any> = [
             "username": usernameField.text!,
-            "profile-pic": imgUrl
+            "profile-pic": imgUrl,
+            "city-born": cityBornField.text!,
+            "current-city": currentCityField.text!
         ]
         // updating the database specific user with new information
         DataService.ds.REF_USER_CURRENT.updateChildValues(userInfo)
         
         //Reset all fields
         usernameField.text = ""
+        cityBornField.text = ""
+        currentCityField.text = ""
         imageSelected = false
+        
         profilePicAdd.image = UIImage(named: "default-pic")
     }
     

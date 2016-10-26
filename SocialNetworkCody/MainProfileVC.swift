@@ -28,6 +28,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     var profilePicUrl: String = ""
     var coverPhotoUrl: String = ""
     
+    
     var imagePicker: UIImagePickerController!
     var imageSelected = false
     
@@ -40,12 +41,15 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         tableView.delegate = self
         tableView.dataSource = self
         scrollView.delegate = self
+        scrollView.isScrollEnabled = false
         scrollView.bounces = false
         tableView.bounces = false
         tableView.isScrollEnabled = false
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        
+        
         
         
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -128,6 +132,10 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             }
         })
         
+        if self.posts.count > 1 {
+            scrollView.isScrollEnabled = true
+        }
+        
         
     }
     
@@ -143,7 +151,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             }
         }
         
-        if scrollView == self.tableView {
+        if scrollView == self.tableView  {
             if yOffset <= 0   {
                 self.scrollView.isScrollEnabled = true
                 self.tableView.isScrollEnabled = false
