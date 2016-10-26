@@ -16,6 +16,8 @@ class User {
     private var _coverPhotoUrl: String!
     private var _userKey: String!
     private var _userRef: FIRDatabaseReference!
+    private var _cityBorn: String!
+    private var _currentCity: String!
     
     var username: String {
         return _username
@@ -37,11 +39,21 @@ class User {
         return _userKey
     }
     
-    init(username: String, provider: String, profilePicUrl: String, coverPhotoUrl: String) {
+    var cityBorn: String {
+        return _cityBorn
+    }
+    
+    var currentCity: String {
+        return _currentCity
+    }
+    
+    init(username: String, provider: String, profilePicUrl: String, coverPhotoUrl: String, cityBorn: String, currentCity: String) {
         self._username = username
         self._provider = provider
         self._profilePicUrl = profilePicUrl
         self._coverPhotoUrl = coverPhotoUrl
+        self._cityBorn = cityBorn
+        self._currentCity = currentCity
     }
     
     init(userKey: String, userData: Dictionary<String, AnyObject>) {
@@ -53,6 +65,13 @@ class User {
         
         if let provider = userData["provider"] as? String {
             self._provider = provider
+        }
+        if let cityBorn = userData["city-born"] as? String {
+            self._cityBorn = cityBorn
+        }
+        
+        if let currentCity = userData["current-city"] as? String {
+            self._currentCity = currentCity
         }
         
         if let profilePicUrl = userData["profile-pic"] as? String {

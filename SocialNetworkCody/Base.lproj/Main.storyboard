@@ -1526,7 +1526,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1300"/>
                     <connections>
+                        <outlet property="cityBornLbl" destination="Hc8-rO-CcO" id="2Si-w1-rtQ"/>
                         <outlet property="coverImage" destination="VlR-Dw-601" id="eRc-NX-DTf"/>
+                        <outlet property="currentCityLbl" destination="eCv-pR-rRl" id="E50-3b-Y0O"/>
                         <outlet property="profileImg" destination="J7y-IX-1f6" id="MY4-TL-2RB"/>
                         <outlet property="profileImg2" destination="OoJ-a3-il3" id="VdW-tt-4hd"/>
                         <outlet property="scrollView" destination="gUu-z6-fIe" id="BTi-7q-jTD"/>

@@ -17,6 +17,9 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileImg2: UIImageView!
     
+    @IBOutlet weak var currentCityLbl: UILabel!
+    @IBOutlet weak var cityBornLbl: UILabel!
+    
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var coverImage: UIImageView!
     
@@ -53,9 +56,24 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         
         
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            //setting username
             let usernameRef = snapshot.childSnapshot(forPath: "username")
             let username = usernameRef.value
             self.usernameLbl.text = username as! String?
+            
+            // setting cityBorn
+            let cityBornRef = snapshot.childSnapshot(forPath: "city-born")
+            let cityBorn = cityBornRef.value
+            self.cityBornLbl.text = cityBorn as! String?
+            
+            // setting current city
+            let currentCityRef = snapshot.childSnapshot(forPath: "current-city")
+            let currentCity = currentCityRef.value
+            self.currentCityLbl.text = currentCity as! String?
+           
+            
+            
+            
             
             if snapshot.hasChild("posts") {
                 DataService.ds.REF_USER_CURRENT.child("posts").observe(.value, with: { (snapshot) in
