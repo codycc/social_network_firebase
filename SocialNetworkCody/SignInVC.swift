@@ -86,7 +86,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                     let userData = ["provider": credential.provider,
                                     "profile-pic": "https://firebasestorage.googleapis.com/v0/b/socialnetworkcody.appspot.com/o/profile-pics%2F60B8721E-B3FE-44A8-B7AE-D7C6596059FE?alt=media&token=3014ef3a-ec02-4bc7-a9ed-1411a3599d24",
                                     "city-born": "Default",
-                                    "current-city": "Default"
+                                    "current-city": "Default",
+                                    "workplace": "Default"
                                     ]
                     self.completeSignIn(id: user.uid, userData: userData)
                 }
@@ -102,9 +103,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                 if error == nil {
                     print("CODY1: Email user authenticated with Firebase")
                     if let user = user {
-                        let userData = ["provider": user.providerID
-                                        
-                                        ]
+                        let userData = ["provider": user.providerID]
                         
                         self.completeSignIn(id: user.uid, userData: userData)
                         self.performSegue(withIdentifier: "goToFeed", sender: nil)
@@ -120,7 +119,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                                 let userData = ["provider": user.providerID,
                                                 "profile-pic": "https://firebasestorage.googleapis.com/v0/b/socialnetworkcody.appspot.com/o/profile-pics%2F60B8721E-B3FE-44A8-B7AE-D7C6596059FE?alt=media&token=3014ef3a-ec02-4bc7-a9ed-1411a3599d24",
                                                 "city-born": "Default",
-                                                "current-city": "Default"
+                                                "current-city": "Default",
+                                                "workplace": "Default"
                                                 ]
                                 self.completeSignIn(id: user.uid, userData: userData)
                                 self.performSegue(withIdentifier: "goToCustomize", sender: nil)

@@ -18,6 +18,7 @@ class User {
     private var _userRef: FIRDatabaseReference!
     private var _cityBorn: String!
     private var _currentCity: String!
+    private var _workplace: String!
     
     var username: String {
         return _username
@@ -47,13 +48,18 @@ class User {
         return _currentCity
     }
     
-    init(username: String, provider: String, profilePicUrl: String, coverPhotoUrl: String, cityBorn: String, currentCity: String) {
+    var workplace: String {
+        return _workplace
+    }
+    
+    init(username: String, provider: String, profilePicUrl: String, coverPhotoUrl: String, cityBorn: String, currentCity: String, workplace: String) {
         self._username = username
         self._provider = provider
         self._profilePicUrl = profilePicUrl
         self._coverPhotoUrl = coverPhotoUrl
         self._cityBorn = cityBorn
         self._currentCity = currentCity
+        self._workplace = workplace
     }
     
     init(userKey: String, userData: Dictionary<String, AnyObject>) {
@@ -80,6 +86,10 @@ class User {
         
         if let coverPhotoUrl = userData["coverPhotoUrl"] as? String {
             self._coverPhotoUrl = coverPhotoUrl
+        }
+        
+        if let workplace = userData["workplace"] as? String {
+            self._workplace = workplace
         }
         
         _userRef = DataService.ds.REF_USERS.child(_userKey)

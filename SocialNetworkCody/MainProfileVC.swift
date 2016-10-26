@@ -17,6 +17,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileImg2: UIImageView!
     
+    @IBOutlet weak var workplaceLbl: UILabel!
     @IBOutlet weak var currentCityLbl: UILabel!
     @IBOutlet weak var cityBornLbl: UILabel!
     
@@ -70,6 +71,10 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             let currentCityRef = snapshot.childSnapshot(forPath: "current-city")
             let currentCity = currentCityRef.value
             self.currentCityLbl.text = currentCity as! String?
+            
+            let workplaceRef = snapshot.childSnapshot(forPath: "workplace")
+            let workplace = workplaceRef.value
+            self.workplaceLbl.text = workplace as! String?
            
             
             
