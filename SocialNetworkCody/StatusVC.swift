@@ -101,7 +101,7 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         }
     }
     
-    //////
+   
     func postToFirebase(imgUrl: String!, profileUrl: String!) {
         let post: Dictionary<String, Any> = [
             "caption": textViewField.text! as String,

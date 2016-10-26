@@ -16,13 +16,12 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileImg2: UIImageView!
-    
     @IBOutlet weak var workplaceLbl: UILabel!
     @IBOutlet weak var currentCityLbl: UILabel!
     @IBOutlet weak var cityBornLbl: UILabel!
-    
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var coverImage: UIImageView!
+    @IBOutlet weak var postsCountLbl: UILabel!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
@@ -31,11 +30,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     var posts = [Post]()
     var profilePicUrl: String = ""
     var coverPhotoUrl: String = ""
-    
-    
     var imagePicker: UIImagePickerController!
     var imageSelected = false
-    
     
     
     override func viewDidLoad() {
@@ -77,9 +73,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             self.workplaceLbl.text = workplace as! String?
            
             
-            
-            
-            
             if snapshot.hasChild("posts") {
                 DataService.ds.REF_USER_CURRENT.child("posts").observe(.value, with: { (snapshot) in
                     // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
@@ -120,23 +113,20 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 print("user doesnt have any posts")
                 
             }
-            
         })
+        
         // downloading profile pic from firebase
             downloadProfilePic()
         
         // if the user has uploaded a coverphoto, then go and download it.
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("coverPhotoUrl") {
-                
                 self.downloadCoverPic()
             } else {
                 print("Cody1: User hasnt added dynamic cover photo")
                 
             }
         })
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -155,12 +145,15 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             }
         })
         
-        if self.posts.count > 1 {
+        // only scroll down to full table if the user has a post
+        if self.posts.count >= 1 {
             scrollView.isScrollEnabled = true
         }
         
-        
+        // setting the posts label after it counts and pops the posts into the array
+          self.postsCountLbl.text = "\(self.posts.count)"
     }
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y

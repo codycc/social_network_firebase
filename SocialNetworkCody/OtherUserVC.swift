@@ -18,6 +18,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     @IBOutlet weak var usernameLbl: UILabel!
     
     @IBOutlet weak var coverImage: UIImageView!
+    @IBOutlet weak var postsCountLbl: UILabel!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
@@ -125,6 +126,14 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                 
             }
         })
+        
+        // only scroll down to full table if the user has a post
+        if self.posts.count >= 1 {
+            scrollView.isScrollEnabled = true
+        }
+        
+        // setting the posts label after it counts and pops the posts into the array
+        self.postsCountLbl.text = "\(self.posts.count)"
         
         
     }
@@ -298,6 +307,40 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
 
     @IBAction func editCoverPressed(_ sender: AnyObject) {
         present(imagePicker,animated: true, completion: nil)
+    }
+   
+    @IBAction func followBtnPressed(_ sender: Any) {
+        //grabbing the current user and setting their child following to this users key
+        let followingRef = DataService.ds.REF_USER_CURRENT.child("following").child(user.userKey)
+        // grabbing the users key and setting followers child to the current user
+        let refCurrentUserKey = DataService.ds.REF_USER_CURRENT.key
+        let followersRef = DataService.ds.REF_USERS.child(user.userKey).child("followers").child(refCurrentUserKey)
+     
+        
+        followingRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let _ = snapshot.value as? NSNull {
+//                self.user.adjustLikes(addLike: true)
+                // setting the value of the current users likes, the likes will have every post and true beside it
+                followingRef.setValue(true)
+            } else {
+//                self.post.adjustLikes(addLike: false)
+                // remove the value of true under the current users liked posts
+                followingRef.removeValue()
+            }
+        })
+        
+        followersRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let _ = snapshot.value as? NSNull {
+                //                self.user.adjustLikes(addLike: true)
+                // setting the value of the current users likes, the likes will have every post and true beside it
+                followersRef.setValue(true)
+            } else {
+                //                self.post.adjustLikes(addLike: false)
+                // remove the value of true under the current users liked posts
+                followersRef.removeValue()
+            }
+        })
+       
     }
     
 }
