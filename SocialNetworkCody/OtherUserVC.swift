@@ -19,6 +19,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var postsCountLbl: UILabel!
+    @IBOutlet weak var followBtn: UIButton!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
@@ -52,7 +53,6 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         print("here is user key\(user.userKey)")
         
         DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
-            
             if snapshot.hasChild("posts") {
                 DataService.ds.REF_USER_CURRENT.child("posts").observe(.value, with: { (snapshot) in
                     // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
@@ -110,6 +110,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         })
         
         
+        
         // storing the information of the current user so it can be set later times
        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
         if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
@@ -117,12 +118,23 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
             let key = snapshot.key
             self.currentUser = User(userKey: key, userData: userDict)
             //adding each post to the posts array
-            
         }
-    
        })
         
         
+        // checking if the current user already follows this user, if so, then update the follow button accordingly
+         let _ = DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("following") {
+//                let snap = snapshot.value(forKey: "followers")
+                let snap = snapshot.childSnapshot(forPath: "following")
+                if snap.hasChild(self.user.userKey) {
+                    self.followBtn.setTitle("Unfollow", for: .normal)
+                    self.followBtn.backgroundColor = UIColor.white
+                    self.followBtn.setTitleColor(UIColor(red: 0.0/255.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0), for: .normal)
+                    
+                }
+            }
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -337,11 +349,21 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                 self.user.adjustFollowersCount(addFollowerCount: true)
                 followingRef.setValue(true)
                 followersRef.setValue(true)
+                //display
+                self.followBtn.setTitle("Unfollow", for: .normal)
+                self.followBtn.backgroundColor = UIColor.white
+                self.followBtn.setTitleColor(UIColor(red: 0.0/255.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0), for: .normal)
+                
+             
             } else {
                 self.currentUser.adjustFollowingCount(addFollowingCount: false)
                 self.user.adjustFollowersCount(addFollowerCount: false)
                 followingRef.removeValue()
                 followersRef.removeValue()
+                //display
+                self.followBtn.setTitle("Follow", for: .normal)
+                self.followBtn.backgroundColor = UIColor(red: 0.0/255.0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+                self.followBtn.setTitleColor(UIColor.white, for: .normal)
             }
         })
         

@@ -1707,7 +1707,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBi-bW-yva">
                                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="38"/>
-                                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="80" id="arA-kZ-c13"/>
                                                                 </constraints>
@@ -1929,6 +1929,7 @@
                     <size key="freeformSize" width="375" height="1300"/>
                     <connections>
                         <outlet property="coverImage" destination="y6V-BQ-kMH" id="wjy-sq-z2X"/>
+                        <outlet property="followBtn" destination="TBi-bW-yva" id="cOh-K1-bS9"/>
                         <outlet property="postsCountLbl" destination="bCi-4Y-jKc" id="hjC-vw-7S8"/>
                         <outlet property="profileImg" destination="oyq-5E-zOr" id="MGF-h8-CmJ"/>
                         <outlet property="scrollView" destination="h9M-xv-jRt" id="Dc5-0b-bQQ"/>
