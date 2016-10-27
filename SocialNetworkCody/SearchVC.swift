@@ -52,6 +52,7 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToOtherUserVC" {
             if let otherUserVC = segue.destination as? OtherUserVC  {

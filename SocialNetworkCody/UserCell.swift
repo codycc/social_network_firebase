@@ -26,25 +26,11 @@ class UserCell: UITableViewCell {
     
     func configureCell(user: User, img: UIImage? = nil) {
         usernameLbl.text = user.username
-        
-        
-        if img != nil {
-            self.profileImg.image = img
+        let url = URL(string: user.profilePicUrl)
+        if url != nil {
+            profileImg.kf.setImage(with: url)
         } else {
-            let ref = FIRStorage.storage().reference(forURL: user.profilePicUrl)
-            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("CODY!: Unable to download image from firebase storage")
-                } else {
-                    print("Cody1: Image downloaded from firebase storage")
-                    if let imgData = data {
-                        if let img = UIImage(data:imgData) {
-                            self.profileImg.image = img
-                            SearchVC.imageCache.setObject(img, forKey: user.profilePicUrl as NSString)
-                        }
-                    }
-                }
-            })
+            print("unable to download and cache image with Kingfisher")
         }
     }
 

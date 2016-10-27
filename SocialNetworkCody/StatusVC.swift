@@ -10,6 +10,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import Kingfisher
 
 class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
 
@@ -20,8 +21,9 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var textViewField: UITextView!
     
     var imagePicker: UIImagePickerController!
+    var imageSelected = false
+    var currentUser: User!
     
-     var imageSelected = false
     override func viewDidLoad() {
         super.viewDidLoad()
    
@@ -30,13 +32,30 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         textViewField.delegate = self
         imagePicker.allowsEditing = true
         textViewField.isEditable = true
+
         
-        //grabbing username
-        _ = DataService.ds.REF_USER_CURRENT.child("username").observeSingleEvent(of: .value, with: { (snapshot) in
-           self.usernameLbl.text = snapshot.value as? String
+        // storing the information of the current user so it can be set later times
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+                //setting constants of key and post
+                let key = snapshot.key
+                self.currentUser = User(userKey: key, userData: userDict)
+                //adding each post to the posts array
+            }
         })
+        
+        
       
-       
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let url = URL(string: self.currentUser.profilePicUrl)
+        if url != nil {
+            profileImage.kf.setImage(with: url)
+        } else {
+            print("unable to download and cache image using Kingfisher")
+        }
+        self.usernameLbl.text = "\(self.currentUser.username)"
     }
     
   

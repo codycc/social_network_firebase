@@ -12,5 +12,6 @@ target 'SocialNetworkCody' do
   pod 'Firebase/Storage'
   pod 'FBSDKLoginKit'
   pod 'SwiftKeychainWrapper'
+  pod 'Kingfisher', '~> 3.0'
 
 end

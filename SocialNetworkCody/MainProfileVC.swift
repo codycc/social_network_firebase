@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 //
 class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -38,7 +39,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         scrollView.contentSize = CGSize(width: scrollViewContentWidth, height: scrollViewContentHeight)
         tableView.delegate = self
         tableView.dataSource = self
@@ -51,30 +51,86 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         
+        self.setCurrentUser()
+        self.checkAndAddPosts()
+     
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+        self.usernameLbl.text = self.currentUser.username
+        self.cityBornLbl.text = self.currentUser.cityBorn
+        self.currentCityLbl.text = self.currentUser.currentCity
+        self.workplaceLbl.text = self.currentUser.workplace
+        self.postsCountLbl.text = "\(self.posts.count)"
+        self.followersCountLbl.text = "\(self.currentUser.followerCount)"
+        self.followingCountLbl.text = "\(self.currentUser.followingCount)"
         
-        
-        
+         // only scroll down to full table if the user has a post
+        if self.posts.count >= 1 {
+            scrollView.isScrollEnabled = true
+        }
+     
+        // if the current user has a cover photo, then go and cache it
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            //setting username
-            let usernameRef = snapshot.childSnapshot(forPath: "username")
-            let username = usernameRef.value
-            self.usernameLbl.text = username as! String?
-            
-            // setting cityBorn
-            let cityBornRef = snapshot.childSnapshot(forPath: "city-born")
-            let cityBorn = cityBornRef.value
-            self.cityBornLbl.text = cityBorn as! String?
-            
-            // setting current city
-            let currentCityRef = snapshot.childSnapshot(forPath: "current-city")
-            let currentCity = currentCityRef.value
-            self.currentCityLbl.text = currentCity as! String?
-            
-            let workplaceRef = snapshot.childSnapshot(forPath: "workplace")
-            let workplace = workplaceRef.value
-            self.workplaceLbl.text = workplace as! String?
-           
-            
+            if snapshot.hasChild("coverPhotoUrl") {
+                let url = URL(string: self.currentUser.coverPhotoUrl)
+                if url != nil {
+                  self.coverImage.kf.setImage(with: url)
+                } else {
+                    print("unable to download and cache image with Kingfisher")
+                }
+                
+            } else {
+                print("Cody1: User hasnt added dynamic cover photo")
+                
+            }
+        })
+    }
+    
+   
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        print("THIS IS Y OFFSET \(yOffset)")
+        
+        if scrollView == self.scrollView {
+            if yOffset >= scrollViewContentHeight - screenHeight {
+                print("this is screen height: \(screenHeight)")
+                scrollView.isScrollEnabled = false
+                tableView.isScrollEnabled = true
+            }
+        }
+        
+        if scrollView == self.tableView  {
+            if yOffset <= 0   {
+                self.scrollView.isScrollEnabled = true
+                self.tableView.isScrollEnabled = false
+            }
+        }
+    }
+    
+   
+    
+    func setCurrentUser() {
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+                let key = snapshot.key
+                self.currentUser = User(userKey: key, userData: userDict)
+                // setting profile images
+                self.setProfileImages()
+            }
+        })
+    }
+    
+    func setProfileImages() {
+        let url = URL(string: self.currentUser.profilePicUrl)
+        self.profileImg.kf.setImage(with: url)
+        self.profileImg2.kf.setImage(with: url)
+        
+    }
+    
+    func checkAndAddPosts() {
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("posts") {
                 DataService.ds.REF_USER_CURRENT.child("posts").observe(.value, with: { (snapshot) in
                     // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
@@ -116,77 +172,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 
             }
         })
-        
-        // downloading profile pic from firebase
-            downloadProfilePic()
-        
-        // if the user has uploaded a coverphoto, then go and download it.
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.hasChild("coverPhotoUrl") {
-                self.downloadCoverPic()
-            } else {
-                print("Cody1: User hasnt added dynamic cover photo")
-                
-            }
-        })
-        
-        // storing the information of the current user so it can be set later times
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
-                //setting constants of key and post
-                let key = snapshot.key
-                self.currentUser = User(userKey: key, userData: userDict)
-                //adding each post to the posts array
-            }
-        })
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.tableView.reloadData()
-        // caching user profile pic
-        cacheProfilePic()
-        
-        // if the current user has a cover photo, then go and cache it
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.hasChild("coverPhotoUrl") {
-                // if the user has uploaded a coverphoto, then go and download it.
-                self.cacheCoverPic()
-            } else {
-                print("Cody1: User hasnt added dynamic cover photo")
-                
-            }
-        })
-        
-        // only scroll down to full table if the user has a post
-        if self.posts.count >= 1 {
-            scrollView.isScrollEnabled = true
-        }
-        
-        // setting the posts label after it counts and pops the posts into the array
-        self.postsCountLbl.text = "\(self.posts.count)"
-        self.followersCountLbl.text = "\(self.currentUser.followerCount)"
-        self.followingCountLbl.text = "\(self.currentUser.followingCount)"
-    }
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        print("THIS IS Y OFFSET \(yOffset)")
-        
-        if scrollView == self.scrollView {
-            if yOffset >= scrollViewContentHeight - screenHeight {
-                print("this is screen height: \(screenHeight)")
-                scrollView.isScrollEnabled = false
-                tableView.isScrollEnabled = true
-            }
-        }
-        
-        if scrollView == self.tableView  {
-            if yOffset <= 0   {
-                self.scrollView.isScrollEnabled = true
-                self.tableView.isScrollEnabled = false
-            }
-        }
     }
     
   
@@ -214,77 +199,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             return ProfileCell()
         }
     }
-    
-    func downloadProfilePic() {
-        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
-            self.profilePicUrl = (snapshot.value as? String)!
-        })
-    }
-    
-    func downloadCoverPic() {
-        DataService.ds.REF_USER_CURRENT.child("coverPhotoUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-            self.coverPhotoUrl = (snapshot.value as? String)!
-        })
-    }
-    
-    
-    
-    func cacheProfilePic() {
-        // putting this here because I need to grab the users profile pic before caching it
-        let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString)
-        
-        if profile != nil {
-            self.profileImg.image = profile
-            self.profileImg2.image = profile
-        } else {
-            // otherwise create the image from firebase storage
-            let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
-            // max size aloud
-            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("CODY!: Unable to download image Firebase storage")
-                } else {
-                    print("CODY!: Image downloaded from firebase storage")
-                    if let imgData = data {
-                        if let img = UIImage(data: imgData) {
-                            self.profileImg.image = img
-                            self.profileImg2.image = img
-                            // setting the cache now
-                            FeedVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
-                        }
-                    }
-                }
-            })
-        }
-    }
-    
-    func cacheCoverPic() {
-        // putting this here because I need to grab the users profile pic before caching it
-        let cover = MainProfileVC.imageCache.object(forKey: coverPhotoUrl as NSString)
-        
-        if cover != nil {
-            self.coverImage.image = cover
-        } else {
-            // otherwise create the image from firebase storage
-            let ref = FIRStorage.storage().reference(forURL: coverPhotoUrl)
-            // max size aloud
-            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("CODY!: Unable to download image Firebase storage")
-                } else {
-                    print("CODY!: Image downloaded from firebase storage")
-                    if let imgData = data {
-                        if let img = UIImage(data: imgData) {
-                            self.coverImage.image = img
-                            // setting the cache now
-                            MainProfileVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
-                        }
-                    }
-                }
-            })
-        }
-    }
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {

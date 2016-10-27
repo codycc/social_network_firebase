@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import SwiftKeychainWrapper
+import Kingfisher
+
 
 class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -24,7 +26,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     var imagePicker: UIImagePickerController!
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var imageSelected = false
-    var profilePicUrl: String = ""
+    var currentUser: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,37 +35,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.delegate = self
         searchBar.showsCancelButton = true
      
-        // observing for any changes in the posts object in firebase
-        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
-            // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading 
-            self.posts = []
-            // going through every snapshot
-            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
-                //for every snap in the snapshot
-                for snap in snapshot {
-                    print("SNAP: \(snap)")
-                    // setting the value of each snap as a postDict
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        //setting constants of key and post
-                        let key = snap.key
-                        let post = Post(postKey: key, postData: postDict)
-                        //adding each post to the posts array 
-                        self.posts.append(post)
-                    }
-                }
-                    self.tableView.reloadData()
-            }
-        })
-        // grabbing user profilepic url from firebase
-//        grabUserProfilePicURL()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        // if profile pic url exists, then either set image from cache or download it
-//        if let profile = FeedVC.imageCache.object(forKey: profilePicUrl as NSString) {
-//            cacheImg(profile: profile)
-//        }
-        
+        self.addPosts()
+        self.setCurrentUser()
     }
     
     
@@ -107,42 +80,40 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
-    func cacheImg(profile: UIImage? = nil) {
-        // putting this here because I need to grab the users profile pic before caching it
-        
-        if profile != nil {
-            self.profilePic.image = profile
-            self.statusProfilePic.image = profile
-        } else {
-            // otherwise create the image from firebase storage
-            let ref = FIRStorage.storage().reference(forURL: profilePicUrl)
-            // max size aloud
-            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("CODY!: Unable to download image Firebase storage")
-                } else {
-                    print("CODY!: Image downloaded from firebase storage")
-                    if let imgData = data {
-                        if let img = UIImage(data: imgData) {
-                            self.profilePic.image = img
-                            self.statusProfilePic.image = img
-                            // setting the cache now
-                            FeedVC.imageCache.setObject(img, forKey: self.profilePicUrl as NSString)
-                        }
-                    }
-                }
-            })
-        }
-        
+    func setCurrentUser() {
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+                let key = snapshot.key
+                self.currentUser = User(userKey: key, userData: userDict)
+                // setting profile images
+                self.setprofileImages()
+            }
+        })
     }
     
-//    func grabUserProfilePicURL() {
-//        DataService.ds.REF_USER_CURRENT.child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
-//           
-//               self.profilePicUrl = (snapshot.value as String)!
-//        })
-//    }
-//    
+    func addPosts() {
+        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
+            // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
+            self.posts = []
+            // going through every snapshot
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                //for every snap in the snapshot
+                for snap in snapshot {
+                    print("SNAP: \(snap)")
+                    // setting the value of each snap as a postDict
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        //setting constants of key and post
+                        let key = snap.key
+                        let post = Post(postKey: key, postData: postDict)
+                        //adding each post to the posts array
+                        self.posts.append(post)
+                    }
+                }
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPost" {
             if let postVC = segue.destination as? PostVC  {
@@ -187,11 +158,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         feedLbl.isHidden = false
     }
     
-  
+    func setprofileImages() {
+        let url = URL(string: self.currentUser.profilePicUrl)
+        self.profilePic.kf.setImage(with: url)
+        self.statusProfilePic.kf.setImage(with: url)
+    }
     
     
-    
-
     @IBAction func signOutTapped(_ sender: AnyObject) {
         // When signing out ... remove keychain ID
         let removeKeychain: Bool = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
