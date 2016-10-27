@@ -25,7 +25,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
-    let scrollViewContentHeight = 1350 as CGFloat
+    let scrollViewContentHeight = 1250 as CGFloat
     let scrollViewContentWidth = UIScreen.main.bounds.width
     var posts = [Post]()
     var profilePicUrl: String = ""
