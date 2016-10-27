@@ -22,6 +22,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var coverImage: UIImageView!
     @IBOutlet weak var postsCountLbl: UILabel!
+    @IBOutlet weak var followingCountLbl: UILabel!
+    @IBOutlet weak var followersCountLbl: UILabel!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
@@ -32,7 +34,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     var coverPhotoUrl: String = ""
     var imagePicker: UIImagePickerController!
     var imageSelected = false
-    
+    var currentUser: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,6 +129,16 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 
             }
         })
+        
+        // storing the information of the current user so it can be set later times
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+                //setting constants of key and post
+                let key = snapshot.key
+                self.currentUser = User(userKey: key, userData: userDict)
+                //adding each post to the posts array
+            }
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -151,7 +163,9 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         }
         
         // setting the posts label after it counts and pops the posts into the array
-          self.postsCountLbl.text = "\(self.posts.count)"
+        self.postsCountLbl.text = "\(self.posts.count)"
+        self.followersCountLbl.text = "\(self.currentUser.followerCount)"
+        self.followingCountLbl.text = "\(self.currentUser.followingCount)"
     }
     
     
