@@ -54,60 +54,18 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         usernameLbl.text = user.username
         print("here is user key\(user.userKey)")
         
-        DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.hasChild("posts") {
-                DataService.ds.REF_USER_CURRENT.child("posts").observe(.value, with: { (snapshot) in
-                    // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
-                    self.posts = []
-                    // snapshot will now grab all objects
-                    if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
-                        
-                        // for every post object ie "kldjfkjdls" : "true"
-                        for snap in snapshot {
-                            print("SNAP: \(snap)")
-                            // grab the key of that post and search for it in your posts database
-                            let post = DataService.ds.REF_POSTS.child(snap.key)
-                            print("THE POST NOW:\(post)")
-                            // now grab the snapshot of that specific post
-                            post.observeSingleEvent(of: .value, with: { (snapshot) in
-                                // set it up as a dictionary with string and any object
-                                if let postValue = snapshot.value as? Dictionary <String, AnyObject> {
-                                    print("POST VALUE:\(postValue)")
-                                    // the key will be the key of that post
-                                    let key = snapshot.key
-                                    // create a post instance with the new data
-                                    let post = Post(postKey: key, postData: postValue)
-                                    // add that post into the array
-                                    self.posts.append(post)
-                                    print("HERE IS THE THING IN ARRAY:\(post.caption)")
-                                    
-                                }
-                                
-                            })
-                            
-                        }
-                        
-                    }
-                    
-                })
-                
-            } else {
-                print("user doesnt have any posts")
-                
-            }
-            
-        })
+        
+        self.findAndParsePosts()
+        
         // downloading profile pic from firebase
         downloadProfilePic()
         
         // if the user has uploaded a coverphoto, then go and download it.
         DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("coverPhotoUrl") {
-                
                 self.downloadCoverPic()
             } else {
                 print("Cody1: User hasnt added dynamic cover photo")
-                
             }
         })
         
@@ -164,6 +122,53 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         
     }
     
+    func findAndParsePosts() {
+        DataService.ds.REF_USERS.child(user.userKey).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("posts") {
+                DataService.ds.REF_USERS.child(self.user.userKey).child("posts").observe(.value, with: { (snapshot) in
+                    // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
+                    self.posts = []
+                    // snapshot will now grab all objects
+                    if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                        
+                        // for every post object ie "kldjfkjdls" : "true"
+                        for snap in snapshot {
+                            print("SNAP: \(snap)")
+                            // grab the key of that post and search for it in your posts database
+                            let post = DataService.ds.REF_POSTS.child(snap.key)
+                            print("THE POST NOW:\(post)")
+                            // now grab the snapshot of that specific post
+                            post.observeSingleEvent(of: .value, with: { (snapshot) in
+                                // set it up as a dictionary with string and any object
+                                if let postValue = snapshot.value as? Dictionary <String, AnyObject> {
+                                    print("POST VALUE:\(postValue)")
+                                    // the key will be the key of that post
+                                    let key = snapshot.key
+                                    // create a post instance with the new data
+                                    let post = Post(postKey: key, postData: postValue)
+                                    // add that post into the array
+                                    self.posts.append(post)
+                                    print("HERE IS THE THING IN ARRAY:\(post.caption)")
+                                    
+                                }
+                                
+                            })
+                            
+                        }
+                        
+                    }
+                    
+                })
+                
+            } else {
+                print("user doesnt have any posts")
+                
+            }
+            
+        })
+
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
         print("THIS IS Y OFFSET \(yOffset)")
@@ -196,7 +201,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let post = posts[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
-            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
+            if let img = OtherUserVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 print("THIS IS THE POST FROM CELL:\(post)")
                 cell.configureCell(post: post, img: img)
             } else {

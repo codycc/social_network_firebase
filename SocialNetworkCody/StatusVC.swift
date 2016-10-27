@@ -33,19 +33,7 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         imagePicker.allowsEditing = true
         textViewField.isEditable = true
 
-        
-        // storing the information of the current user so it can be set later times
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
-                //setting constants of key and post
-                let key = snapshot.key
-                self.currentUser = User(userKey: key, userData: userDict)
-                //adding each post to the posts array
-            }
-        })
-        
-        
-      
+        self.setCurrentUser()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +44,17 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             print("unable to download and cache image using Kingfisher")
         }
         self.usernameLbl.text = "\(self.currentUser.username)"
+    }
+    
+    func setCurrentUser() {
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+                //setting constants of key and post
+                let key = snapshot.key
+                self.currentUser = User(userKey: key, userData: userDict)
+                //adding each post to the posts array
+            }
+        })
     }
     
   

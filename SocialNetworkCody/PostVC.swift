@@ -60,10 +60,6 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
                 })
             }
         
-        
-        
-        
-        
         //Downloading profile image
         let profile = PostVC.imageCache.object(forKey: post.profilePicUrl as NSString)
         

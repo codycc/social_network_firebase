@@ -18,40 +18,11 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    
-
         tableView.delegate = self
         tableView.dataSource = self
-        // here is what is passed from the search bar on the feed vc, I will then query my database with this term to display the proper users
-        print("HERE IS THE SEARCH TERM:\(searchTerm)")
-        
-        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
-            self.users = []
-            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
-                // for ever user in user
-                for snap in snapshot {
-                    let usernameRef = snap.childSnapshot(forPath: "username")
-                    let username = usernameRef.value
-                    if username as? String == self.searchTerm!.lowercased() {
-                        if let userDict = snap.value as? Dictionary<String, AnyObject> {
-                            let key = snap.key
-                            let user = User(userKey: key, userData: userDict)
-                            self.users.append(user)
-                        } else {
-                            print("couldnt add to dictionary")
-                        }
-                        self.tableView.reloadData()
-                    } else {
-                        print("doesnt match search term")
-                    }
-                }
-            }
-            
-        })
-        
+      
+        self.searchAndParseUsers()
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToOtherUserVC" {
@@ -91,6 +62,31 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return UserCell()
         }
         
+    }
+    
+    func searchAndParseUsers() {
+        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+            self.users = []
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                // for ever user in user
+                for snap in snapshot {
+                    let usernameRef = snap.childSnapshot(forPath: "username")
+                    let username = usernameRef.value
+                    if username as? String == self.searchTerm!.lowercased() {
+                        if let userDict = snap.value as? Dictionary<String, AnyObject> {
+                            let key = snap.key
+                            let user = User(userKey: key, userData: userDict)
+                            self.users.append(user)
+                        } else {
+                            print("couldnt add to dictionary")
+                        }
+                        self.tableView.reloadData()
+                    } else {
+                        print("doesnt match search term")
+                    }
+                }
+            }
+        })
     }
     
  
