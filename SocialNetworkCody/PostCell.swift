@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class PostCell: UITableViewCell {
     
@@ -37,6 +38,8 @@ class PostCell: UITableViewCell {
         //adding the user interaction
         likeImg.isUserInteractionEnabled = true
     }
+    
+   
     
   
     
@@ -83,8 +86,11 @@ class PostCell: UITableViewCell {
             })
         }
         
+      
+        
+        
 
-        // if theres an img from the cache then set the image
+       //  if theres an img from the cache then set the image
         if img != nil {
         self.postImg.image = img
         } else {

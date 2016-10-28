@@ -34,10 +34,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         tableView.dataSource = self
         searchBar.delegate = self
         searchBar.showsCancelButton = true
-     
         self.addPosts()
-        
         self.setCurrentUser()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            print("CALLING THE A SYNC METHOD")
+        }
 
     }
     
@@ -63,15 +66,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // grabbing each post out of the posts array
         let post = posts[indexPath.row]
-       
-        
-        
         // setting up each cell and calling configureCell which will update the UI with firebase data
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
             // let img equal to the imageCache with this specifiv post url
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 if let profileImg = FeedVC.imageCache.object(forKey: post.profilePicUrl as NSString) {
                     cell.configureCell(post: post, img: img, profileImage: profileImg)
+                    
                 }
                 // pass that into the configure cell with the post itself
             } else {
