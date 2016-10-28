@@ -40,9 +40,6 @@ class PostCell: UITableViewCell {
     }
     
    
-    
-  
-    
     // ui image with default value as nil
     func configureCell(post:Post, img: UIImage? = nil, profileImage: UIImage? = nil ) {
         self.post = post
@@ -65,53 +62,11 @@ class PostCell: UITableViewCell {
         })
         
         
-        // grabbing profile image from cache or downloading it from the url
-        if profileImage != nil {
-            self.profileImg.image = profileImage
-        } else {
-            let ref = FIRStorage.storage().reference(forURL: post.profilePicUrl)
-            
-            ref.data(withMaxSize: 2 * 1024 * 1024 , completion: { (data, error) in
-                if error != nil {
-                    print("cody!: unable to download image firebase storage")
-                } else {
-                    print("cody!: image downloaded fromfirebase storage ")
-                    if let imgData = data {
-                        if let postProfilePic = UIImage(data: imgData) {
-                            self.profileImg.image = postProfilePic
-                            FeedVC.imageCache.setObject(postProfilePic, forKey: post.profilePicUrl as NSString)
-                        }
-                    }
-                }
-            })
-        }
-        
-      
-        
-        
-
-       //  if theres an img from the cache then set the image
-        if img != nil {
-        self.postImg.image = img
-        } else {
-            // otherwise create the image from firebase storage
-           let ref = FIRStorage.storage().reference(forURL: post.imageUrl)
-            // max size aloud
-           ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-            if error != nil {
-                print("CODY!: Unable to download image Firebase storage")
-            } else {
-                print("CODY!: Image downloaded from firebase storage")
-                if let imgData = data {
-                    if let img = UIImage(data: imgData) {
-                        self.postImg.image = img
-                        // setting the cache now 
-                        FeedVC.imageCache.setObject(img, forKey: post.imageUrl as NSString)
-                    }
-                 }
-              }
-           })
-        }
+        let url = URL(string: post.imageUrl)
+        self.postImg.kf.setImage(with: url)
+       
+        let profileUrl = URL(string: post.profilePicUrl)
+        self.profileImg.kf.setImage(with: profileUrl)
         
         
         // check for the current users likes if anything changes
