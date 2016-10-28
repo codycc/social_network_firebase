@@ -36,9 +36,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.showsCancelButton = true
      
         self.addPosts()
+        
         self.setCurrentUser()
+
     }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -47,6 +48,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
+        
     }
     
     
@@ -61,6 +63,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // grabbing each post out of the posts array
         let post = posts[indexPath.row]
+       
+        
         
         // setting up each cell and calling configureCell which will update the UI with firebase data
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
@@ -78,6 +82,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         } else {
             return PostCell()
         }
+    }
+    
+    func sortList() {
+        posts.sort(by: { $0.date.compare($1.date) == ComparisonResult.orderedDescending })
+        tableView.reloadData(); // notify the table view the data has changed
     }
     
     func setCurrentUser() {
@@ -107,6 +116,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                         let post = Post(postKey: key, postData: postDict)
                         //adding each post to the posts array
                         self.posts.append(post)
+                        self.sortList()
+                        print("called sort list!!")
                     }
                 }
                 self.tableView.reloadData()

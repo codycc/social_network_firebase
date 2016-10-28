@@ -255,5 +255,8 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBAction func editCoverPressed(_ sender: AnyObject) {
         present(imagePicker,animated: true, completion: nil)
     }
+    @IBAction func editProfileTapped(_ sender: Any) {
+        
+    }
    
 }

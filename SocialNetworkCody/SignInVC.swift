@@ -87,8 +87,10 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                                     "profile-pic": "https://firebasestorage.googleapis.com/v0/b/socialnetworkcody.appspot.com/o/profile-pics%2F60B8721E-B3FE-44A8-B7AE-D7C6596059FE?alt=media&token=3014ef3a-ec02-4bc7-a9ed-1411a3599d24",
                                     "city-born": "Default",
                                     "current-city": "Default",
-                                    "workplace": "Default"
-                                    ]
+                                    "workplace": "Default",
+                                    "following-count": 0,
+                                    "follower-count": 0
+                                    ] as [String : Any]
                     self.completeSignIn(id: user.uid, userData: userData)
                 }
                 
@@ -120,8 +122,10 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                                                 "profile-pic": "https://firebasestorage.googleapis.com/v0/b/socialnetworkcody.appspot.com/o/profile-pics%2F60B8721E-B3FE-44A8-B7AE-D7C6596059FE?alt=media&token=3014ef3a-ec02-4bc7-a9ed-1411a3599d24",
                                                 "city-born": "Default",
                                                 "current-city": "Default",
-                                                "workplace": "Default"
-                                                ]
+                                                "workplace": "Default",
+                                                "following-count": 0,
+                                                "follower-count": 0
+                                                ] as [String : Any]
                                 self.completeSignIn(id: user.uid, userData: userData)
                                 self.performSegue(withIdentifier: "goToCustomize", sender: nil)
                             }
@@ -134,7 +138,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     
     // for existing users function to automatically sign them in
-    func completeSignIn(id: String, userData: Dictionary<String,String>) {
+    func completeSignIn(id: String, userData: Dictionary<String,Any>) {
         //passing the text from email field and password into the createfirebasedbuser function in the DataService class
         DataService.ds.createFirebaseDbUser(uid: id, userData: userData)
 //        let keychainResult = KeychainWrapper.defaultKeychainWrapper().stringForKey(KEY_UID)

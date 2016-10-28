@@ -157,7 +157,6 @@ class PostCell: UITableViewCell {
         self.saveBtn.isHidden = false
     }
     
-    
     @IBAction func saveBtnTapped(_ sender: AnyObject) {
         self.saveBtn.isHidden = true
         let post = self.post!
@@ -167,15 +166,10 @@ class PostCell: UITableViewCell {
         let newCaption = self.caption.text as String
         
         // setting up structure for this post
-        let postRef = DataService.ds.REF_POSTS
-        let newPost = ["caption": newCaption,
-                    "imageUrl": post.imageUrl,
-                    "likes": post.likes,
-                    "profilePicUrl": post.profilePicUrl,
-                    "userId": post.userId] as [String : Any]
+        let postRef = DataService.ds.REF_POSTS.child(post.postKey)
+        let newPost: Dictionary<String, Any> = ["caption": newCaption]
         // updating that specific post in firebase
-        let childUpdates = ["\(post.postKey)": newPost ]
-        postRef.updateChildValues(childUpdates)
+        postRef.updateChildValues(newPost)
         
     }
 }
