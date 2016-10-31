@@ -36,43 +36,15 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         })
         self.postCaption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
-            
         
         let url = URL(string: self.post.imageUrl)
         self.postImg.kf.setImage(with: url)
         
         let profileUrl = URL(string: self.post.profilePicUrl)
         self.profileImg.kf.setImage(with: profileUrl)
-
         
+        self.retrieveComments()
         
-        // going through every comment in the comments database and passing them to the Comment Model to use later 
-        // also, taking those comments and passing into the comments array for use in the tableview
-        DataService.ds.REF_COMMENTS.observe(.value, with: { (snapshot) in
-            // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
-            self.comments = []
-            // going through every snapshot
-            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
-                //for every snap in the snapshot
-                for snap in snapshot {
-                    print("SNAP: \(snap)")
-                   // grab the value for the child postId
-                    let postId = snap.childSnapshot(forPath: "postId")
-                    // if the value for that specific postId is equal to this post Id on the page, only then can you store it in the array
-                    let postIdValue = postId.value as? String
-                    if postIdValue == self.post.postKey {
-                        if let commentDict = snap.value as? Dictionary<String, AnyObject> {
-                            //setting constants of key and post
-                            let key = snap.key
-                            let comment = Comment(commentKey: key, commentData: commentDict)
-                            //adding each post to the posts array
-                            self.comments.append(comment)
-                        }
-                    }
-                }
-                self.tableView.reloadData()
-            }
-        })
     }
     
     //FOR KEYBOARD EDITING
@@ -99,6 +71,36 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
+    }
+    
+    func retrieveComments() {
+        // going through every comment in the comments database and passing them to the Comment Model to use later
+        // also, taking those comments and passing into the comments array for use in the tableview
+        DataService.ds.REF_COMMENTS.observe(.value, with: { (snapshot) in
+            // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
+            self.comments = []
+            // going through every snapshot
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                //for every snap in the snapshot
+                for snap in snapshot {
+                    print("SNAP: \(snap)")
+                    // grab the value for the child postId
+                    let postId = snap.childSnapshot(forPath: "postId")
+                    // if the value for that specific postId is equal to this post Id on the page, only then can you store it in the array
+                    let postIdValue = postId.value as? String
+                    if postIdValue == self.post.postKey {
+                        if let commentDict = snap.value as? Dictionary<String, AnyObject> {
+                            //setting constants of key and post
+                            let key = snap.key
+                            let comment = Comment(commentKey: key, commentData: commentDict)
+                            //adding each post to the posts array
+                            self.comments.append(comment)
+                        }
+                    }
+                }
+                self.tableView.reloadData()
+            }
+        })
     }
 
  

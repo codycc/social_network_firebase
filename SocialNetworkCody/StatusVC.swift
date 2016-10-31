@@ -37,13 +37,8 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let url = URL(string: self.currentUser.profilePicUrl)
-        if url != nil {
-            profileImage.kf.setImage(with: url)
-        } else {
-            print("unable to download and cache image using Kingfisher")
-        }
-        self.usernameLbl.text = "\(self.currentUser.username)"
+      
+        
     }
     
     func setCurrentUser() {
@@ -54,7 +49,18 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 self.currentUser = User(userKey: key, userData: userDict)
                 //adding each post to the posts array
             }
+            self.setProfileImages()
         })
+    }
+    
+    func setProfileImages() {
+        let url = URL(string: self.currentUser.profilePicUrl)
+        if url != nil {
+            profileImage.kf.setImage(with: url)
+            self.usernameLbl.text = "\(self.currentUser.username)"
+        } else {
+            print("unable to download and cache image using Kingfisher")
+        }
     }
     
   

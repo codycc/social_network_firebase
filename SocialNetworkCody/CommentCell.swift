@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class CommentCell: UITableViewCell {
     @IBOutlet weak var commentText: UITextView!
@@ -38,31 +39,35 @@ class CommentCell: UITableViewCell {
         
         // Grabbing the specific profile pic from the user who made the comment and then caching it
         DataService.ds.REF_USERS.child(userId).child("profile-pic").observeSingleEvent(of: .value,with: { (snapshot) in
-            let url = snapshot.value
+            let url = URL(string: snapshot.value as! String)
+            self.profilePic.kf.setImage(with: url)
             
-            // Downloading post image
-            let img = PostVC.imageCache.object(forKey: url as! NSString)
-            if img != nil {
-                self.profilePic.image = img
-            } else {
-                // otherwise create the image from firebase storage
-                let ref = FIRStorage.storage().reference(forURL: url as! String)
-                // max size aloud
-                ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                    if error != nil {
-                        print("CODY!: Unable to download image Firebase storage")
-                    } else {
-                        print("CODY!: Image downloaded from firebase storage")
-                        if let imgData = data {
-                            if let img = UIImage(data: imgData) {
-                                self.profilePic.image = img
-                                // setting the cache now
-                                PostVC.imageCache.setObject(img, forKey: url as! NSString)
-                            }
-                        }
-                    }
-                })
-            }
+            
+//            // Downloading post image
+//            let img = PostVC.imageCache.object(forKey: url as! NSString)
+//            if img != nil {
+//                self.profilePic.image = img
+//            } else {
+//                // otherwise create the image from firebase storage
+//                let ref = FIRStorage.storage().reference(forURL: url as! String)
+//                // max size aloud
+//                ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
+//                    if error != nil {
+//                        print("CODY!: Unable to download image Firebase storage")
+//                    } else {
+//                        print("CODY!: Image downloaded from firebase storage")
+//                        if let imgData = data {
+//                            if let img = UIImage(data: imgData) {
+//                                self.profilePic.image = img
+//                                // setting the cache now
+//                                PostVC.imageCache.setObject(img, forKey: url as! NSString)
+//                            }
+//                        }
+//                    }
+//                })
+//            }
         })
+        
+        
     }
 }

@@ -53,39 +53,23 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         
         self.setCurrentUser()
         self.checkAndAddPosts()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
      
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
-        self.usernameLbl.text = self.currentUser.username
-        self.cityBornLbl.text = self.currentUser.cityBorn
-        self.currentCityLbl.text = self.currentUser.currentCity
-        self.workplaceLbl.text = self.currentUser.workplace
         self.postsCountLbl.text = "\(self.posts.count)"
-        self.followersCountLbl.text = "\(self.currentUser.followerCount)"
-        self.followingCountLbl.text = "\(self.currentUser.followingCount)"
+
         
          // only scroll down to full table if the user has a post
         if self.posts.count >= 1 {
             scrollView.isScrollEnabled = true
         }
-     
-        // if the current user has a cover photo, then go and cache it
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.hasChild("coverPhotoUrl") {
-                let url = URL(string: self.currentUser.coverPhotoUrl)
-                if url != nil {
-                  self.coverImage.kf.setImage(with: url)
-                } else {
-                    print("unable to download and cache image with Kingfisher")
-                }
-                
-            } else {
-                print("Cody1: User hasnt added dynamic cover photo")
-                
-            }
-        })
     }
     
    
@@ -117,15 +101,38 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 let key = snapshot.key
                 self.currentUser = User(userKey: key, userData: userDict)
                 // setting profile images
-                self.setProfileImages()
+                self.setProfile()
             }
         })
     }
     
-    func setProfileImages() {
+    func setProfile() {
         let url = URL(string: self.currentUser.profilePicUrl)
         self.profileImg.kf.setImage(with: url)
         self.profileImg2.kf.setImage(with: url)
+        self.usernameLbl.text = self.currentUser.username
+        self.cityBornLbl.text = self.currentUser.cityBorn
+        self.currentCityLbl.text = self.currentUser.currentCity
+        self.workplaceLbl.text = self.currentUser.workplace
+        self.postsCountLbl.text = "\(self.posts.count)"
+        self.followersCountLbl.text = "\(self.currentUser.followerCount)"
+        self.followingCountLbl.text = "\(self.currentUser.followingCount)"
+        
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.hasChild("coverPhotoUrl") {
+                let url = URL(string: self.currentUser.coverPhotoUrl)
+                if url != nil {
+                    self.coverImage.kf.setImage(with: url)
+                } else {
+                    print("unable to download and cache image with Kingfisher")
+                }
+                
+            } else {
+                print("Cody1: User hasnt added dynamic cover photo")
+                
+            }
+            
+        })
         
     }
     
@@ -156,20 +163,13 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                                     // add that post into the array
                                     self.posts.append(post)
                                     print("HERE IS THE THING IN ARRAY:\(post.caption)")
-                                    
                                 }
-                                
                             })
-                            
                         }
-                        
                     }
-                    
                 })
-                
             } else {
                 print("user doesnt have any posts")
-                
             }
         })
     }
