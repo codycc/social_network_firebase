@@ -41,8 +41,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             self.tableView.reloadData()
             print("CALLING THE A SYNC METHOD")
         }
-      
-
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

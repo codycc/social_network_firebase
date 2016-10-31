@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import Kingfisher
+
 class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate  {
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
@@ -34,57 +36,14 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         })
         self.postCaption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
+            
         
+        let url = URL(string: self.post.imageUrl)
+        self.postImg.kf.setImage(with: url)
         
-        // Downloading post image
-            let img = PostVC.imageCache.object(forKey: post.imageUrl as NSString)
-            if img != nil {
-                self.postImg.image = img
-            } else {
-                // otherwise create the image from firebase storage
-                let ref = FIRStorage.storage().reference(forURL: post.imageUrl)
-                // max size aloud
-                ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                    if error != nil {
-                        print("CODY!: Unable to download image Firebase storage")
-                    } else {
-                        print("CODY!: Image downloaded from firebase storage")
-                        if let imgData = data {
-                            if let img = UIImage(data: imgData) {
-                                self.postImg.image = img
-                                // setting the cache now
-                                PostVC.imageCache.setObject(img, forKey: self.post.imageUrl as NSString)
-                            }
-                        }
-                    }
-                })
-            }
-        
-        //Downloading profile image
-        let profile = PostVC.imageCache.object(forKey: post.profilePicUrl as NSString)
-        
-        if profile != nil {
-            self.profileImg.image = profile
-        } else {
-            // otherwise create the image from firebase storage
-            let ref = FIRStorage.storage().reference(forURL: post.profilePicUrl)
-            // max size aloud
-            ref.data(withMaxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("CODY!: Unable to download image Firebase storage")
-                } else {
-                    print("CODY!: Image downloaded from firebase storage")
-                    if let imgData = data {
-                        if let img = UIImage(data: imgData) {
-                            self.profileImg.image = img
-                            // setting the cache now
-                            PostVC.imageCache.setObject(img, forKey: self.post.profilePicUrl as NSString)
-                        }
-                    }
-                }
-            })
-        }
-        
+        let profileUrl = URL(string: self.post.profilePicUrl)
+        self.profileImg.kf.setImage(with: profileUrl)
+
         
         
         // going through every comment in the comments database and passing them to the Comment Model to use later 
