@@ -127,6 +127,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         })
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPost" {
             if let postVC = segue.destination as? PostVC  {
