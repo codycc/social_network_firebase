@@ -177,7 +177,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         self.statusProfilePic.kf.setImage(with: url)
     }
     
-    
     @IBAction func signOutTapped(_ sender: AnyObject) {
         // When signing out ... remove keychain ID
         let removeKeychain: Bool = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
