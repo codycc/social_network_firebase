@@ -36,7 +36,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.showsCancelButton = true
         self.addPosts()
         self.setCurrentUser()
-        
         DispatchQueue.main.async {
             self.tableView.reloadData()
             print("CALLING THE A SYNC METHOD")
@@ -47,12 +46,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         return 1
     }
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
-        
     }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var post: Post!
@@ -60,7 +56,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         print("DID SELECT ROW AT CALLED")
         performSegue(withIdentifier: "goToPost", sender: post)
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // grabbing each post out of the posts array
@@ -71,7 +66,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 if let profileImg = FeedVC.imageCache.object(forKey: post.profilePicUrl as NSString) {
                     cell.configureCell(post: post, img: img, profileImage: profileImg)
-                    
                 }
                 // pass that into the configure cell with the post itself
             } else {
@@ -197,10 +191,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         profilePic.isHidden = true
         signOutImage.isHidden = true
         feedLbl.isHidden = true
+        searchBar.becomeFirstResponder()
     }
     
-  
-
     @IBAction func statusFieldTapped(_ sender: AnyObject) {
         performSegue(withIdentifier: "goToStatus", sender: nil)
     }

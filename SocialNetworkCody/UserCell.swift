@@ -25,7 +25,7 @@ class UserCell: UITableViewCell {
     }
     
     func configureCell(user: User, img: UIImage? = nil) {
-        usernameLbl.text = user.username
+        usernameLbl.text = user.username.capitalized
         let url = URL(string: user.profilePicUrl)
         if url != nil {
             profileImg.kf.setImage(with: url)
