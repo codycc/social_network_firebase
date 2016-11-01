@@ -23,11 +23,13 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     var comments = [Comment]()
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         commentField.delegate = self
+        postCaption.isEditable = false
         // setting up the information from the didselectrow, taking from sender and setting up views and labels
         let userId = post.userId
         DataService.ds.REF_USERS.child(userId).child("username").observeSingleEvent(of: .value, with: { (snapshot) in

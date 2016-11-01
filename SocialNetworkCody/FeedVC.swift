@@ -103,15 +103,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 //for every snap in the snapshot
                 for snap in snapshot {
                     print("SNAP: \(snap)")
+                    // for every post, if the post's user Id matches with one the user Id's in the current users following list, then add that post to the array
+                    let userId = snap.childSnapshot(forPath: "userId")
+                    let userIdValue = userId.value as! String
                     // setting the value of each snap as a postDict
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         //setting constants of key and post
                         let key = snap.key
-                        let post = Post(postKey: key, postData: postDict)
-                        //adding each post to the posts array
-                        self.posts.append(post)
-                        self.sortList()
-                        print("called sort list!!")
+                         _ = DataService.ds.REF_USER_CURRENT.child("following").observeSingleEvent(of: .value, with: { (snapshot) in
+                            if snapshot.hasChild(userIdValue) {
+                                let post = Post(postKey: key, postData: postDict)
+                                //adding each post to the posts array
+                                self.posts.append(post)
+                                self.sortList()
+                                print("called sort list!!")
+                            } else {
+                                print("this post isnt for this user")
+                            }
+                          })
                     }
                 }
                 self.tableView.reloadData()

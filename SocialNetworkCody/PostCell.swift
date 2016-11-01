@@ -58,7 +58,8 @@ class PostCell: UITableViewCell {
         // grab value of username and set the label accordinly 
         userNickname.observeSingleEvent(of: .value, with: { (snapshot) in
              print(snapshot)
-            self.usernameLbl.text = snapshot.value as! String?
+            let username = snapshot.value  as! String?
+            self.usernameLbl.text = username?.capitalized
         })
         
         
