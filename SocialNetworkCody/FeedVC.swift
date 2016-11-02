@@ -71,13 +71,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             } else {
                 cell.configureCell(post: post)
             }
-           
              return cell
         } else {
             return PostCell()
         }
     }
     
+    // sorting through the array, and comparing posted date then reloading data
     func sortList() {
         posts.sort(by: { $0.date.compare($1.date) == ComparisonResult.orderedDescending })
         tableView.reloadData(); // notify the table view the data has changed
@@ -201,6 +201,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         signOutImage.isHidden = true
         feedLbl.isHidden = true
         searchBar.becomeFirstResponder()
+    }
+    @IBAction func globeTapped(_ sender: Any) {
+        print("icon tapped")
     }
     
     @IBAction func statusFieldTapped(_ sender: AnyObject) {
