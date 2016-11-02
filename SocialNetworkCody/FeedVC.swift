@@ -51,6 +51,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     override func viewDidAppear(_ animated: Bool) {
         self.checkNumberOfPosts()
+        self.sortList()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,10 +89,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
-    func loadList(notification: NSNotification){
-        //load data here
-        self.tableView.reloadData()
-    }
+
     
     // sorting through the array, and comparing posted date then reloading data
     func sortList() {

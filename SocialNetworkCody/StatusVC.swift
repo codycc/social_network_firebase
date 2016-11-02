@@ -127,18 +127,15 @@ class StatusVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
    
     func postToFirebase(imgUrl: String!, profileUrl: String!) {
-        let dateformatter = DateFormatter()
-        dateformatter.dateStyle = DateFormatter.Style.medium
-        dateformatter.timeStyle = DateFormatter.Style.short
-        let now = dateformatter.string(from: NSDate() as Date)
-
+        let timestamp = String(NSDate().timeIntervalSince1970)
+    
         let post: Dictionary<String, Any> = [
             "caption": textViewField.text! as String,
             "imageUrl": imgUrl as String,
             "likes": 0 as Int,
             "userId": DataService.ds.REF_USER_CURRENT.key,
             "profilePicUrl": profileUrl,
-            "date": now
+            "date": timestamp
         ]
         // setting the value with whatever is passed into this function
         let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
