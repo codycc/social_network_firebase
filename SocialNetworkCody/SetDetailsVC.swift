@@ -90,12 +90,13 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
                     if let url = downloadUrl {
                         // passing this img url to the post to firebase database function so it can be stored with the specific user
                         self.postToFirebase(imgUrl: url)
+                        
                     }
                 }
             }
         }
        // opening app
-        performSegue(withIdentifier: "enterApp", sender: nil)
+     
     }
     
     func postToFirebase(imgUrl: String!) {
@@ -108,7 +109,7 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         ]
         // updating the database specific user with new information
         DataService.ds.REF_USER_CURRENT.updateChildValues(userInfo)
-        
+        performSegue(withIdentifier: "enterApp", sender: nil)
         //Reset all fields
         usernameField.text = ""
         cityBornField.text = ""
@@ -116,6 +117,7 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
         imageSelected = false
         
         profilePicAdd.image = UIImage(named: "default-pic")
+        
     }
     
   
