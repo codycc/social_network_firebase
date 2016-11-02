@@ -41,17 +41,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         self.addPosts()
         self.setCurrentUser()
         
-                
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            print("CALLING THE A SYNC METHOD")
-        }
+        
     }
-    
-    
     override func viewDidAppear(_ animated: Bool) {
         self.checkNumberOfPosts()
-        self.sortList()
+        self.tableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -89,12 +83,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
-
-    
     // sorting through the array, and comparing posted date then reloading data
     func sortList() {
         posts.sort(by: { $0.date.compare($1.date) == ComparisonResult.orderedDescending })
-        tableView.reloadData(); // notify the table view the data has changed
     }
     
     func setCurrentUser() {
@@ -131,18 +122,28 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                                 let post = Post(postKey: key, postData: postDict)
                                 //adding each post to the posts array
                                 self.posts.append(post)
-                                self.sortList()
+                                 self.sortList()
+                                self.refreshUI()
                                 print("called sort list!!")
-                            } else {
-                                print("this post isnt for this user")
                             }
                           })
                     }
+                 
                 }
-                self.tableView.reloadData()
+                
             }
+           
+            print("current number of posts\(self.posts.count)")
         })
-        self.checkNumberOfPosts()
+    
+      // self.refreshUI()
+    }
+    
+    func refreshUI() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            print("CALLING THE A SYNC METHOD")
+        }
     }
     
     func checkNumberOfPosts() {
@@ -238,7 +239,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.becomeFirstResponder()
     }
     @IBAction func globeTapped(_ sender: Any) {
-        performSegue(withIdentifier: "goToExploreVC", sender: nil)
+        print("icon tapped")
     }
     
     @IBAction func statusFieldTapped(_ sender: AnyObject) {

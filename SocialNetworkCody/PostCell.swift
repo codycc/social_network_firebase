@@ -112,6 +112,7 @@ class PostCell: UITableViewCell {
                 self.likesRef.removeValue()
             }
         })
+        
     }
     
     @IBAction func editPostTapped(_ sender: AnyObject) {
@@ -134,4 +135,6 @@ class PostCell: UITableViewCell {
         postRef.updateChildValues(newPost)
         
     }
+    
+  
 }

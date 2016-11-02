@@ -663,6 +663,7 @@
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty-heart" translatesAutoresizingMaskIntoConstraints="NO" id="mWc-nq-VlF">
                                                                             <rect key="frame" x="310" y="0.0" width="45" height="45"/>
+                                                                            <gestureRecognizers/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="45" id="8wQ-6V-mN7"/>
                                                                                 <constraint firstAttribute="width" constant="45" id="GKo-PH-1Xe"/>
@@ -683,23 +684,20 @@
                                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                                    <connections>
-                                                                        <outletCollection property="gestureRecognizers" destination="S7W-4N-dkr" appends="YES" id="9bH-32-xjU"/>
-                                                                    </connections>
                                                                 </textView>
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GSs-wv-rxR">
-                                                            <rect key="frame" x="284" y="391" width="76" height="22"/>
+                                                            <rect key="frame" x="284.5" y="391" width="75.5" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBF-nm-6Wi">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="36" height="22"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="35.5" height="22"/>
                                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.53745719178082196" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2222" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udm-DZ-QMs">
-                                                                    <rect key="frame" x="40" y="0.0" width="36" height="22"/>
+                                                                    <rect key="frame" x="39.5" y="0.0" width="36" height="22"/>
                                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.86927440068493156" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -837,13 +835,11 @@
                         <action selector="signOutTapped:" destination="bWE-xY-NgQ" id="tr3-CW-zTg"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="ebD-2x-uPd"/>
                 <tapGestureRecognizer id="HoR-Gh-3T0">
                     <connections>
                         <action selector="profilePicTapped:" destination="bWE-xY-NgQ" id="6LK-nZ-nGm"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="S7W-4N-dkr"/>
                 <tapGestureRecognizer id="Lsb-do-OpP">
                     <connections>
                         <action selector="magGlassTapped:" destination="bWE-xY-NgQ" id="1o3-mv-6kZ"/>
@@ -2101,6 +2097,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="k5h-2q-SgC"/>
-        <segue reference="UvL-8c-Tc9"/>
+        <segue reference="mEU-ZU-oGF"/>
     </inferredMetricsTieBreakers>
 </document>
