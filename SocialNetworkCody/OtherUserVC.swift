@@ -245,7 +245,9 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                 self.followBtn.setTitleColor(UIColor.white, for: .normal)
             }
         })
+        
+        
     }
-    
 }
+
 

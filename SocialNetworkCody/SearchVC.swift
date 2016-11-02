@@ -14,14 +14,17 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var users = [User]()
     var searchTerm: String!
+
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-      
+        
         self.searchAndParseUsers()
+        
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,6 +95,8 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
  
     @IBAction func arrowBtnPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        
+
     }
     
 }

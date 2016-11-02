@@ -18,6 +18,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     @IBOutlet weak var profilePic: CircleView!
     @IBOutlet weak var statusProfilePic: UIImageView!
     @IBOutlet weak var signOutImage: UIImageView!
+    @IBOutlet weak var showcaseArrow: UIImageView!
+    @IBOutlet weak var showcaseView: FancyView!
+    @IBOutlet weak var showcaseLbl: UILabel!
+    @IBOutlet weak var exploreIcon: UIImageView!
 
     @IBOutlet weak var feedLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -36,10 +40,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.showsCancelButton = true
         self.addPosts()
         self.setCurrentUser()
+        
+                
         DispatchQueue.main.async {
             self.tableView.reloadData()
             print("CALLING THE A SYNC METHOD")
         }
+    }
+    
+    func reloadData() {
+        self.tableView.reloadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        self.checkNumberOfPosts()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,6 +90,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
+    func loadList(notification: NSNotification){
+        //load data here
+        self.tableView.reloadData()
+    }
+    
     // sorting through the array, and comparing posted date then reloading data
     func sortList() {
         posts.sort(by: { $0.date.compare($1.date) == ComparisonResult.orderedDescending })
@@ -93,6 +111,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             }
         })
     }
+    
+    
     
     func addPosts() {
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
@@ -126,6 +146,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 self.tableView.reloadData()
             }
         })
+    }
+    
+    func checkNumberOfPosts() {
+        print("there are this many posts!!! \(self.posts.count)")
+        if self.posts.count >= 1 {
+            showcaseLbl.isHidden = true
+            showcaseArrow.isHidden = true
+            showcaseView.isHidden = true
+        } else {
+            showcaseLbl.isHidden = false
+            showcaseArrow.isHidden = false
+            showcaseView.isHidden = false
+        }
     }
     
     
@@ -162,6 +195,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         profilePic.isHidden = false
         signOutImage.isHidden = false
         feedLbl.isHidden = false
+        exploreIcon.isHidden = false
+        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -171,6 +206,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         profilePic.isHidden = false
         signOutImage.isHidden = false
         feedLbl.isHidden = false
+        exploreIcon.isHidden = false
     }
     
     func setprofileImages() {
@@ -200,6 +236,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         profilePic.isHidden = true
         signOutImage.isHidden = true
         feedLbl.isHidden = true
+        exploreIcon.isHidden = true
+        
         searchBar.becomeFirstResponder()
     }
     @IBAction func globeTapped(_ sender: Any) {
