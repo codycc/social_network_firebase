@@ -68,7 +68,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y28-g2-0oH" customClass="RoundButton" customModule="SocialNetworkCody" customModuleProvider="target">
-                                <rect key="frame" x="113" y="230" width="150" height="150"/>
+                                <rect key="frame" x="112.5" y="230" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.25490196078431371" green="0.36078431372549019" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Iki-L9-LVO"/>
@@ -196,14 +196,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="Yop-a4-s9A">
-                                                    <rect key="frame" x="3" y="2.5" width="85" height="85"/>
+                                                    <rect key="frame" x="3" y="3" width="85" height="85"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="85" id="Lob-eo-U1o"/>
                                                         <constraint firstAttribute="width" constant="85" id="Sfv-jo-Shw"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cody Condon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-a1-90W">
-                                                    <rect key="frame" x="103" y="34.5" width="264" height="21"/>
+                                                    <rect key="frame" x="103" y="35" width="264" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="FTE-aA-R67"/>
                                                     </constraints>
@@ -283,7 +283,7 @@
                                 </constraints>
                             </view>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="GzE-dA-GTY" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
-                                <rect key="frame" x="113" y="81" width="150" height="150"/>
+                                <rect key="frame" x="112.5" y="81" width="150" height="150"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="g5e-ni-0Qj"/>
@@ -392,10 +392,10 @@
             </objects>
             <point key="canvasLocation" x="904.79999999999995" y="-307.1964017991005"/>
         </scene>
-        <!--View Controller-->
+        <!--ExploreVC-->
         <scene sceneID="7DR-o0-xIN">
             <objects>
-                <viewController id="TAL-qH-JsR" sceneMemberID="viewController">
+                <viewController id="TAL-qH-JsR" customClass="ExploreVC" customModule="SocialNetworkCody" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="v8m-6K-JVu"/>
                         <viewControllerLayoutGuide type="bottom" id="Rci-1J-S2L"/>
@@ -413,49 +413,88 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1fx-HY-dZ4">
+                                        <rect key="frame" x="5" y="19" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="Mw9-he-h8M"/>
+                                            <constraint firstAttribute="height" constant="40" id="gdD-a1-g84"/>
+                                        </constraints>
+                                        <state key="normal" image="arrow-left"/>
+                                        <connections>
+                                            <action selector="backBtnPressed:" destination="TAL-qH-JsR" eventType="touchUpInside" id="Cyf-gr-ajX"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1843137255" green="0.66666666669999997" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="ohF-d9-VQP" firstAttribute="centerX" secondItem="oe8-Yg-VFL" secondAttribute="centerX" id="0RQ-NL-RLE"/>
+                                    <constraint firstItem="1fx-HY-dZ4" firstAttribute="leading" secondItem="oe8-Yg-VFL" secondAttribute="leading" constant="5" id="Y0x-bM-w0L"/>
                                     <constraint firstAttribute="height" constant="65" id="caK-sm-OpY"/>
+                                    <constraint firstItem="ohF-d9-VQP" firstAttribute="centerY" secondItem="1fx-HY-dZ4" secondAttribute="centerY" id="eXd-As-JYn"/>
                                     <constraint firstAttribute="bottom" secondItem="ohF-d9-VQP" secondAttribute="bottom" constant="8" id="uOB-8y-S9T"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dSr-Zh-AG3">
-                                <rect key="frame" x="0.0" y="73" width="375" height="586"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dSr-Zh-AG3">
+                                <rect key="frame" x="10" y="120" width="355" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0me-eQ-fQx">
-                                    <size key="itemSize" width="122" height="122"/>
+                                    <size key="itemSize" width="118" height="118"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="T8C-s9-qKp">
-                                        <rect key="frame" x="0.0" y="0.0" width="122" height="122"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExploreCell" id="T8C-s9-qKp" customClass="ExploreCell" customModule="SocialNetworkCody" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="122" height="122"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="hu4-G0-Zkh">
-                                                    <rect key="frame" x="8" y="8" width="106" height="106"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="hu4-G0-Zkh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="hu4-G0-Zkh" firstAttribute="top" secondItem="T8C-s9-qKp" secondAttribute="top" id="Eaj-Vb-7je"/>
+                                            <constraint firstAttribute="trailing" secondItem="hu4-G0-Zkh" secondAttribute="trailing" id="Gwf-kk-C3C"/>
+                                            <constraint firstAttribute="bottom" secondItem="hu4-G0-Zkh" secondAttribute="bottom" id="Omd-6K-uvf"/>
+                                            <constraint firstItem="hu4-G0-Zkh" firstAttribute="leading" secondItem="T8C-s9-qKp" secondAttribute="leading" id="pRH-JS-Fhe"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="userImg" destination="hu4-G0-Zkh" id="xgh-qv-ddg"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check out these Users!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jM-Oa-rer">
+                                <rect key="frame" x="10" y="73" width="349" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="mmm-EC-t3p"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.78746698943661975" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dSr-Zh-AG3" secondAttribute="trailing" constant="10" id="7O7-7S-ABX"/>
                             <constraint firstItem="oe8-Yg-VFL" firstAttribute="leading" secondItem="zHm-rB-mVp" secondAttribute="leading" id="ALj-hr-CZ7"/>
                             <constraint firstAttribute="trailing" secondItem="oe8-Yg-VFL" secondAttribute="trailing" id="EoF-gr-II6"/>
+                            <constraint firstItem="dSr-Zh-AG3" firstAttribute="leading" secondItem="zHm-rB-mVp" secondAttribute="leading" constant="10" id="ExI-1D-Z9R"/>
+                            <constraint firstItem="4jM-Oa-rer" firstAttribute="leading" secondItem="zHm-rB-mVp" secondAttribute="leading" constant="10" id="S1s-gc-Yey"/>
+                            <constraint firstItem="4jM-Oa-rer" firstAttribute="top" secondItem="oe8-Yg-VFL" secondAttribute="bottom" constant="8" id="c3L-3q-m5t"/>
+                            <constraint firstItem="Rci-1J-S2L" firstAttribute="top" secondItem="dSr-Zh-AG3" secondAttribute="bottom" id="g8Q-km-bJ3"/>
+                            <constraint firstItem="4jM-Oa-rer" firstAttribute="trailing" secondItem="zHm-rB-mVp" secondAttribute="trailingMargin" id="jeB-II-tms"/>
+                            <constraint firstItem="dSr-Zh-AG3" firstAttribute="top" secondItem="oe8-Yg-VFL" secondAttribute="bottom" constant="55" id="jeW-EC-NBK"/>
                             <constraint firstItem="oe8-Yg-VFL" firstAttribute="top" secondItem="zHm-rB-mVp" secondAttribute="top" id="pdx-br-SVi"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="dSr-Zh-AG3" id="IIJ-uG-01k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gCi-O4-sXC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -651,16 +690,16 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GSs-wv-rxR">
-                                                            <rect key="frame" x="284.5" y="391" width="75.5" height="22"/>
+                                                            <rect key="frame" x="284" y="391" width="76" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBF-nm-6Wi">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="35.5" height="22"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="36" height="22"/>
                                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.53745719178082196" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2222" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udm-DZ-QMs">
-                                                                    <rect key="frame" x="39.5" y="0.0" width="36" height="22"/>
+                                                                    <rect key="frame" x="40" y="0.0" width="36" height="22"/>
                                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.86927440068493156" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -729,7 +768,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8wd-La-MZ9" customClass="FancyView" customModule="SocialNetworkCody" customModuleProvider="target">
-                                <rect key="frame" x="52" y="244" width="270" height="170"/>
+                                <rect key="frame" x="52.5" y="244" width="270" height="170"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check out our explore and search tabs, to start following users!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3og-Ua-uvp">
                                         <rect key="frame" x="8" y="8" width="254" height="154"/>
@@ -789,6 +828,7 @@
                         <segue destination="MC3-Di-c4n" kind="show" identifier="goToStatus" id="UvL-8c-Tc9"/>
                         <segue destination="seu-Dl-Bf4" kind="show" identifier="goToMainProfile" id="HZi-fq-Eov"/>
                         <segue destination="4cV-xA-5An" kind="show" identifier="goToSearchVC" id="xKt-gW-E7l"/>
+                        <segue destination="TAL-qH-JsR" kind="show" identifier="goToExploreVC" id="EjS-q9-mdZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GeE-7T-ZNv" userLabel="First Responder" sceneMemberID="firstResponder"/>

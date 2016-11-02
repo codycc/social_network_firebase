@@ -48,9 +48,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
-    func reloadData() {
-        self.tableView.reloadData()
-    }
+    
     override func viewDidAppear(_ animated: Bool) {
         self.checkNumberOfPosts()
     }
@@ -146,6 +144,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
                 self.tableView.reloadData()
             }
         })
+        self.checkNumberOfPosts()
     }
     
     func checkNumberOfPosts() {
@@ -241,7 +240,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.becomeFirstResponder()
     }
     @IBAction func globeTapped(_ sender: Any) {
-        print("icon tapped")
+        performSegue(withIdentifier: "goToExploreVC", sender: nil)
     }
     
     @IBAction func statusFieldTapped(_ sender: AnyObject) {
