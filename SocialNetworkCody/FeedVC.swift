@@ -239,7 +239,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         searchBar.becomeFirstResponder()
     }
     @IBAction func globeTapped(_ sender: Any) {
-        print("icon tapped")
+        performSegue(withIdentifier: "goToExploreVC", sender: nil)
     }
     
     @IBAction func statusFieldTapped(_ sender: AnyObject) {

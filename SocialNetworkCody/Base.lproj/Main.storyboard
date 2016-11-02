@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="-511" y="139"/>
         </scene>
         <!--SearchVC-->
         <scene sceneID="nPI-e6-c7C">
@@ -251,7 +251,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="904.79999999999995" y="602.24887556221893"/>
+            <point key="canvasLocation" x="1689" y="844"/>
         </scene>
         <!--Set DetailsVC-->
         <scene sceneID="KAk-YT-akD">
@@ -494,6 +494,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="dSr-Zh-AG3" id="IIJ-uG-01k"/>
+                        <segue destination="aw6-PR-Ioy" kind="show" identifier="goToOtherUserFromExploreVC" id="MgC-3Y-LL5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gCi-O4-sXC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1009,7 +1010,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2462" y="-278"/>
+            <point key="canvasLocation" x="3609" y="-277"/>
         </scene>
         <!--PostVC-->
         <scene sceneID="UVd-qQ-VEj">
@@ -1244,7 +1245,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2461.5999999999999" y="540.17991004497753"/>
+            <point key="canvasLocation" x="3609" y="522"/>
         </scene>
         <!--Main ProfileVC-->
         <scene sceneID="Jat-wC-LoR">
@@ -1688,7 +1689,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3221.5999999999999" y="138.53073463268368"/>
+            <point key="canvasLocation" x="4764" y="139"/>
         </scene>
         <!--Other UserVC-->
         <scene sceneID="2Xh-RX-KYk">
@@ -2077,7 +2078,7 @@
                 <tapGestureRecognizer id="MBE-Rr-5gp"/>
                 <tapGestureRecognizer id="TPe-mf-eLG"/>
             </objects>
-            <point key="canvasLocation" x="1656.8" y="1144.2278860569716"/>
+            <point key="canvasLocation" x="2599" y="161"/>
         </scene>
     </scenes>
     <resources>
@@ -2096,7 +2097,8 @@
         <image name="sign-out" width="92" height="65"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="k5h-2q-SgC"/>
+        <segue reference="0ai-qZ-pEI"/>
         <segue reference="mEU-ZU-oGF"/>
+        <segue reference="sIL-zc-Ibv"/>
     </inferredMetricsTieBreakers>
 </document>

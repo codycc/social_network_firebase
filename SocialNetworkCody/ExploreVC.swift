@@ -30,6 +30,11 @@ class ExploreVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return users.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let user = users[indexPath.item]
+        performSegue(withIdentifier: "goToOtherUserFromExploreVC", sender: user)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = users[indexPath.item]
         
@@ -43,6 +48,16 @@ class ExploreVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             return UICollectionViewCell()
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToOtherUserFromExploreVC" {
+            if let otherUserVC = segue.destination as? OtherUserVC  {
+                if let user = sender as? User {
+                    otherUserVC.user = user
+                }
+            }
+        }
     }
     
     
