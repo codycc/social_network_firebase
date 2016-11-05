@@ -166,6 +166,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                                 }
                             })
                         }
+                        self.refreshUI()
                     }
                 })
             } else {
@@ -210,6 +211,13 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             print("Cody1: A valid image wasnt selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func refreshUI() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            print("CALLING THE A SYNC METHOD")
+        }
     }
     
     

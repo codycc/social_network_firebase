@@ -15,6 +15,7 @@ class ProfileCell: UITableViewCell {
     @IBOutlet weak var captionField: UITextView!
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
 
     var post: Post!
     override func awakeFromNib() {
@@ -28,6 +29,16 @@ class ProfileCell: UITableViewCell {
         self.post = post 
         self.captionField.text = post.caption
         self.captionField.isEditable = false
+        
+        
+//        let newDate = String(post.date)
+//        let theDate = newDate?.replacingOccurrences(of: ".", with: "")
+//        let date = Double(theDate!)
+//        let convertedDate = NSDate(timeIntervalSince1970: date!)
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd-MM-yyyy"
+//        let formattedDate = formatter.string(from: convertedDate as Date)
+//        self.dateLbl.text = formattedDate
         
         
         // grab the user id of that post

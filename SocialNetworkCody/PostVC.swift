@@ -18,6 +18,12 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     @IBOutlet weak var likesLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var commentField: UITextField!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+   
+    @IBOutlet weak var textFieldd: UITextField!
+    
+  
+  
     
     var post: Post!
     var comments = [Comment]()
@@ -30,6 +36,8 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         tableView.dataSource = self
         commentField.delegate = self
         postCaption.isEditable = false
+       
+      
         // setting up the information from the didselectrow, taking from sender and setting up views and labels
         let userId = post.userId
         DataService.ds.REF_USERS.child(userId).child("username").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -74,6 +82,9 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
+    
+   
+ 
     
     func retrieveComments() {
         // going through every comment in the comments database and passing them to the Comment Model to use later
@@ -122,6 +133,7 @@ class PostVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         self.postToFirebase()
         
     }
+    
     // which will set up the JSON in firebase and set values for the comment, the user who posted it, and post id its for.
     // also will reset the commentfield
     func postToFirebase() {

@@ -46,6 +46,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     override func viewDidAppear(_ animated: Bool) {
         self.checkNumberOfPosts()
         self.tableView.reloadData()
+        print("view did appear")
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -135,8 +136,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
            
             print("current number of posts\(self.posts.count)")
         })
-    
-      // self.refreshUI()
+
     }
     
     func refreshUI() {

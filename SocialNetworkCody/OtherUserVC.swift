@@ -154,6 +154,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                                 }
                             })
                         }
+                       self.refreshUI()
                     }
                 })
                 
@@ -184,6 +185,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     }
     
     
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -205,6 +207,13 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
             return cell
         } else {
             return ProfileCell()
+        }
+    }
+    
+    func refreshUI() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            print("CALLING THE A SYNC METHOD")
         }
     }
     
