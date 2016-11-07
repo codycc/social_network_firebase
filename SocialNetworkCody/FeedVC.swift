@@ -148,14 +148,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     func checkNumberOfPosts() {
         print("there are this many posts!!! \(self.posts.count)")
-        if self.posts.count >= 1 {
-            showcaseLbl.isHidden = true
-            showcaseArrow.isHidden = true
-            showcaseView.isHidden = true
-        } else {
+        if self.posts.count <= 0 {
             showcaseLbl.isHidden = false
             showcaseArrow.isHidden = false
             showcaseView.isHidden = false
+        } else {
+            showcaseLbl.isHidden = true
+            showcaseArrow.isHidden = true
+            showcaseView.isHidden = true
         }
     }
     

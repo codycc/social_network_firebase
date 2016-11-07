@@ -31,14 +31,32 @@ class ProfileCell: UITableViewCell {
         self.captionField.isEditable = false
         
         
-//        let newDate = String(post.date)
-//        let theDate = newDate?.replacingOccurrences(of: ".", with: "")
-//        let date = Double(theDate!)
-//        let convertedDate = NSDate(timeIntervalSince1970: date!)
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd-MM-yyyy"
-//        let formattedDate = formatter.string(from: convertedDate as Date)
-//        self.dateLbl.text = formattedDate
+    
+//        if let newDate = String(post.date) {
+//           print("\(newDate)")
+//            let theDate = newDate.replacingOccurrences(of: ".", with: "")
+//            print("\(theDate)")
+//            if let date = TimeInterval(theDate) {
+//                print("\(date)")
+//                 let convertedDate = NSDate(timeIntervalSince1970: date)
+//                    print("\(convertedDate)")
+//                    let formatter = DateFormatter()
+//                    formatter.dateFormat = "dd-MM-yyyy"
+//                     let formattedDate = formatter.string(from: convertedDate as Date)
+//                    self.dateLbl.text = formattedDate
+//                    
+//                
+//            }
+//        }
+        
+        
+        
+        
+        
+       
+        
+      
+       
         
         
         // grab the user id of that post
