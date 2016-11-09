@@ -116,7 +116,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         self.workplaceLbl.text = self.currentUser.workplace
         self.postsCountLbl.text = "\(self.posts.count)"
         self.followersCountLbl.text = "\(self.currentUser.followerCount)"
-        self.followingCountLbl.text = "\(self.currentUser.followingCount)"
+        self.followingCountLbl.text = "\(self.currentUser.followingCount - 1 )"
         
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild("coverPhotoUrl") {

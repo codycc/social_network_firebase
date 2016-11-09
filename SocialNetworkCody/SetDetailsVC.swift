@@ -101,13 +101,20 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
     }
     
     func postToFirebase(imgUrl: String!) {
+     let currentUser = DataService.ds.REF_USER_CURRENT.key
+       
         // setting up how I will update that specific users child value
         let userInfo: Dictionary<String, Any> = [
             "username": usernameField.text!,
             "profile-pic": imgUrl,
             "city-born": cityBornField.text!,
             "current-city": currentCityField.text!,
-            "workplace": workplaceField.text!
+            "workplace": workplaceField.text!,
+            "following": [
+                "\(currentUser)": true
+            ],
+            "following-count": 1 
+            
         ]
         // updating the database specific user with new information
         DataService.ds.REF_USER_CURRENT.updateChildValues(userInfo)

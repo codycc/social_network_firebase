@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="372" y="139"/>
+            <point key="canvasLocation" x="220" y="139"/>
         </scene>
         <!--SearchVC-->
         <scene sceneID="nPI-e6-c7C">
@@ -192,10 +192,10 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Nu-eR-AC2" id="b7H-FT-cw7">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="Yop-a4-s9A">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="Yop-a4-s9A">
                                                     <rect key="frame" x="3" y="3" width="85" height="85"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="85" id="Lob-eo-U1o"/>
@@ -251,7 +251,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1657" y="1049"/>
+            <point key="canvasLocation" x="1657" y="906"/>
         </scene>
         <!--Set DetailsVC-->
         <scene sceneID="KAk-YT-akD">
@@ -282,7 +282,7 @@
                                     <constraint firstAttribute="height" constant="65" id="xEN-Vh-BHN"/>
                                 </constraints>
                             </view>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="GzE-dA-GTY" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="GzE-dA-GTY" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
                                 <rect key="frame" x="112.5" y="81" width="150" height="150"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -326,7 +326,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Workplace" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D8M-kr-hK5" customClass="FancyField" customModule="SocialNetworkCody" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28.5" width="243" height="30"/>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to be called?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcC-L5-jSo">
@@ -403,7 +403,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="VpV-9u-JNw"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="-310"/>
+            <point key="canvasLocation" x="906" y="-304"/>
         </scene>
         <!--ExploreVC-->
         <scene sceneID="7DR-o0-xIN">
@@ -464,7 +464,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="hu4-G0-Zkh">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="hu4-G0-Zkh">
                                                     <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                                 </imageView>
                                             </subviews>
@@ -512,7 +512,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gCi-O4-sXC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1657" y="-726"/>
+            <point key="canvasLocation" x="2478" y="-939"/>
         </scene>
         <!--FeedVC-->
         <scene sceneID="uQz-PT-3Oh">
@@ -559,7 +559,7 @@
                                             <outletCollection property="gestureRecognizers" destination="Lsb-do-OpP" appends="YES" id="hwS-Cf-lMC"/>
                                         </connections>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="E61-K8-l3x" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="E61-K8-l3x" customClass="CircleView" customModule="SocialNetworkCody" customModuleProvider="target">
                                         <rect key="frame" x="67" y="21" width="38" height="38"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -618,7 +618,7 @@
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="PtG-lg-bVO">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="PtG-lg-bVO">
                                         <rect key="frame" x="8" y="9" width="55" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="55" id="TzJ-VN-Aiy"/>
@@ -685,7 +685,7 @@
                                                                         </imageView>
                                                                     </subviews>
                                                                 </stackView>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newyork" translatesAutoresizingMaskIntoConstraints="NO" id="24E-MR-B1g">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitepic" translatesAutoresizingMaskIntoConstraints="NO" id="24E-MR-B1g">
                                                                     <rect key="frame" x="0.0" y="49" width="355" height="308"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="308" id="XSq-J0-7oe"/>
@@ -779,14 +779,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8wd-La-MZ9" customClass="FancyView" customModule="SocialNetworkCody" customModuleProvider="target">
-                                <rect key="frame" x="52.5" y="244" width="270" height="170"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8wd-La-MZ9" customClass="FancyView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                <rect key="frame" x="52" y="244" width="270" height="170"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check out our explore and search tabs, to start following users!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3og-Ua-uvp">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check out our explore and search tabs, to start following users!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3og-Ua-uvp">
                                         <rect key="frame" x="8" y="8" width="254" height="154"/>
+                                        <gestureRecognizers/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="76r-HH-aME" appends="YES" id="BR3-d0-ehm"/>
+                                        </connections>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -799,7 +803,7 @@
                                     <constraint firstAttribute="trailing" secondItem="3og-Ua-uvp" secondAttribute="trailing" constant="8" id="kA9-lh-HFM"/>
                                 </constraints>
                             </view>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow (1)" translatesAutoresizingMaskIntoConstraints="NO" id="0j8-8N-2WB">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow (1)" translatesAutoresizingMaskIntoConstraints="NO" id="0j8-8N-2WB">
                                 <rect key="frame" x="67.5" y="139" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="OsO-Uh-pKw"/>
@@ -869,6 +873,11 @@
                         <action selector="globeTapped:" destination="bWE-xY-NgQ" id="IWk-2f-ERZ"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="76r-HH-aME">
+                    <connections>
+                        <action selector="showcaseViewTapped:" destination="bWE-xY-NgQ" id="dKv-Jr-abX"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1656.8" y="138.98050974512745"/>
         </scene>
@@ -900,7 +909,9 @@
                                             <constraint firstAttribute="width" constant="62" id="Tec-Pn-GrQ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                                        <state key="normal" title="Cancel"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.91667341319999995" green="0.91667341319999995" blue="0.91667341319999995" alpha="0.88564590669999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelButtonTapped:" destination="MC3-Di-c4n" eventType="touchUpInside" id="Vbg-nb-xRM"/>
                                         </connections>
@@ -912,7 +923,9 @@
                                             <constraint firstAttribute="width" constant="42" id="sDi-u2-473"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
-                                        <state key="normal" title="Post"/>
+                                        <state key="normal" title="Post">
+                                            <color key="titleColor" red="0.91667341321243523" green="0.91667341321243523" blue="0.91667341321243523" alpha="0.88564590669014087" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="postBtnTapped:" destination="MC3-Di-c4n" eventType="touchUpInside" id="D6W-d4-uUo"/>
                                         </connections>
@@ -929,7 +942,7 @@
                                     <constraint firstItem="wQJ-r4-S8s" firstAttribute="centerX" secondItem="Cgz-JV-XPm" secondAttribute="centerX" id="Vop-Ic-aoc"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="ao2-f7-bdK">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="ao2-f7-bdK">
                                 <rect key="frame" x="8" y="73" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="fao-IE-zqd"/>
@@ -1023,7 +1036,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3291" y="844"/>
+            <point key="canvasLocation" x="3290" y="709"/>
         </scene>
         <!--PostVC-->
         <scene sceneID="UVd-qQ-VEj">
@@ -1045,7 +1058,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s9A-YE-hl7" id="e5K-DT-95L">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="88.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="622-gE-mHb">
@@ -1129,7 +1142,7 @@
                                             <constraint firstAttribute="width" constant="35" id="vLz-2Y-i5x"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newyork" translatesAutoresizingMaskIntoConstraints="NO" id="ZGF-0Q-xwj">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitepic" translatesAutoresizingMaskIntoConstraints="NO" id="ZGF-0Q-xwj">
                                         <rect key="frame" x="4" y="43" width="367" height="266"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="266" id="ty7-Po-FOf"/>
@@ -1269,7 +1282,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1014" y="970"/>
+            <point key="canvasLocation" x="905" y="843"/>
         </scene>
         <!--Main ProfileVC-->
         <scene sceneID="Jat-wC-LoR">
@@ -1309,7 +1322,7 @@
                                                         <rect key="frame" x="0.0" y="28" width="375" height="365"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A08-M3-lW6" id="APK-Ix-CY1">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="364.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="364"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HMs-Q7-Qql" customClass="FancyView" customModule="SocialNetworkCody" customModuleProvider="target">
@@ -1397,7 +1410,7 @@
                                                     <constraint firstAttribute="height" constant="200" id="GFB-vu-Uni"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pumpkinphoto" translatesAutoresizingMaskIntoConstraints="NO" id="J7y-IX-1f6" customClass="BorderView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="J7y-IX-1f6" customClass="BorderView" customModule="SocialNetworkCody" customModuleProvider="target">
                                                 <rect key="frame" x="118" y="174" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="140" id="AOx-j7-TMj"/>
@@ -1745,7 +1758,7 @@
                                                         <rect key="frame" x="0.0" y="28" width="375" height="365"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M9e-Wt-Uis" id="Hff-Ej-RC2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="364.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="364"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pMj-SR-TUs" customClass="FancyView" customModule="SocialNetworkCody" customModuleProvider="target">
@@ -1778,25 +1791,12 @@
                                                                                 </label>
                                                                             </subviews>
                                                                         </stackView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OUE-yd-7IH">
-                                                                            <rect key="frame" x="233" y="11" width="101" height="21"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="101" id="k59-Ph-dxp"/>
-                                                                                <constraint firstAttribute="height" constant="21" id="vng-Df-0Vr"/>
-                                                                            </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
                                                                         <constraint firstItem="Hed-Ys-fR0" firstAttribute="top" secondItem="pMj-SR-TUs" secondAttribute="top" constant="11" id="5V9-Qk-2Tv"/>
                                                                         <constraint firstItem="Odt-Hr-bb9" firstAttribute="top" secondItem="pMj-SR-TUs" secondAttribute="top" constant="5" id="HFZ-9Q-tzr"/>
-                                                                        <constraint firstItem="OUE-yd-7IH" firstAttribute="top" secondItem="pMj-SR-TUs" secondAttribute="top" constant="11" id="W4h-Ul-6xr"/>
                                                                         <constraint firstItem="Hed-Ys-fR0" firstAttribute="leading" secondItem="Odt-Hr-bb9" secondAttribute="trailing" constant="8" id="d8x-5H-BAe"/>
-                                                                        <constraint firstItem="OUE-yd-7IH" firstAttribute="leading" secondItem="Hed-Ys-fR0" secondAttribute="trailing" constant="7.5" id="i28-KT-vOE"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="OUE-yd-7IH" secondAttribute="trailing" constant="31" id="qMA-5E-bIW"/>
                                                                         <constraint firstItem="Odt-Hr-bb9" firstAttribute="leading" secondItem="pMj-SR-TUs" secondAttribute="leading" constant="5" id="rDf-t9-Hbx"/>
                                                                     </constraints>
                                                                 </view>
@@ -1833,7 +1833,6 @@
                                                         </tableViewCellContentView>
                                                         <connections>
                                                             <outlet property="captionField" destination="2E1-sM-RKN" id="j8m-0E-gYL"/>
-                                                            <outlet property="dateLbl" destination="OUE-yd-7IH" id="7Ud-fp-5DY"/>
                                                             <outlet property="postPic" destination="B9K-fa-Whh" id="ne2-7v-jVL"/>
                                                             <outlet property="profilePic" destination="Odt-Hr-bb9" id="Wuc-qZ-OYM"/>
                                                             <outlet property="usernameLbl" destination="OcQ-cq-F4I" id="zWq-3O-WZV"/>
@@ -1847,7 +1846,7 @@
                                                     <constraint firstAttribute="height" constant="200" id="aKX-eq-rBR"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pumpkinphoto" translatesAutoresizingMaskIntoConstraints="NO" id="oyq-5E-zOr" customClass="BorderView" customModule="SocialNetworkCody" customModuleProvider="target">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-pic" translatesAutoresizingMaskIntoConstraints="NO" id="oyq-5E-zOr" customClass="BorderView" customModule="SocialNetworkCody" customModuleProvider="target">
                                                 <rect key="frame" x="118" y="174" width="140" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="Hcn-ef-xs4"/>
@@ -2129,10 +2128,8 @@
         <image name="empty-heart" width="70" height="70"/>
         <image name="f" width="352" height="328"/>
         <image name="magglass" width="256" height="256"/>
-        <image name="newyork" width="1600" height="800"/>
-        <image name="profile" width="113" height="155"/>
-        <image name="pumpkinphoto" width="960" height="960"/>
         <image name="sign-out" width="92" height="65"/>
+        <image name="whitepic" width="1200" height="630"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="k5h-2q-SgC"/>

@@ -44,7 +44,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         
     }
     override func viewDidAppear(_ animated: Bool) {
-        self.checkNumberOfPosts()
+//        self.checkNumberOfPosts()
         self.tableView.reloadData()
         print("view did appear")
     }
@@ -146,18 +146,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         }
     }
     
-    func checkNumberOfPosts() {
-        print("there are this many posts!!! \(self.posts.count)")
-        if self.posts.count <= 0 {
-            showcaseLbl.isHidden = false
-            showcaseArrow.isHidden = false
-            showcaseView.isHidden = false
-        } else {
-            showcaseLbl.isHidden = true
-            showcaseArrow.isHidden = true
-            showcaseView.isHidden = true
-        }
-    }
+//    func checkNumberOfPosts() {
+//        print("there are this many posts!!! \(self.posts.count)")
+//        if self.posts.count <= 0 {
+//            showcaseLbl.isHidden = false
+//            showcaseArrow.isHidden = false
+//            showcaseView.isHidden = false
+//        } else {
+//            showcaseLbl.isHidden = true
+//            showcaseArrow.isHidden = true
+//            showcaseView.isHidden = true
+//        }
+//    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -244,5 +244,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     
     @IBAction func statusFieldTapped(_ sender: AnyObject) {
         performSegue(withIdentifier: "goToStatus", sender: nil)
+    }
+    @IBAction func showcaseViewTapped(_ sender: Any) {
+        showcaseLbl.isHidden = true
+        showcaseView.isHidden = true
+        showcaseArrow.isHidden = true 
     }
 }
