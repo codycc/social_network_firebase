@@ -31,6 +31,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var imageSelected = false
     var currentUser: User!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +43,24 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         self.setCurrentUser()
         
         
+        let rc = UIRefreshControl()
+        tableView.refreshControl = rc
+        rc.addTarget(self, action: #selector(FeedVC.refresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        
     }
+    
+    func refresh(refreshControl: UIRefreshControl) {
+        self.addPosts()
+        refreshControl.endRefreshing()
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
 //        self.checkNumberOfPosts()
-        self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
         print("view did appear")
     }
     
