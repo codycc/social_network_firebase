@@ -251,8 +251,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         
     }
     
-    
-    
     @IBAction func backBtnPressed(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }

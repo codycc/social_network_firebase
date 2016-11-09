@@ -11,6 +11,7 @@ import Firebase
 
 class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var workplaceField: FancyField!
     @IBOutlet weak var usernameField: FancyField!
     @IBOutlet weak var cityBornField: FancyField!
     @IBOutlet weak var currentCityField: FancyField!
@@ -105,7 +106,8 @@ class SetDetailsVC: UIViewController, UITextFieldDelegate, UIImagePickerControll
             "username": usernameField.text!,
             "profile-pic": imgUrl,
             "city-born": cityBornField.text!,
-            "current-city": currentCityField.text!
+            "current-city": currentCityField.text!,
+            "workplace": workplaceField.text!
         ]
         // updating the database specific user with new information
         DataService.ds.REF_USER_CURRENT.updateChildValues(userInfo)
