@@ -1424,7 +1424,7 @@
                                                     <constraint firstAttribute="height" constant="44" id="mzk-LH-AFz"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cody Condon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acD-lY-mMw">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acD-lY-mMw">
                                                 <rect key="frame" x="83" y="324" width="210" height="31"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="31" id="R2I-f8-5NM"/>
@@ -2133,7 +2133,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="k5h-2q-SgC"/>
-        <segue reference="UvL-8c-Tc9"/>
         <segue reference="MgC-3Y-LL5"/>
+        <segue reference="mEU-ZU-oGF"/>
     </inferredMetricsTieBreakers>
 </document>

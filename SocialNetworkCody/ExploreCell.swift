@@ -19,6 +19,9 @@ class ExploreCell: UICollectionViewCell {
     func configureCell(user: User) {
         print("here is the user cell\(user.profilePicUrl)")
         let url = URL(string: user.profilePicUrl)
-        userImg.kf.setImage(with: url)
+        DispatchQueue.main.async {
+        self.userImg.kf.setImage(with: url)
+        }
+       
     }
 }

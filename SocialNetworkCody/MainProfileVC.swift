@@ -110,7 +110,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         let url = URL(string: self.currentUser.profilePicUrl)
         self.profileImg.kf.setImage(with: url)
         self.profileImg2.kf.setImage(with: url)
-        self.usernameLbl.text = self.currentUser.username
+        self.usernameLbl.text = self.currentUser.username.capitalized
         self.cityBornLbl.text = self.currentUser.cityBorn
         self.currentCityLbl.text = self.currentUser.currentCity
         self.workplaceLbl.text = self.currentUser.workplace

@@ -46,10 +46,13 @@ class PostCell: UITableViewCell {
       
         // going to the id of the likkes
         likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
-
-        self.caption.text = post.caption
-        self.likesLbl.text = "\(post.likes)"
-        self.caption.isEditable = false 
+        
+        DispatchQueue.main.async {
+            self.caption.text = post.caption
+            self.likesLbl.text = "\(post.likes)"
+            self.caption.isEditable = false
+        }
+   
         
         // grab the user id of that post
          let postUser = post.userId
@@ -64,10 +67,15 @@ class PostCell: UITableViewCell {
         
         
         let url = URL(string: post.imageUrl)
-        self.postImg.kf.setImage(with: url)
+        DispatchQueue.main.async {
+            self.postImg.kf.setImage(with: url)
+        }
+        
        
         let profileUrl = URL(string: post.profilePicUrl)
-        self.profileImg.kf.setImage(with: profileUrl)
+        DispatchQueue.main.async {
+            self.profileImg.kf.setImage(with: profileUrl)
+        }
         
         
         // check for the current users likes if anything changes
