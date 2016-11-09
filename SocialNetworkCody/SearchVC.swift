@@ -74,8 +74,9 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 // for ever user in user
                 for snap in snapshot {
                     let usernameRef = snap.childSnapshot(forPath: "username")
-                    let username = usernameRef.value
-                    if username as? String == self.searchTerm!.lowercased() {
+                    let username = usernameRef.value as! String
+                    let lowercaseUsername = username.lowercased()
+                    if lowercaseUsername == self.searchTerm!.lowercased() {
                         if let userDict = snap.value as? Dictionary<String, AnyObject> {
                             let key = snap.key
                             let user = User(userKey: key, userData: userDict)
