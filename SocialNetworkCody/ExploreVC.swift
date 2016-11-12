@@ -37,7 +37,6 @@ class ExploreVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
-     
         let user = users[indexPath.item]
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExploreCell", for: indexPath) as? ExploreCell {
@@ -50,6 +49,7 @@ class ExploreVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
     }
     
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToOtherUserFromExploreVC" {
             if let otherUserVC = segue.destination as? OtherUserVC  {

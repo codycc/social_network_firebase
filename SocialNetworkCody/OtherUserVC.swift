@@ -10,10 +10,11 @@ import UIKit
 import Firebase
 import Kingfisher
 
-class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var profileImg: UIImageView!
 
     @IBOutlet weak var usernameLbl: UILabel!
@@ -29,9 +30,10 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
-    let scrollViewContentHeight = 1250 as CGFloat
+    let scrollViewContentHeight = 1395 as CGFloat
     let scrollViewContentWidth = UIScreen.main.bounds.width
     var posts = [Post]()
+    var following = [User]()
     var profilePicUrl: String = ""
     var coverPhotoUrl: String = ""
     
@@ -48,6 +50,8 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         scrollView.contentSize = CGSize(width: scrollViewContentWidth, height: scrollViewContentHeight)
         tableView.delegate = self
         tableView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
         scrollView.delegate = self
         scrollView.bounces = false
         tableView.bounces = false
@@ -56,7 +60,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        usernameLbl.text = user.username
+        usernameLbl.text = user.username.capitalized
         
         followersCountLbl.text = "\(user.followerCount)"
         followingCountLbl.text = "\(user.followingCount)"
@@ -66,6 +70,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         
         self.downloadAndCacheProfileAndCover()
         self.findAndParsePosts()
+        self.findUserFollowing()
         
        
         // storing the information of the current user so it can be set later times
@@ -100,7 +105,6 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         }
          postsCountLbl.text = "\(self.posts.count)"
     }
-    
     
     func downloadAndCacheProfileAndCover() {
         //profile photo
@@ -154,7 +158,7 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
                                 }
                             })
                         }
-                       self.refreshUI()
+                        self.refreshUI()
                     }
                 })
                 
@@ -163,27 +167,29 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
             }
         })
     }
+
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        print("THIS IS Y OFFSET \(yOffset)")
-        
-        if scrollView == self.scrollView {
-            if yOffset >= scrollViewContentHeight - screenHeight {
-                print("this is screen height: \(screenHeight)")
-                scrollView.isScrollEnabled = false
-                tableView.isScrollEnabled = true
-            }
-        }
-        
-        if scrollView == self.tableView {
-            if yOffset <= 0   {
-                self.scrollView.isScrollEnabled = true
-                self.tableView.isScrollEnabled = false
-            }
-        }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return following.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let user = following[indexPath.item]
+        print("isTheUserBeingPassedIn \(user)")
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FollowingCell", for: indexPath) as? FollowingCell {
+            cell.configureCell(user: user)
+            return cell
+        } else {
+          return UICollectionViewCell()
+        }
+        
+    }
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -207,6 +213,64 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
             return cell
         } else {
             return ProfileCell()
+        }
+    }
+    
+    func findUserFollowing() {
+        self.following = []
+        let userKey = user.userKey
+        print("HERE IS THE USER KEY \(userKey)")
+            
+        DataService.ds.REF_USERS.child(userKey).child("following").observeSingleEvent(of: .value, with: { (snapshot) in
+            print("here is the snapshot of the following\(snapshot)")
+            if let snaps = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                print("here is the snaps of the children\(snaps)")
+                for snap in snaps {
+                    print("here is the snap \(snap)")
+                   let key = snap.key
+                    print("here is the key\(key)")
+                    let user = DataService.ds.REF_USERS.child(key)
+                    print("HERE IS THE USER\(user)")
+                    user.observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let userValue = snapshot.value as? Dictionary <String, AnyObject> {
+                            print("here are the snapshot of users\(snapshot))")
+                            let userKey = snapshot.key
+                            let user = User(userKey: userKey, userData: userValue)
+                            self.following.append(user)
+                            print("here is the user:!\(user)")
+                            self.collectionView.reloadData()
+                        }
+                    })
+                    
+                    
+                }
+               
+            }
+        })
+        
+        
+    }
+    
+    
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        print("THIS IS Y OFFSET \(yOffset)")
+        
+        if scrollView == self.scrollView {
+            if yOffset >= scrollViewContentHeight - screenHeight {
+                print("this is screen height: \(screenHeight)")
+                scrollView.isScrollEnabled = false
+                tableView.isScrollEnabled = true
+            }
+        }
+        
+        if scrollView == self.tableView {
+            if yOffset <= 0   {
+                self.scrollView.isScrollEnabled = true
+                self.tableView.isScrollEnabled = false
+            }
         }
     }
     

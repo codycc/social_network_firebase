@@ -27,6 +27,7 @@
 		0B522F6A1D9DB17000BC2B05 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B522F691D9DB17000BC2B05 /* PostCell.swift */; };
 		0B522F6D1D9EF2B200BC2B05 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B522F6C1D9EF2B200BC2B05 /* DataService.swift */; };
 		0B5423801DB836ED00663EF5 /* StatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54237F1DB836ED00663EF5 /* StatusVC.swift */; };
+		0B60B4C11DD67AC700CE9605 /* FollowingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B60B4C01DD67AC700CE9605 /* FollowingCell.swift */; };
 		0B63D4851DBFC0BF008FF884 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63D4841DBFC0BF008FF884 /* SearchVC.swift */; };
 		0B63D4871DBFC27C008FF884 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63D4861DBFC27C008FF884 /* User.swift */; };
 		0B63D4891DBFC7C7008FF884 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63D4881DBFC7C7008FF884 /* UserCell.swift */; };
@@ -63,6 +64,7 @@
 		0B522F691D9DB17000BC2B05 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		0B522F6C1D9EF2B200BC2B05 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0B54237F1DB836ED00663EF5 /* StatusVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusVC.swift; sourceTree = "<group>"; };
+		0B60B4C01DD67AC700CE9605 /* FollowingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingCell.swift; sourceTree = "<group>"; };
 		0B63D4841DBFC0BF008FF884 /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		0B63D4861DBFC27C008FF884 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0B63D4881DBFC7C7008FF884 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				0B1A94F41DBA885E00FE5A2F /* BorderView.swift */,
 				0B63D4881DBFC7C7008FF884 /* UserCell.swift */,
 				0B049A4B1DCA68F9006B8491 /* ExploreCell.swift */,
+				0B60B4C01DD67AC700CE9605 /* FollowingCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				0B446B251D9C4FD5004E9A56 /* Constants.swift in Sources */,
 				0B522F6A1D9DB17000BC2B05 /* PostCell.swift in Sources */,
 				0B63D4871DBFC27C008FF884 /* User.swift in Sources */,
+				0B60B4C11DD67AC700CE9605 /* FollowingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
