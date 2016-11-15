@@ -12,7 +12,7 @@ import Kingfisher
 
 //
 class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var profileImg: UIImageView!
@@ -58,21 +58,21 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             self.tableView.reloadData()
         }
         
-     
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
         self.postsCountLbl.text = "\(self.posts.count)"
-
         
-         // only scroll down to full table if the user has a post
+        
+        // only scroll down to full table if the user has a post
         if self.posts.count >= 1 {
             scrollView.isScrollEnabled = true
         }
     }
     
-   
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
         print("THIS IS Y OFFSET \(yOffset)")
@@ -93,7 +93,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         }
     }
     
-   
+    
     
     func setCurrentUser() {
         DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -175,7 +175,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         })
     }
     
-  
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -233,7 +233,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 } else {
                     print("CODY1: Successfully uploaded image to Firebase Storage")
                     let downloadUrl = metadata?.downloadURL()?.absoluteString
-                     if let url = downloadUrl {
+                    if let url = downloadUrl {
                         // taking the image url, and passing it to the postToFirebaseDatabase function to be stored with the specific user
                         self.postToFirebaseDatabase(imgUrl: url)
                     }
@@ -254,7 +254,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBAction func backBtnPressed(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func statusBtnPressed(_ sender: AnyObject) {
         performSegue(withIdentifier: "goToStatusVC2", sender: nil)
     }
@@ -264,5 +264,5 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     @IBAction func editProfileTapped(_ sender: Any) {
         
     }
-   
+    
 }
