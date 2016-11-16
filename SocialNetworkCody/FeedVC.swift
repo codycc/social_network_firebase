@@ -46,10 +46,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         tableView.refreshControl = rc
         rc.addTarget(self, action: #selector(FeedVC.refresh(refreshControl:)), for: UIControlEvents.valueChanged)
         
+        
     }
     
+
     func refresh(refreshControl: UIRefreshControl) {
-        self.tableView.reloadData()
+        
+       self.addPosts()
+        print("here are the posts after refresh\(posts)")
         refreshControl.endRefreshing()
     }
     
@@ -113,9 +117,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     
+//    func observelikes() {
+//        DataService.ds.REF_USER_CURRENT.observe( .value, with: { (snapshot) in
+//            
+//            self.refreshUI()
+//        })
+//
+//       
+//    }
     
     func addPosts() {
-        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
+        DataService.ds.REF_POSTS.observeSingleEvent( of: .value, with: { (snapshot) in
             // need to clear out the posts array when the app is interacted with otherwise posts will be duplicated from redownloading
             self.posts = []
             // going through every snapshot
@@ -150,6 +162,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         })
 
     }
+    
+    
     
     func refreshUI() {
         DispatchQueue.main.async {

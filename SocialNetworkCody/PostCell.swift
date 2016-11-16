@@ -27,6 +27,7 @@ class PostCell: UITableViewCell {
     var likesRef: FIRDatabaseReference!
     var postsRef: FIRDatabaseReference!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // setting up the tap for the heart like button, since its repeated in the cells
@@ -97,6 +98,8 @@ class PostCell: UITableViewCell {
         })
     }
     
+    
+    
     func likeTapped(sender: UITapGestureRecognizer) {
         // check for the current users likes if anything changes
         likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -117,6 +120,8 @@ class PostCell: UITableViewCell {
                 self.likesRef.removeValue()
             }
         })
+        
+        
         
     }
     
