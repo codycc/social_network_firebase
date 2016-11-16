@@ -42,7 +42,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
         self.addPosts()
         self.setCurrentUser()
         
-        
         let rc = UIRefreshControl()
         tableView.refreshControl = rc
         rc.addTarget(self, action: #selector(FeedVC.refresh(refreshControl:)), for: UIControlEvents.valueChanged)
@@ -50,17 +49,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
     }
     
     func refresh(refreshControl: UIRefreshControl) {
-        self.addPosts()
+        self.tableView.reloadData()
         refreshControl.endRefreshing()
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-//        self.checkNumberOfPosts()
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        
         print("view did appear")
     }
     
@@ -160,20 +157,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISe
             print("CALLING THE A SYNC METHOD")
         }
     }
-    
-//    func checkNumberOfPosts() {
-//        print("there are this many posts!!! \(self.posts.count)")
-//        if self.posts.count <= 0 {
-//            showcaseLbl.isHidden = false
-//            showcaseArrow.isHidden = false
-//            showcaseView.isHidden = false
-//        } else {
-//            showcaseLbl.isHidden = true
-//            showcaseArrow.isHidden = true
-//            showcaseView.isHidden = true
-//        }
-//    }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPost" {

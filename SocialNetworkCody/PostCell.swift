@@ -43,7 +43,6 @@ class PostCell: UITableViewCell {
     // ui image with default value as nil
     func configureCell(post:Post, img: UIImage? = nil, profileImage: UIImage? = nil ) {
         self.post = post
-      
         // going to the id of the likkes
         likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
         
@@ -57,7 +56,7 @@ class PostCell: UITableViewCell {
         // grab the user id of that post
          let postUser = post.userId
         // search through users by that specific id and access the username
-            let userNickname = DataService.ds.REF_USERS.child(postUser).child("username")
+        let userNickname = DataService.ds.REF_USERS.child(postUser).child("username")
         // grab value of username and set the label accordinly 
         userNickname.observeSingleEvent(of: .value, with: { (snapshot) in
              print(snapshot)
@@ -92,8 +91,6 @@ class PostCell: UITableViewCell {
         DataService.ds.REF_USER_CURRENT.child("posts").observeSingleEvent(of: .value, with: { (snapshot) in
             if snapshot.hasChild(post.postKey) {
                 self.editPostBtn.isHidden = false
-                
-                
             } else {
                 self.editPostBtn.isHidden = true 
             }
