@@ -1,15 +1,15 @@
 //
-//  FollowingCell.swift
+//  MainFollowingCell.swift
 //  SocialNetworkCody
 //
-//  Created by Cody Condon on 2016-11-11.
+//  Created by Cody Condon on 2016-11-15.
 //  Copyright © 2016 Cody Condon. All rights reserved.
 //
 
 import UIKit
 import Kingfisher
 
-class FollowingCell: UICollectionViewCell {
+class MainFollowingCell: UICollectionViewCell {
     
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!

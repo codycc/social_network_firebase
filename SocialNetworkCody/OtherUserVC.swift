@@ -188,7 +188,6 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         } else {
           return UICollectionViewCell()
         }
-        
     }
     
     
@@ -250,9 +249,6 @@ class OtherUserVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, 
         
         
     }
-    
-    
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y

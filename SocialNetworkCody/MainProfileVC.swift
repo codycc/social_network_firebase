@@ -11,10 +11,13 @@ import Firebase
 import Kingfisher
 
 //
-class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileImg2: UIImageView!
     @IBOutlet weak var workplaceLbl: UILabel!
@@ -28,20 +31,24 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     let screenHeight = UIScreen.main.bounds.height
-    let scrollViewContentHeight = 1350 as CGFloat
+    let scrollViewContentHeight = 1470 as CGFloat
     let scrollViewContentWidth = UIScreen.main.bounds.width
     var posts = [Post]()
+    var following = [User]()
     var profilePicUrl: String = ""
     var coverPhotoUrl: String = ""
     var imagePicker: UIImagePickerController!
     var imageSelected = false
     var currentUser: User!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.contentSize = CGSize(width: scrollViewContentWidth, height: scrollViewContentHeight)
         tableView.delegate = self
         tableView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
         scrollView.delegate = self
         scrollView.isScrollEnabled = false
         scrollView.bounces = false
@@ -53,6 +60,7 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         
         self.setCurrentUser()
         self.checkAndAddPosts()
+        self.findUserFollowing()
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -72,39 +80,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
         }
     }
     
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        print("THIS IS Y OFFSET \(yOffset)")
-        
-        if scrollView == self.scrollView {
-            if yOffset >= scrollViewContentHeight - screenHeight {
-                print("this is screen height: \(screenHeight)")
-                scrollView.isScrollEnabled = false
-                tableView.isScrollEnabled = true
-            }
-        }
-        
-        if scrollView == self.tableView  {
-            if yOffset <= 0   {
-                self.scrollView.isScrollEnabled = true
-                self.tableView.isScrollEnabled = false
-            }
-        }
-    }
-    
-    
-    
-    func setCurrentUser() {
-        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
-                let key = snapshot.key
-                self.currentUser = User(userKey: key, userData: userDict)
-                // setting profile images
-                self.setProfile()
-            }
-        })
-    }
     
     func setProfile() {
         let url = URL(string: self.currentUser.profilePicUrl)
@@ -134,6 +109,141 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
             
         })
         
+    }
+    
+    
+    
+    //TABLEVIEW IMPLEMENTATION
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let post = posts[indexPath.row]
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
+            
+            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
+                print("THIS IS THE POST FROM CELL:\(post)")
+                cell.configureCell(post: post, img: img)
+            } else {
+                cell.configureCell(post: post)
+                
+            }
+            return cell
+        } else {
+            return ProfileCell()
+        }
+    }
+    
+    //COLLECTIONVIEW IMPLEMENTATION 
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("CALLED")
+        return following.count
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("ALSOCALLED")
+        let user = following[indexPath.item]
+        print("isTheUserBeingPassedIn \(user)")
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainFollowingCell", for: indexPath) as? MainFollowingCell {
+            cell.configureCell(user: user)
+            return cell
+        }
+        else {
+            return UICollectionViewCell()
+        }
+       
+    }
+    
+    
+    func findUserFollowing() {
+        self.following = []
+//        let userKey = currentUser.userKey
+        let userKey = DataService.ds.REF_USER_CURRENT.key
+        print("HERE IS THE USER KEY \(userKey)")
+        
+        DataService.ds.REF_USERS.child(userKey).child("following").observeSingleEvent(of: .value, with: { (snapshot) in
+            print("here is the snapshot of the following\(snapshot)")
+            if let snaps = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                print("here is the snaps of the children\(snaps)")
+                for snap in snaps {
+                    print("here is the snap \(snap)")
+                    let key = snap.key
+                    print("here is the key\(key)")
+                    let user = DataService.ds.REF_USERS.child(key)
+                    print("HERE IS THE USER\(user)")
+                    user.observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let userValue = snapshot.value as? Dictionary <String, AnyObject> {
+                            print("here are the snapshot of users\(snapshot))")
+                            let userKey = snapshot.key
+                            let user = User(userKey: userKey, userData: userValue)
+                            self.following.append(user)
+                            print("here is the user:!\(user)")
+                            self.collectionView.reloadData()
+                        }
+                    })
+                    
+                    
+                }
+                
+            }
+        })
+        
+    }
+
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            coverImage.image = image
+            imageSelected = true
+            // take image from uipicker and pass to post to firebase storage function
+            postToFirebaseStorage(image: image)
+        } else {
+            print("Cody1: A valid image wasnt selected")
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        print("THIS IS Y OFFSET \(yOffset)")
+        
+        if scrollView == self.scrollView {
+            if yOffset >= scrollViewContentHeight - screenHeight {
+                print("this is screen height: \(screenHeight)")
+                scrollView.isScrollEnabled = false
+                tableView.isScrollEnabled = true
+            }
+        }
+        
+        if scrollView == self.tableView  {
+            if yOffset <= 0   {
+                self.scrollView.isScrollEnabled = true
+                self.tableView.isScrollEnabled = false
+            }
+        }
+    }
+    
+    func setCurrentUser() {
+        DataService.ds.REF_USER_CURRENT.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userDict = snapshot.value as? Dictionary<String, AnyObject> {
+                let key = snapshot.key
+                self.currentUser = User(userKey: key, userData: userDict)
+                // setting profile images
+                self.setProfile()
+            }
+        })
     }
     
     func checkAndAddPosts() {
@@ -173,44 +283,6 @@ class MainProfileVC: UIViewController, UIScrollViewDelegate, UITableViewDelegate
                 print("user doesnt have any posts")
             }
         })
-    }
-    
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = posts[indexPath.row]
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell") as? ProfileCell {
-            
-            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
-                print("THIS IS THE POST FROM CELL:\(post)")
-                cell.configureCell(post: post, img: img)
-            } else {
-                cell.configureCell(post: post)
-                
-            }
-            return cell
-        } else {
-            return ProfileCell()
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            coverImage.image = image
-            imageSelected = true
-            // take image from uipicker and pass to post to firebase storage function
-            postToFirebaseStorage(image: image)
-        } else {
-            print("Cody1: A valid image wasnt selected")
-        }
-        imagePicker.dismiss(animated: true, completion: nil)
     }
     
     func refreshUI() {

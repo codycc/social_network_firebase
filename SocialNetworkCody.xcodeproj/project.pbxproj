@@ -31,6 +31,7 @@
 		0B63D4851DBFC0BF008FF884 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63D4841DBFC0BF008FF884 /* SearchVC.swift */; };
 		0B63D4871DBFC27C008FF884 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63D4861DBFC27C008FF884 /* User.swift */; };
 		0B63D4891DBFC7C7008FF884 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63D4881DBFC7C7008FF884 /* UserCell.swift */; };
+		0B8FFB4F1DDBD62F00CF9F85 /* MainFollowingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8FFB4E1DDBD62F00CF9F85 /* MainFollowingCell.swift */; };
 		0B93799B1D9D58A300C7553A /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B93799A1D9D58A200C7553A /* FeedVC.swift */; };
 		0BB991531DA5B578001D0204 /* SetDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB991521DA5B578001D0204 /* SetDetailsVC.swift */; };
 		0BDB59A01D9C1B6200E8195F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB599F1D9C1B6200E8195F /* AppDelegate.swift */; };
@@ -69,6 +70,7 @@
 		0B63D4861DBFC27C008FF884 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0B63D4881DBFC7C7008FF884 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		0B7F52A01D9C77EB009CF99E /* SocialNetworkCody.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SocialNetworkCody.entitlements; sourceTree = "<group>"; };
+		0B8FFB4E1DDBD62F00CF9F85 /* MainFollowingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFollowingCell.swift; sourceTree = "<group>"; };
 		0B93799A1D9D58A200C7553A /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		0BB991521DA5B578001D0204 /* SetDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetDetailsVC.swift; sourceTree = "<group>"; };
 		0BDB599C1D9C1B6200E8195F /* SocialNetworkCody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetworkCody.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +179,7 @@
 				0B63D4881DBFC7C7008FF884 /* UserCell.swift */,
 				0B049A4B1DCA68F9006B8491 /* ExploreCell.swift */,
 				0B60B4C01DD67AC700CE9605 /* FollowingCell.swift */,
+				0B8FFB4E1DDBD62F00CF9F85 /* MainFollowingCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				0B446B291D9C5338004E9A56 /* FancyField.swift in Sources */,
 				0B5423801DB836ED00663EF5 /* StatusVC.swift in Sources */,
 				0BB991531DA5B578001D0204 /* SetDetailsVC.swift in Sources */,
+				0B8FFB4F1DDBD62F00CF9F85 /* MainFollowingCell.swift in Sources */,
 				0B14207C1DAEEB9C00E39F05 /* PostVC.swift in Sources */,
 				0BDB59A21D9C1B6200E8195F /* SignInVC.swift in Sources */,
 				0B2FE32D1DADCB6900C5D603 /* FancyImage.swift in Sources */,
