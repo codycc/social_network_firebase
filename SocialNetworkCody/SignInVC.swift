@@ -26,7 +26,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //Checking if keychain already exists
+       // Checking if keychain already exists
         if let _ = KeychainWrapper.standard.string(forKey: KEY_UID) {
             
             print("CODY1: ID found in keychain")
